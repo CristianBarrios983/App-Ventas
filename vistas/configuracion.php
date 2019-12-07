@@ -21,9 +21,6 @@
 
     <div class="d-flex justify-content-center align-items-center my-5">
             <!-- Datos del negocio -->
-            <?php
-                if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"):
-            ?>
             <div class="col-6">
                 <div class="card text-center rounded-0" id="datosNegocio">
                     <div class="card-header">
@@ -75,7 +72,6 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <?php endif; ?>
 
     </div>
             

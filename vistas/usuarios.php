@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(isset($_SESSION['usuario'])){
-      if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"){
+      if($_SESSION['rol'] == "Administrador"){
 
         require_once "../clases/Conexion.php"; 
         $c= new conectar();
@@ -27,11 +27,9 @@
           </div>
         </div>
         <div class="row mb-3">
-            <?php if($_SESSION['rol'] == "Administrador"): ?>
             <div class="col-lg-8">
                 <button type="button" class="btn btn-primary rounded-0 w-auto d-inline-block" data-bs-toggle="modal" data-bs-target="#registraUsuarioModal">Registrar usuario</button>
             </div>
-            <?php endif; ?>
         </div>
         <div class="row">
             <div class="col-sm-12">

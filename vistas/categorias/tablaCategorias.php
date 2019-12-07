@@ -13,9 +13,7 @@
   <thead class="table-dark">
     <tr>
       <th scope="col">Categoria</th>
-      <?php if($_SESSION['rol'] == "Administrador"): ?>
       <th scope="col" colspan="2">Acciones</th>
-      <?php endif; ?>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +21,6 @@
       <?php while($mostrar=mysqli_fetch_row($result)): ?>
       <tr>
         <td><?php echo $mostrar[1]; ?></td>
-        <?php if($_SESSION['rol'] == "Administrador"): ?>
         <td>
             <span class="btn btn-warning btn-xs rounded-0" data-bs-toggle="modal" data-bs-target="#actualizaCategoria" onclick="agregaDato('<?php echo $mostrar[0] ?>','<?php echo $mostrar[1] ?>')">
                   <span class="bi bi-pen-fill"></span>
@@ -34,12 +31,11 @@
                   <span class="bi bi-trash3-fill"></span>
               </span>
         </td>
-        <?php endif; ?>
       </tr>
         <?php endwhile;?>
       <?php else: ?>
         <tr>
-                <td colspan="<?php echo ($_SESSION['rol'] == "Administrador") ? '3' : '1'; ?>">No hay categorías registradas.</td>
+                <td colspan="3">No hay categorías registradas.</td>
             </tr>
       <?php endif; ?>
   </tbody>

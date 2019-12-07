@@ -58,7 +58,6 @@
       <td class="<?= $claseBajoStock; ?>"><?php echo $mostrar[7]; ?></td>
       <td class="<?= $claseBajoStock; ?>"><?php echo '<label class="fw-bold text-success">$</label>'.$mostrar[3]; ?></td>
       <td class="<?= $claseBajoStock; ?>"><?php echo $mostrar[5]; ?></td>
-      <?php if($_SESSION['rol'] == "Administrador"): ?>
       <td class="<?= ($mostrar[2] <= $mostrar[7]) ? 'bajo-stock' : '' ?>">
           <span data-bs-toggle="modal" data-bs-target="#abremodalAgregaStock" class="btn btn-success btn-xs rounded-0" onclick="agregaDatosActualizarStock('<?php echo $mostrar[6] ?>','<?php echo $mostrar[2] ?>')">
                 <span class="bi bi-plus-lg"></span>
@@ -74,12 +73,11 @@
                 <span class="bi bi-trash3-fill"></span>
             </span>
       </td>
-      <?php endif; ?>
     </tr>
     <?php endwhile;?>
   <?php else: ?>
       <tr>
-            <td colspan="<?php echo ($_SESSION['rol'] == "Administrador") ? '9' : '6'; ?>">No hay productos registrados.</td>
+            <td colspan="9">No hay productos registrados.</td>
         </tr>
     <?php endif; ?>
   </tbody>

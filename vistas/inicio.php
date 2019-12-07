@@ -134,7 +134,7 @@
         
         <div class="row">
             <?php
-                if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"):
+                if($_SESSION['rol'] == "Administrador"):
             ?>
             <div class="col-6">
                 <!-- Produtos mas vendidos -->

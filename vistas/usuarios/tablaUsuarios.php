@@ -34,18 +34,16 @@
                 <span class="bi bi-pen-fill"></span>
             </span>
       </td>
-      <?php if($_SESSION['rol'] == "Administrador"): ?>
       <td>
           <span class="btn btn-danger btn-xs rounded-0" onclick="eliminarUsuario('<?php echo $mostrar[0] ;?>')">
                 <span class="bi bi-trash3-fill"></span>
             </span>
       </td>
-      <?php endif; ?>
     </tr>
     <?php endwhile;?>
   <?php else: ?>
       <tr>
-              <td colspan="<?php echo ($_SESSION['rol'] == "Administrador") ? '6' : '5'; ?>">No hay usuarios registrados.</td>
+              <td colspan="7">No hay usuarios registrados.</td>
       </tr>
     <?php endif; ?>
   </tbody>

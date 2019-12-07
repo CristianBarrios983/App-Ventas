@@ -25,7 +25,7 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="inicio.php">Panel</a>
         </li>
-        <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
+        <?php if($_SESSION['rol'] == "Administrador"): ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administrar productos
@@ -38,7 +38,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
+        <?php if($_SESSION['rol'] == "Administrador"): ?>
         <li class="nav-item">
           <a class="nav-link" href="usuarios.php">Usuarios</a>
         </li>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-10-2024 a las 00:54:33
+-- Tiempo de generación: 07-12-2019 a las 11:32:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -136,8 +136,7 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id_rol`, `rol`) VALUES
 (1, 'Administrador'),
-(2, 'Vendedor'),
-(3, 'Supervisor');
+(2, 'Vendedor');
 
 -- --------------------------------------------------------
 
