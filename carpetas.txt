@@ -1,0 +1,9 @@
+1_bd: carpeta que contiene los querys de la base de datos listos para ejecutar
+2_clases: contiene todas las clases de cada modulo con sus respectivos metodos de crud
+3_css: contiene los scripts de css que serviran para dar estilo personalizado al sistema
+4_img: contiene todas las imagenes que necesitemos agregar a nuestras vistas
+5-archivos: contiene todas las imagenes de todos los productos agregados
+6_js: contiene todos los scripts de js para cada modulo y poder ejecutar todas las funciones de crud
+7_librerias: contiene las librerias para la creacion de pdf, jquery, alertify, bootstrap y select 2
+8_procesos: contiene los archivos intermedios entre las clases y las vistas. Estos enviaran informacion entre una cosa u otra
+9_vistas: contiene todas las vistas de los modulos
