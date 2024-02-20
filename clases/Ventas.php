@@ -37,6 +37,7 @@
             $idventa=self::crearFolio();
             $datos=$_SESSION['tablaComprasTemp'];
             $idusuario=$_SESSION['id_usuario'];
+<<<<<<< HEAD
             $idCliente = $_SESSION['idcliente'];
             $r=0;
 
@@ -81,6 +82,28 @@
             unset($_SESSION['idcliente']);
             unset($_SESSION['cliente']);
 
+=======
+            $r=0;
+
+            for ($i=0; $i < count($datos) ; $i++){
+                $d=explode("||", $datos[$i]);
+
+                $sql="INSERT into ventas (id_venta,
+                                            id_cliente,
+                                            id_producto,
+                                            id_usuario,
+                                            precio,
+                                            fechaCompra)
+                                    values ('$idventa',
+                                            '$d[5]',
+                                            '$d[0]',
+                                            '$idusuario',
+                                            '$d[3]',
+                                            '$fecha')";
+                $r=$r + $result=mysqli_query($conexion,$sql);
+                self::descuentaCantidad($d[0],1);
+            }
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
             return $r;
         }
 
@@ -104,23 +127,35 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
+<<<<<<< HEAD
             $sql="SELECT nombre,apellido from clientes where id_cliente='$idCliente'";
+=======
+            $sql="SELECT apellido,nombre from clientes where id_cliente='$idCliente'";
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
             $result=mysqli_query($conexion,$sql);
 
             $mostrar=mysqli_fetch_row($result);
 
+<<<<<<< HEAD
             if(!$mostrar==null){
                 return $mostrar[0]." ".$mostrar[1];
             }else{
                 return " ";
             }
+=======
+            return $mostrar[0]." ".$mostrar[1];
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         }
 
         public function obtenerTotal($idventa){
             $c= new conectar();
             $conexion=$c->conexion();
 
+<<<<<<< HEAD
             $sql="SELECT total from ventas where id_venta='$idventa'";
+=======
+            $sql="SELECT precio from ventas where id_venta='$idventa'";
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
             $result=mysqli_query($conexion,$sql);
 
             $total=0;

@@ -92,6 +92,7 @@
            <div class="card-body">
                <div class="d-flex align-items-center">
                    <div>
+<<<<<<< HEAD
                        <p class="mb-0 text-secondary">Total hoy</p>
                        <?php
                         $c= new conectar();
@@ -112,6 +113,19 @@
                             ?>
                         </h4>
                        <p class="mb-0 font-13">Total generado</p>
+=======
+                       <p class="mb-0 text-secondary">Total Ganancias</p>
+                       <?php
+                        $c= new conectar();
+                        $conexion=$c->conexion();
+                        
+                        $sql = "SELECT SUM(precio) ingresos FROM ventas";
+                        $result = mysqli_query($conexion,$sql);
+                        $totalingresos = mysqli_fetch_assoc($result);
+                      ?>
+                       <h4 class="my-1 text-warning"><?php echo '$'.$totalingresos['ingresos'];?></h4>
+                       <p class="mb-0 font-13">Ganancias totales</p>
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                    </div>
                    <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class="bi bi-currency-dollar"></i>
                    </div>
@@ -138,10 +152,17 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
+<<<<<<< HEAD
             $sql="SELECT articulos.nombre, articulos.descripcion, SUM(detalles.cantidad) as cantidad
                 FROM detalles JOIN articulos ON detalles.producto = articulos.id_producto
                 GROUP BY articulos.id_producto
                 ORDER BY COUNT(detalles.producto) DESC LIMIT 5;";
+=======
+            $sql="SELECT articulos.nombre, articulos.descripcion, COUNT(ventas.id_producto) as cantidad
+                FROM ventas JOIN articulos ON ventas.id_producto = articulos.id_producto
+                GROUP BY articulos.id_producto
+                ORDER BY COUNT(ventas.id_producto) DESC LIMIT 5;";
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
 
             $result=mysqli_query($conexion,$sql);
             $id=0;

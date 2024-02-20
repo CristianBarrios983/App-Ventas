@@ -19,7 +19,11 @@
       <th scope="col">#</th>
       <th scope="col">Fecha</th>
       <th scope="col">Cliente</th>
+<<<<<<< HEAD
       <th scope="col">Total</th>
+=======
+      <th>Total</th>
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
       <th scope="col">Ticket</th>
       <th scope="col">Reporte</th>
     </tr>
@@ -32,7 +36,11 @@
       <td>
           <?php
               if($obj->nombreCliente($mostrar[2])==" "){
+<<<<<<< HEAD
                   echo "Sin cliente";
+=======
+                  echo "S/C";
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
               }else{
                   echo $obj->nombreCliente($mostrar[2]);
               }

@@ -14,6 +14,7 @@
 
             return mysqli_insert_id($conexion);
         }
+<<<<<<< HEAD
         public function actualizaImagen($datos) {
             $c = new conectar();
             $conexion = $c->conexion();
@@ -27,6 +28,8 @@
         
             return mysqli_query($conexion, $sql);
         }
+=======
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         public function insertaArticulo($datos){
             $c= new conectar();
             $conexion=$c->conexion();
@@ -69,11 +72,19 @@
             $sql="UPDATE articulos set id_categoria='$datos[1]',
                                         nombre='$datos[2]',
                                         descripcion='$datos[3]',
+<<<<<<< HEAD
                                         precio='$datos[4]'
                                         where id_producto='$datos[0]'";
             return mysqli_query($conexion,$sql);
         }
 
+=======
+                                        cantidad='$datos[4]',
+                                        precio='$datos[5]'
+                                        where id_producto='$datos[0]'";
+            return mysqli_query($conexion,$sql);
+        }
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         public function eliminaArticulo($idarticulo){
             $c= new conectar();
             $conexion=$c->conexion();
@@ -106,7 +117,10 @@
 
             return mysqli_fetch_row($result)[0];
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         public function obtenerRutaImagen($idImg){
             $c= new conectar();
             $conexion=$c->conexion();
@@ -116,6 +130,7 @@
 
             return mysqli_fetch_row($result)[0];
         }
+<<<<<<< HEAD
 
         public function actualizaStock($datos){
             $c= new conectar();
@@ -125,5 +140,7 @@
                                         where id_producto='$datos[0]'";
             return mysqli_query($conexion,$sql);
         }
+=======
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
     }
 ?>

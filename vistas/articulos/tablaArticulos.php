@@ -27,7 +27,10 @@
       <th scope="col">Precio</th>
       <th scope="col">Imagen</th>
       <th scope="col">Categoria</th>
+<<<<<<< HEAD
       <th scope="col">Agregar stock</th>
+=======
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
       <th scope="col">Editar</th>
       <th scope="col">Eliminar</th>
     </tr>
@@ -48,11 +51,14 @@
       </td>
       <td><?php echo $mostrar[5]; ?></td>
       <td>
+<<<<<<< HEAD
           <span data-toggle="modal" data-target="#abremodalAgregaStock" class="btn btn-success btn-xs" onclick="agregaDatosArticulo('<?php echo $mostrar[6] ?>')">
                 <span class="bi bi-plus-lg"></span>
             </span>
       </td>
       <td>
+=======
+>>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
           <span data-toggle="modal" data-target="#abremodalUpdateArticulo" class="btn btn-warning btn-xs" onclick="agregaDatosArticulo('<?php echo $mostrar[6] ?>')">
                 <span class="bi bi-pen-fill"></span>
             </span>
