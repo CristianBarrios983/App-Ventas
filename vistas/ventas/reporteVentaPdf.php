@@ -8,15 +8,8 @@
     $conexion=$c->conexion();
     $idventa=$_GET['idventa'];
 
-    $sql="SELECT ve.id_venta,
-                    ve.fechaCompra,
-                    ve.id_cliente,
-                    art.nombre,
-                    art.precio,
-                    art.descripcion 
-                    from ventas as ve
-                    inner join articulos as art
-                    on ve.id_producto=art.id_producto and ve.id_venta='$idventa'";
+    $sql="SELECT ventas.id_venta, ventas.fechaCompra, ventas.id_cliente FROM detalles
+    WHERE detalles.venta ='$idventa'";
 
     $result=mysqli_query($conexion,$sql);
 
@@ -94,28 +87,23 @@
                 <th scope="col">Precio</th>
             </tr>
         <?php 
-            $sql="SELECT ve.id_venta,
-                    ve.fechaCompra,
-                    ve.id_cliente,
-                    art.nombre,
-                    art.precio,
-                    art.descripcion 
-                    from ventas as ve
-                    inner join articulos as art
-                    on ve.id_producto=art.id_producto and ve.id_venta='$idventa'";
+            $sql="SELECT articulos.nombre, articulos.descripcion, detalles.cantidad, detalles.precio FROM detalles
+            INNER JOIN ventas ON ventas.id_venta = detalles.venta
+            INNER JOIN articulos ON articulos.id_producto = detalles.producto
+            WHERE detalles.venta ='$idventa'";
 
             $result=mysqli_query($conexion,$sql);
             $total=0;
             while($mostrar=mysqli_fetch_row($result)):
         ?>
             <tr>
-                <td><?php echo $mostrar[3]; ?></td>
-                <td><?php echo $mostrar[5]; ?></td>
-                <td>1</td>
-                <td><?php echo "$".$mostrar[4]; ?></td>
+                <td><?php echo $mostrar[0]; ?></td>
+                <td><?php echo $mostrar[1]; ?></td>
+                <td><?php echo $mostrar[2]; ?></td>
+                <td><?php echo "$".$mostrar[3]; ?></td>
             </tr>
         <?php
-            $total=$total + $mostrar[4]; 
+            $total=$total + $mostrar[3]; 
             endwhile; 
         ?>
 

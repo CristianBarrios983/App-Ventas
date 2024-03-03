@@ -1,30 +1,19 @@
 <?php
-<<<<<<< HEAD
     // session_start();
-=======
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
     require_once "../../clases/Conexion.php";
     $c= new conectar();
     $conexion=$c->conexion();
 ?>
 <h4>Vender</h4>
 <div class="row">
-<<<<<<< HEAD
      <div class="col-sm-4" id="formVenta">
-=======
-     <div class="col-sm-4">
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Vender</h5>
             <form id="frmVentasProductos">
                 <label for="">Seleccione cliente</label>
                 <select class="form-control input-sm" id="clienteVenta" name="clienteVenta">
-<<<<<<< HEAD
                     <option value="">Selecciona</option>
-=======
-                    <option value="A">Selecciona</option>
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                     <option value="0">Sin cliente</option>
                     <?php 
                         $sql="SELECT id_cliente,nombre,apellido from clientes";
@@ -46,28 +35,17 @@
                     <option value="<?php echo $producto[0] ?>"><?php echo $producto[1] ?></option>
                     <?php endwhile; ?>
                 </select>
-<<<<<<< HEAD
                 <label for="descripcionV">Descripcion</label>
                 <textarea readonly="" name="descripcionV" id="descripcionV" class="form-control input-sm"></textarea>
                 <p class="text-danger" id="cantidadV" name="cantidadV" style="font-weight: bold;"></p>
                 <!-- <label for="">Cantidad</label> -->
                 <input readonly="" hidden="" type="text" class="form-control input-sm" id="cantidad" name="cantidad">
                 <label for="precioV">Precio</label>
-=======
-                <label for="">Descripcion</label>
-                <textarea readonly="" name="descripcionV" id="descripcionV" class="form-control input-sm"></textarea>
-                <label for="">Cantidad</label>
-                <input readonly="" type="text" class="form-control input-sm" id="cantidadV" name="cantidadV">
-                <label for="">Precio</label>
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                 <input readonly="" type="text" class="form-control input-sm" id="precioV" name="precioV">
                 <p></p>
                 <span class="btn btn-primary" id="btnAgregaVenta">Agregar</span>
                 <span class="btn btn-danger" id="btnVaciarVentas">Vaciar ventas</span>
-<<<<<<< HEAD
                 <p class="text-danger" id="message" style="font-weight: bold;"></p>
-=======
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
             </form>
           </div>
         </div>
@@ -93,7 +71,6 @@
                 url:"../procesos/ventas/llenarFormProducto.php",
                 success:function(r){
                     dato=jQuery.parseJSON(r);
-<<<<<<< HEAD
                     
                         $('#descripcionV').val(dato['descripcion']);
                         // $('#cantidadV').text('Disponibles: '+ dato['cantidad']);
@@ -110,19 +87,10 @@
 
 
                     // $('#imgProducto').prepend('<img width="100" height="100" class="img-thumbnail" id="imgp" src=" ' + dato['ruta'] + '" />');
-=======
-
-                    $('#descripcionV').val(dato['descripcion']);
-                    $('#cantidadV').val(dato['cantidad']);
-                    $('#precioV').val(dato['precio']);
-
-                    $('#imgProducto').prepend('<img width="100" height="100" class="img-thumbnail" id="imgp" src=" ' + dato['ruta'] + '" />');
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                 }
             });
         });
 
-<<<<<<< HEAD
         function obtenerCantidadDisponible(idProducto) {
             $.ajax({
                 type: "POST",
@@ -135,8 +103,6 @@
             });
         }
 
-=======
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         $('#btnAgregaVenta').click(function(){
 
             vacios=validarFormVacio('frmVentasProductos');
@@ -152,7 +118,6 @@
                 data:datos,
                 url:"../procesos/ventas/agregaProductoTemp.php",
                 success:function(r){
-<<<<<<< HEAD
                     // console.log(r);
                     if(r==1){
                         $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
@@ -167,9 +132,6 @@
                         $('#btnAgregaVenta').hide(); //Oculta el boton
                         $('#message').text('¡No hay stock disponible!');
                     }
-=======
-                    $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                 }
             });
         });
@@ -179,10 +141,7 @@
             url:"../procesos/ventas/vaciarTemp.php",
             success:function(r){
                 $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
-<<<<<<< HEAD
                 obtenerCantidadDisponible($('#productoVenta').val());
-=======
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
             }
         });
     });
@@ -210,10 +169,7 @@
                 if(r > 0){
                     $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
                     $('#frmVentasProductos')[0].reset();
-<<<<<<< HEAD
                     $('#nombreclienteVenta').load("ventas/tablaVentasTemp.php");
-=======
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                     alertify.alert("Venta creada con exito. Consulte la informacion de esta en ventas hechas");
                 }else if(r==0){
                     alertify.alert("No hay lista de venta");

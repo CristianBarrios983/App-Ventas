@@ -52,6 +52,41 @@
     }
 </script>
 
+<script>
+    function verDetalles(idVenta){
+        $.ajax({
+            type:"POST",
+            data:"idVenta=" + idVenta,
+            url:"../procesos/ventas/verDetalles.php",
+            success:function(r){
+                // console.log(r)
+                 let detallesVenta = jQuery.parseJSON(r);
+
+                 // Limpiar la tabla de detalles antes de agregar nuevos datos
+                 $('#abremodalDetalles tbody').empty();
+
+                 // Iterar sobre los detalles y agregar filas a la tabla
+                 let i = 0;
+                 $.each(detallesVenta, function(index, detalle) {
+                    i++;
+                      var fila = '<tr>' +
+                          '<td>' + i + '</td>' +
+                          '<td>' + detalle.nombreProducto + '</td>' +
+                          '<td>' + detalle.cantidad + '</td>' +
+                          '<td>' + detalle.precio + '</td>' +
+                          '</tr>';
+                      $('#abremodalDetalles tbody').append(fila);
+
+                     console.log(detalle.nombreProducto, detalle.cantidad, detalle.precio);
+                 });
+
+                //  Mostrar el modal de detalles
+                //  $('#abremodalDetalles').modal('show');
+                }
+        });
+    }
+</script>
+
 <?php
     }else{
         header("location:../index.php");

@@ -134,4 +134,37 @@ SELECT ve.id_venta,
 
             return $total;
         }
+
 ?>
+
+<!-- Codigo ajax para imprimir detalles en modal -->
+
+function verDetalles(idVenta) {
+    // Hacer una solicitud AJAX para obtener los detalles de la venta con el idVenta proporcionado
+    $.ajax({
+        type: "POST",
+        data: "idVenta=" + idVenta,
+        url: "../procesos/ventas/obtieneDetallesVenta.php",  // Asegúrate de tener un script que maneje esta solicitud y devuelva los detalles de la venta
+        success: function(response) {
+            // Parsear la respuesta JSON
+            var detallesVenta = jQuery.parseJSON(response);
+
+            // Limpiar la tabla de detalles antes de agregar nuevos datos
+            $('#abremodalDetalles tbody').empty();
+
+            // Iterar sobre los detalles y agregar filas a la tabla
+            $.each(detallesVenta, function(index, detalle) {
+                var fila = '<tr>' +
+                    '<td>' + detalle.idProducto + '</td>' +
+                    '<td>' + detalle.nombreProducto + '</td>' +
+                    '<td>' + detalle.cantidad + '</td>' +
+                    '<td>' + detalle.precio + '</td>' +
+                    '</tr>';
+                $('#abremodalDetalles tbody').append(fila);
+            });
+
+            // Mostrar el modal de detalles
+            $('#abremodalDetalles').modal('show');
+        }
+    });
+}

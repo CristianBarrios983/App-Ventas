@@ -12,6 +12,38 @@
 
 ?>
 
+<!-- Modal muestra detalles -->
+<div class="modal fade" id="abremodalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles de venta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm">
+                    <thead class="table-dark">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-warning" data-dismiss="modal" id="btnActualizaStock">Agregar</button> -->
+            </div>
+            </div>
+        </div>
+    </div>
+
 <h2>Reportes y ventas</h2>
 <table class="table">
   <thead class="table-dark">
@@ -19,13 +51,10 @@
       <th scope="col">#</th>
       <th scope="col">Fecha</th>
       <th scope="col">Cliente</th>
-<<<<<<< HEAD
       <th scope="col">Total</th>
-=======
-      <th>Total</th>
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
       <th scope="col">Ticket</th>
       <th scope="col">Reporte</th>
+      <th scope="col">Detalles</th>
     </tr>
   </thead>
   <?php while($mostrar=mysqli_fetch_row($result)): ?>
@@ -36,11 +65,7 @@
       <td>
           <?php
               if($obj->nombreCliente($mostrar[2])==" "){
-<<<<<<< HEAD
                   echo "Sin cliente";
-=======
-                  echo "S/C";
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
               }else{
                   echo $obj->nombreCliente($mostrar[2]);
               }
@@ -57,7 +82,12 @@
       <td><a href="../procesos/ventas/crearReportePdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-primary btn-sm">
                             Reporte <span class=""></span>
                         </a>   </td>
+      <!-- Detalles de venta -->
+      <td><a data-toggle="modal" data-target="#abremodalDetalles" class="btn btn-success btn-sm" onclick="verDetalles(<?php echo $mostrar[0] ?>)">
+          Detalles <span class=""></span>
+      </a>   </td>
     </tr>
   </tbody>
   <?php endwhile;?>
 </table>
+

@@ -2,7 +2,6 @@
     require_once "../../clases/Conexion.php";
     require_once "../../clases/Articulos.php";
 
-<<<<<<< HEAD
     $obj = new articulos();
     $c = new conectar();
     $conexion = $c->conexion();
@@ -60,18 +59,3 @@
         echo $obj->actualizaArticulo($datos);
     }
 ?>
-=======
-    $obj= new articulos();
-
-    $datos=array(
-        $_POST['idArticulo'],
-        $_POST['categoriaSelectU'],
-        $_POST['nombreU'],
-        $_POST['descripcionU'],
-        $_POST['cantidadU'],
-        $_POST['precioU']
-    );
-
-    echo $obj->actualizaArticulo($datos);
-?>
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270

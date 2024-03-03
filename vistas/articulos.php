@@ -86,17 +86,10 @@
             <input type="text" class="form-control input-sm" name="nombreU" id="nombreU">
             <label for="">Descripcion</label>
             <input type="text" class="form-control input-sm" name="descripcionU" id="descripcionU">
-<<<<<<< HEAD
             <label for="">Precio</label>
             <input type="text" class="form-control input-sm" name="precioU" id="precioU">
             <label for="">Cambiar imagen</label>
             <input type="file" id="imagenU" name="imagenU">
-=======
-            <label for="">Cantidad</label>
-            <input type="text" class="form-control input-sm" name="cantidadU" id="cantidadU">
-            <label for="">Precio</label>
-            <input type="text" class="form-control input-sm" name="precioU" id="precioU">
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         </form>
       </div>
       <div class="modal-footer">
@@ -105,7 +98,6 @@
     </div>
   </div>
 </div>
-<<<<<<< HEAD
 
 
 <!-- Modal Actualiza Stock-->
@@ -133,15 +125,12 @@
     </div>
   </div>
 </div>
-=======
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
 </body>
 </html>
 
 <script>
     $(document).ready(function(){
         $('#btnActualizaArticulo').click(function(){
-<<<<<<< HEAD
             // datos=$('#frmArticulosU').serialize();
             var formDataU= new FormData(document.getElementById("frmArticulosU"));
             console.log(formDataU);
@@ -155,14 +144,6 @@
                 url:"../procesos/articulos/actualizaArticulos.php",
                 success:function(r){
                     console.log(r);
-=======
-            datos=$('#frmArticulosU').serialize();
-            $.ajax({
-                type:"POST",
-                data:datos,
-                url:"../procesos/articulos/actualizaArticulos.php",
-                success:function(r){
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                     if(r==1){
                         $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
                         alertify.success("Se actualizo con exito");
@@ -175,7 +156,6 @@
     });
 </script>
 
-<<<<<<< HEAD
 <!-- Actualiza Stock -->
 <script>
     $(document).ready(function(){
@@ -202,38 +182,23 @@
 <script>
     function agregaDatosArticulo(idarticulo){
         // console.log("id:"+idarticulo);
-=======
-<script>
-    function agregaDatosArticulo(idarticulo){
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
         $.ajax({
             type:"POST",
             data:"idart=" + idarticulo,
             url:"../procesos/articulos/obtieneDatosArticulo.php",
             success:function(r){
                 dato=jQuery.parseJSON(r);
-<<<<<<< HEAD
                 // console.log(dato);
                 $('input[name="idArticulo"]').val(dato['id_producto']);
                 $('#categoriaSelectU').val(dato['id_categoria']);
                 $('#nombreU').val(dato['nombre']);
                 $('#descripcionU').val(dato['descripcion']);
                 $('input[name="cantidadU"]').val(dato['cantidad']);
-=======
-                $('#idArticulo').val(dato['id_producto']);
-                $('#categoriaSelectU').val(dato['id_categoria']);
-                $('#nombreU').val(dato['nombre']);
-                $('#descripcionU').val(dato['descripcion']);
-                $('#cantidadU').val(dato['cantidad']);
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
                 $('#precioU').val(dato['precio']);
             }
         });
     }
-<<<<<<< HEAD
     
-=======
->>>>>>> b0679fb5fd7cf5604f6c56c7d7b1621b2bc75270
 
     function eliminaArticulo(idArticulo){
         alertify.confirm('¿Desea eliminar esta articulo?', function(){ 
