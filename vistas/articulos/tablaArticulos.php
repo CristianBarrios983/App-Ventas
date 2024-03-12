@@ -17,19 +17,17 @@
     $result=mysqli_query($conexion,$sql);
 ?>
 
-<table class="table">
+<table class="table table-hover">
   <thead class="table-dark">
-    <h6>Articulos:</h6>
     <tr>
       <th scope="col">Nombre</th>
       <th scope="col">Descripcion</th>
-      <th scope="col">Cantidad</th>
+      <th scope="col">Stock</th>
       <th scope="col">Precio</th>
       <th scope="col">Imagen</th>
       <th scope="col">Categoria</th>
-      <th scope="col">Agregar stock</th>
-      <th scope="col">Editar</th>
-      <th scope="col">Eliminar</th>
+      <th scope="col" colspan="3">Acciones</th>
+
     </tr>
   </thead>
   <?php while($mostrar=mysqli_fetch_row($result)): ?>
@@ -48,17 +46,17 @@
       </td>
       <td><?php echo $mostrar[5]; ?></td>
       <td>
-          <span data-toggle="modal" data-target="#abremodalAgregaStock" class="btn btn-success btn-xs" onclick="agregaDatosArticulo('<?php echo $mostrar[6] ?>')">
+          <span data-bs-toggle="modal" data-bs-target="#abremodalAgregaStock" class="btn btn-success btn-xs rounded-0" onclick="agregaDatosArticulo('<?php echo $mostrar[6] ?>')">
                 <span class="bi bi-plus-lg"></span>
             </span>
       </td>
       <td>
-          <span data-toggle="modal" data-target="#abremodalUpdateArticulo" class="btn btn-warning btn-xs" onclick="agregaDatosArticulo('<?php echo $mostrar[6] ?>')">
+          <span data-bs-toggle="modal" data-bs-target="#abremodalUpdateArticulo" class="btn btn-warning btn-xs rounded-0" onclick="agregaDatosArticulo('<?php echo $mostrar[6] ?>')">
                 <span class="bi bi-pen-fill"></span>
             </span>
       </td>
       <td>
-          <span class="btn btn-danger btn-xs" onclick="eliminaArticulo('<?php echo $mostrar[6] ?>')">
+          <span class="btn btn-danger btn-xs rounded-0" onclick="eliminaArticulo('<?php echo $mostrar[6] ?>')">
                 <span class="bi bi-trash3-fill"></span>
             </span>
       </td>

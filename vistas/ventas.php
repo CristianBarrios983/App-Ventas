@@ -14,11 +14,10 @@
 </head>
 <body>
     <div class="container">
-        <h2>Venta de productos</h2>
         <div class="row">
-            <div class="col-sm-12">
-                <span class="btn btn-success" id="venderProductosBtn">Vender</span>
-                <span class="btn btn-warning" id="ventasHechasBtn">Ventas hechas</span>
+            <div class="col-sm-12 my-3">
+                <span class="btn btn-success rounded-0" id="venderProductosBtn">Vender</span>
+                <span class="btn btn-warning rounded-0" id="ventasHechasBtn">Ventas hechas</span>
             </div>
         </div>
         <div class="row">
@@ -59,7 +58,6 @@
             data:"idVenta=" + idVenta,
             url:"../procesos/ventas/verDetalles.php",
             success:function(r){
-                // console.log(r)
                  let detallesVenta = jQuery.parseJSON(r);
 
                  // Limpiar la tabla de detalles antes de agregar nuevos datos
@@ -67,21 +65,23 @@
 
                  // Iterar sobre los detalles y agregar filas a la tabla
                  let i = 0;
+                 let total = 0;
                  $.each(detallesVenta, function(index, detalle) {
                     i++;
+                    total = detalle.total;
                       var fila = '<tr>' +
                           '<td>' + i + '</td>' +
                           '<td>' + detalle.nombreProducto + '</td>' +
                           '<td>' + detalle.cantidad + '</td>' +
-                          '<td>' + detalle.precio + '</td>' +
+                          '<td>' + '$' + detalle.precio + '</td>' +
                           '</tr>';
                       $('#abremodalDetalles tbody').append(fila);
-
-                     console.log(detalle.nombreProducto, detalle.cantidad, detalle.precio);
                  });
 
-                //  Mostrar el modal de detalles
-                //  $('#abremodalDetalles').modal('show');
+                 console.log(i,total);
+                 $('#abremodalDetalles #cantidadProductos').text(`${i}`);
+                 $('#abremodalDetalles #totalVenta').text(`$${total}`);
+
                 }
         });
     }

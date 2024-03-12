@@ -21,32 +21,44 @@
 </head>
 <body>
     <div class="container">
-        <h2>Articulos</h2>
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="section-title">
+              <h2 class="my-3">Productos</h2>
+            </div>
+          </div>
+        </div>
         <div class="row">
              <div class="col-sm-4">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Registrar articulo</h5>
+                <div class="card rounded-0">
+                  <div class="card-body p-4">
                     <form id="frmArticulos" enctype="multipart/form-data">
-                        <label for="">Categoria</label>
-                        <select class="form-control input-sm" name="categoriaSelect" id="categoriaSelect">
-                            <option value="A">Seleccione categoria</option>
-                        <?php while($mostrar=mysqli_fetch_row($result)): ?>
-                            <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
-                        <?php endwhile; ?>
-                        </select>
-                        <label for="">Nombre</label>
-                        <input type="text" class="form-control input-sm" name="nombre" id="nombre">
-                        <label for="">Descripcion</label>
-                        <input type="text" class="form-control input-sm" name="descripcion" id="descripcion">
-                        <label for="">Cantidad</label>
-                        <input type="text" class="form-control input-sm" name="cantidad" id="cantidad">
-                        <label for="">Precio</label>
-                        <input type="text" class="form-control input-sm" name="precio" id="precio">
-                        <label for="">Imagen</label>
-                        <input type="file" id="imagen" name="imagen">
-                        <p></p>
-                        <span id="btnAgregaArticulo" class="btn btn-primary">Agregar</span>
+                        <div class="mb-3">
+                            <select class="form-select form-select-lg fs-6 rounded-0" name="categoriaSelect" id="categoriaSelect">
+                                <option value="">Seleccione categoria</option>
+                            <?php while($mostrar=mysqli_fetch_row($result)): ?>
+                                <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
+                            <?php endwhile; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombre" id="nombre" placeholder="Nombre">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="descripcion" id="descripcion" placeholder="Descripcion">
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="cantidad" id="cantidad" placeholder="Cantidad">
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="precio" id="precio" placeholder="Precio">
+                        </div>
+                        <div class="mb-3">
+                            <input type="file" id="imagen" name="imagen" class="form-control form-control-lg fs-6 rounded-0">
+                        </div>
+                        <div>
+                            <button type="submit" id="btnAgregaArticulo" class="btn btn-primary rounded-0 d-block w-100">Registrar</button>
+                        </div>
                     </form>
                   </div>
                 </div>
@@ -57,70 +69,88 @@
         </div>
     </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="abremodalUpdateArticulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
+<!-- Modal actualiza producto Bootstrap 5.3.3 -->
+<div class="modal fade" id="abremodalUpdateArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-0">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Actualiza articulo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar datos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        
         <form id="frmArticulosU" enctype="multipart/form-data">
-            <input type="text" hidden="" id="idArticulo" name="idArticulo">
-            <label for="">Categoria</label>
-            <select class="form-control input-sm" name="categoriaSelectU" id="categoriaSelectU">
-                <option value="A">Seleccione categoria</option>
-                <?php 
-                    $sql="SELECT id_categoria,nombreCategoria from categorias";
-                    $result=mysqli_query($conexion,$sql);
-                 ?>
-                <?php while($mostrar=mysqli_fetch_row($result)): ?>
-                    <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
-                <?php endwhile; ?>
-            </select>
-            <label for="">Nombre</label>
-            <input type="text" class="form-control input-sm" name="nombreU" id="nombreU">
-            <label for="">Descripcion</label>
-            <input type="text" class="form-control input-sm" name="descripcionU" id="descripcionU">
-            <label for="">Precio</label>
-            <input type="text" class="form-control input-sm" name="precioU" id="precioU">
-            <label for="">Cambiar imagen</label>
-            <input type="file" id="imagenU" name="imagenU">
+            <div class="mb-3">
+                <input type="text" hidden="" id="idArticulo" name="idArticulo">
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Categoria</label>
+                <select class="form-select form-select-lg fs-6 rounded-0" name="categoriaSelectU" id="categoriaSelectU">
+                    <option value="">Seleccione categoria</option>
+                    <?php 
+                        $sql="SELECT id_categoria,nombreCategoria from categorias";
+                        $result=mysqli_query($conexion,$sql);
+                    ?>
+                    <?php while($mostrar=mysqli_fetch_row($result)): ?>
+                        <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Nombre</label>
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombreU" id="nombreU">
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Descripcion</label>
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="descripcionU" id="descripcionU">
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Precio</label>
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="precioU" id="precioU">
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Cambiar imagen</label>
+                <input type="file" id="imagenU" name="imagenU" class="form-control form-control-lg fs-6 rounded-0">
+            </div>
         </form>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="btnActualizaArticulo">Actualizar</button>
+        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
+        <button id="btnActualizaArticulo" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Actualizar</button>
       </div>
     </div>
   </div>
 </div>
 
-
-<!-- Modal Actualiza Stock-->
-<div class="modal fade" id="abremodalAgregaStock" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
+<!-- Modal actualiza stock Bootstrap 5.3.3 -->
+<div class="modal fade" id="abremodalAgregaStock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-0">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar Stock</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Añadir stock</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        
         <form id="frmStockU">
-            <input type="text" hidden="" id="idArticulo" name="idArticulo">
-            <label for="">Cantidad Actual</label>
-            <input type="text" class="form-control input-sm" name="cantidadU" id="cantidadU" readonly>
-            <label for="">Cantidad Adicional</label>
-            <input type="text" class="form-control input-sm" name="cantidadA" id="cantidadA">
+            <div class="mb-3">
+                <input type="text" hidden="" id="idArticulo" name="idArticulo">
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Stock Actual</label>
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="cantidadU" id="cantidadU" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Cantidad Adicional</label>
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="cantidadA" id="cantidadA">
+            </div>
         </form>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="btnActualizaStock">Agregar</button>
+        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
+        <button id="btnActualizaStock" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Agregar</button>
       </div>
     </div>
   </div>

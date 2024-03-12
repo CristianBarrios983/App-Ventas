@@ -12,54 +12,55 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <!-- Brand -->
-  <a class="navbar-brand">App de ventas</a>
-<!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="inicio.php">Inicio</a>
-    </li>
 
-    <!-- Dropdown -->
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        Administrar productos
-      </a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="categorias.php">Categorias</a>
-        <a class="dropdown-item" href="articulos.php">Articulos</a>
-      </div>
-    </li>
-
-
-  <?php
-    if($_SESSION['id_usuario']==1):
-  ?>
-    <li class="nav-item">
-      <a class="nav-link" href="usuarios.php">Administrar usuarios</a>
-    </li>
-  <?php
-   endif;
-  ?>
-
-
-  <li class="nav-item">
-      <a class="nav-link" href="clientes.php">Cliente</a>
-  </li>
-  <li class="nav-item">
-      <a class="nav-link" href="ventas.php">Ventas</a>
-    </li>
-  </ul>
-
-<ul class="navbar-nav ml-md-auto d-md-flex">
-<li class="nav-item">
-      <a class="nav-link"><label for=""><span>Usuario: <b class="text-success"><?php echo $_SESSION['usuario']; ?></b></span></label></a>
-    </li>
-<li class="nav-item">
-      <a class="btn btn-primary" href="..//procesos/salir.php">Salir</a>
-    </li>
-</ul>
+<!-- Navbar Bootstrap 5.3.3 -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">App Ventas</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="inicio.php">Panel</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Administrar productos
+          </a>
+          <ul class="dropdown-menu rounded-0">
+            <li><a class="dropdown-item" href="articulos.php">Productos</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="categorias.php">Categorias</a></li>
+          </ul>
+        </li>
+        <?php
+          if($_SESSION['id_usuario']==1):
+        ?>
+        <li class="nav-item">
+          <a class="nav-link" href="usuarios.php">Usuarios</a>
+        </li>
+        <?php
+          endif;
+        ?>
+        <li class="nav-item">
+          <a class="nav-link" href="clientes.php">Clientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="ventas.php">Ventas</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+          <a class="nav-link disabled" href="ventas.php">Usuario: <span class="text-success fw-bold"><?php echo $_SESSION['usuario']; ?></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="..//procesos/salir.php">Salir</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 </body>
 </html>

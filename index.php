@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once "vistas/dependencias.php";
     require_once "Clases/Conexion.php";
     $obj= new conectar();
@@ -10,6 +11,8 @@
     if(mysqli_num_rows($result) > 0){
         $validar=1;
     }
+
+    if(!isset($_SESSION['usuario'])){
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +31,7 @@
     <br>
     <br>
     <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center align-items-center">
       <div class="col-md-8">
         <div class="card-group mb-0">
           <div class="card p-4">
@@ -95,3 +98,9 @@
         });
     });
 </script>
+
+<?php
+    }else{
+      header("Location: vistas/inicio.php");
+    }
+?>

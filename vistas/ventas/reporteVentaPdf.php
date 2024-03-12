@@ -6,10 +6,11 @@
 
     $c= new conectar();
     $conexion=$c->conexion();
+    
     $idventa=$_GET['idventa'];
 
-    $sql="SELECT ventas.id_venta, ventas.fechaCompra, ventas.id_cliente FROM detalles
-    WHERE detalles.venta ='$idventa'";
+    $sql="SELECT id_venta, fechaCompra, id_cliente FROM ventas
+    WHERE id_venta = ='$idventa'";
 
     $result=mysqli_query($conexion,$sql);
 

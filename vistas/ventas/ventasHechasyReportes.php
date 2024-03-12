@@ -12,49 +12,58 @@
 
 ?>
 
-<!-- Modal muestra detalles -->
-<div class="modal fade" id="abremodalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detalles de venta</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-sm">
-                    <thead class="table-dark">
-                        <tr>
+<!-- Modal detalles de venta Bootstrap 5.3.3 -->
+<div class="modal fade" id="abremodalDetalles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles de venta</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
                         <th scope="col">#</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                    </table>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-warning" data-dismiss="modal" id="btnActualizaStock">Agregar</button> -->
-            </div>
-            </div>
-        </div>
-    </div>
+                    </tr>
+                </thead>
+                <tbody>
+                <!-- Detalles aqui -->
+                </tbody>
+            </table>
+                
+            <p>Cantidad de productos: <span id="cantidadProductos" class="fw-bold"></span></p>
+            <p>Total de venta: <span id="totalVenta" class="fw-bold"></span></p>
 
-<h2>Reportes y ventas</h2>
-<table class="table">
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+    <div class="section-title">
+        <h2 class="my-3">Reportes y ventas</h2>
+    </div>
+    </div>
+</div>
+<table class="table table-hover">
   <thead class="table-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Fecha</th>
       <th scope="col">Cliente</th>
       <th scope="col">Total</th>
-      <th scope="col">Ticket</th>
-      <th scope="col">Reporte</th>
-      <th scope="col">Detalles</th>
+      <th scope="col" colspan="3">Acciones</th>
     </tr>
   </thead>
   <?php while($mostrar=mysqli_fetch_row($result)): ?>
@@ -76,18 +85,17 @@
               echo "$".$obj->obtenerTotal($mostrar[0]);
           ?>
       </td>
-      <td><a href="../procesos/ventas/crearTicketPdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-danger btn-sm">
+      <td><a href="../procesos/ventas/crearTicketPdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-danger btn-xs rounded-0">
                             Ticket <span class=""></span>
                         </a></td>
-      <td><a href="../procesos/ventas/crearReportePdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-primary btn-sm">
+      <td><a href="../procesos/ventas/crearReportePdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-primary btn-xs rounded-0">
                             Reporte <span class=""></span>
                         </a>   </td>
       <!-- Detalles de venta -->
-      <td><a data-toggle="modal" data-target="#abremodalDetalles" class="btn btn-success btn-sm" onclick="verDetalles(<?php echo $mostrar[0] ?>)">
+      <td><a data-bs-toggle="modal" data-bs-target="#abremodalDetalles" class="btn btn-success btn-xs rounded-0" onclick="verDetalles(<?php echo $mostrar[0] ?>)">
           Detalles <span class=""></span>
       </a>   </td>
     </tr>
   </tbody>
   <?php endwhile;?>
 </table>
-

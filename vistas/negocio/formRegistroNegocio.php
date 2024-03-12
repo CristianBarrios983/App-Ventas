@@ -1,12 +1,16 @@
-<h5>Registrar Datos del Negocio</h5>
-<form id="frmNegocio">
-	<label>Nombre del negocio:</label>
-	<input type="text" class="form-control input-sm" name="nombreNegocio" id="nombreNegocio">
-	<label>Direccion:</label>
-	<input type="text" class="form-control input-sm" name="direccionNegocio" id="direccionNegocio">
-	<label>Telefono:</label>
-	<input type="number" class="form-control input-sm" name="telefonoNegocio" id="telefonoNegocio">
-	<button type="button" class="btn btn-primary px-4" id="registroNegocio">Registrar Datos</button>
+<form id="frmNegocio" class="p-4">
+    <div class="mb-3">
+        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombreNegocio" id="nombreNegocio" placeholder="Nombre del negocio">
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="direccionNegocio" id="direccionNegocio" placeholder="Direccion">
+    </div>
+    <div class="mb-3">
+	    <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="telefonoNegocio" id="telefonoNegocio" placeholder="Telefono">
+    </div>
+    <div>
+	    <button type="button" class="btn btn-primary px-4 rounded-0 d-block w-100" id="registroNegocio">Registrar</button>
+    </div>
 </form>
 
 <script>

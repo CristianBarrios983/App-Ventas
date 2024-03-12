@@ -14,25 +14,36 @@
 </head>
 <body>
     <div class="container">
-        <h2>Clientes</h2>
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="section-title">
+              <h2 class="my-3">Clientes</h2>
+            </div>
+          </div>
+        </div>
         <div class="row">
             <div class="col-sm-4">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Registro cliente</h5>
+                <div class="card rounded-0">
+                  <div class="card-body p-4">
                     <form action="" id="frmClientes">
-                        <label for="">Nombre</label>
-                        <input type="text" class="form-control input-sm" name="nombre" id="nombre">
-                        <label for="">Apellido</label>
-                        <input type="text" class="form-control input-sm" name="apellidos" id="apellidos">
-                        <label for="">Direccion</label>
-                        <input type="text" class="form-control input-sm" name="direccion" id="direccion">
-                        <label for="">Email</label>
-                        <input type="text" class="form-control input-sm" name="email" id="email">
-                        <label for="">Telefono</label>
-                        <input type="text" class="form-control input-sm" name="telefono" id="telefono">
-                        <p></p>
-                        <span class="btn btn-primary" id="btnAgregaCliente">Agregar</span>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombre" id="nombre" placeholder="Nombre">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="apellidos" id="apellidos" placeholder="Apellido">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="direccion" id="direccion" placeholder="Direccion">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="email" id="email" placeholder="Correo electronico">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="telefono" id="telefono" placeholder="Telefono">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary rounded-0 d-block w-100" id="btnAgregaCliente">Registrar</button>
+                        </div>
                     </form>
                   </div>
                 </div>
@@ -43,36 +54,45 @@
         </div>
     </div>
 
-    <!-- Button trigger modal -->
-    
 
-    <!-- Modal -->
-    <div class="modal fade" id="abremodalClientesUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
+    <!-- Modal Bootstrap 5.3.3 -->
+    <div class="modal fade" id="abremodalClientesUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-0">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Actualizar cliente</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar datos</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="" id="frmClientesU">
-                    <input type="text" hidden="" id="idclienteU" name="idclienteU">
-                    <label for="">Nombre</label>
-                    <input type="text" class="form-control input-sm" name="nombreU" id="nombreU">
-                    <label for="">Apellido</label>
-                    <input type="text" class="form-control input-sm" name="apellidosU" id="apellidosU">
-                    <label for="">Direccion</label>
-                    <input type="text" class="form-control input-sm" name="direccionU" id="direccionU">
-                    <label for="">Email</label>
-                    <input type="text" class="form-control input-sm" name="emailU" id="emailU">
-                    <label for="">Telefono</label>
-                    <input type="text" class="form-control input-sm" name="telefonoU" id="telefonoU">
+                <form action="" id="frmClientesU">
+                    <div class="mb-3">
+                        <input type="text" hidden="" id="idclienteU" name="idclienteU">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label text-secondary fs-6">Nombre</label>
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombreU" id="nombreU">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label text-secondary fs-6">Apellido</label>
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="apellidosU" id="apellidosU">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label text-secondary fs-6">Direccion</label>
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="direccionU" id="direccionU">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label text-secondary fs-6">Email</label>
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="emailU" id="emailU">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label text-secondary fs-6">Telefono</label>
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="telefonoU" id="telefonoU">
+                    </div>
                 </form>
         </div>
         <div class="modal-footer">
-            <button id="btnAgregarClienteU" type="button" class="btn btn-primary" data-dismiss="modal">Actualizar</button>
+            <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
+            <button id="btnAgregarClienteU" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Actualizar</button>
         </div>
         </div>
     </div>

@@ -14,23 +14,33 @@
 </head>
 <body>
     <div class="container">
-        <h2>Administrar usuarios</h2>
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="section-title">
+              <h2 class="my-3">Usuarios</h2>
+            </div>
+          </div>
+        </div>
         <div class="row">
              <div class="col-sm-4">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Registrar usuario</h5>
+                <div class="card rounded-0">
+                  <div class="card-body p-4">
                     <form id="frmRegistro">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control input-sm" name="nombre" id="nombre">
-                        <label>Apellido</label>
-                        <input type="text" class="form-control input-sm" name="apellido" id="apellido">
-                        <label>Usuario</label>
-                        <input type="text" class="form-control input-sm" name="usuario" id="usuario">
-                        <label>Password</label>
-                        <input type="text" class="form-control input-sm" name="password" id="password">
-                        <p></p>
-                        <span class="btn btn-primary" id="registro">Registrar</span>
+                      <div class="mb-3">
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombre" id="nombre" placeholder="Nombre">
+                      </div>
+                      <div class="mb-3">
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="apellido" id="apellido" placeholder="Apellido">
+                      </div>
+                      <div class="mb-3">
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="usuario" id="usuario" placeholder="Usuario">
+                      </div>
+                      <div class="mb-3">
+                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="password" id="password" placeholder="Contraseña">
+                      </div>
+                      <div>
+                        <button type="submit" class="btn btn-primary rounded-0 d-block w-100" id="registro">Registrar</button>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -41,34 +51,43 @@
         </div>
     </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="actualizaUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
+<!-- Modal Boostrap 5.3.3 -->
+<div class="modal fade" id="actualizaUsuarioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-0">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Actualiza usuario</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar datos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        
         <form id="frmRegistroU">
+          <div class="mb-3">
             <input type="text" hidden="" id="idUsuario" name="idUsuario">
-            <label>Nombre</label>
-            <input type="text" class="form-control input-sm" name="nombreU" id="nombreU">
-            <label>Apellido</label>
-            <input type="text" class="form-control input-sm" name="apellidoU" id="apellidoU">
-            <label>Usuario</label>
-            <input type="text" class="form-control input-sm" name="usuarioU" id="usuarioU">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label text-secondary fs-6">Nombre</label>
+            <input type="text" name="nombreU" id="nombreU" class="form-control form-control-lg fs-6 rounded-0">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label text-secondary fs-6">Apellido</label>
+            <input type="text" name="apellidoU" id="apellidoU" class="form-control form-control-lg fs-6 rounded-0">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label text-secondary fs-6">Usuario</label>
+            <input type="text" name="usuarioU" id="usuarioU" class="form-control form-control-lg fs-6 rounded-0">
+          </div>
         </form>
+
       </div>
       <div class="modal-footer">
-        <button id="btnActualizaUsuario" type="button" class="btn btn-warning" data-dismiss="modal">Actualizar</button>
+        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
+        <button id="btnActualizaUsuario" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Actualizar</button>
       </div>
     </div>
   </div>
 </div>
+
 </body>
 </html>
 

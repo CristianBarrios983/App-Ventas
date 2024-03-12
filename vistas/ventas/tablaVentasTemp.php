@@ -2,11 +2,17 @@
     session_start();
 ?>
 
-<h4><strong><div id="nombreclienteVenta"></div></strong></h4>
+<div class="row">
+  <div class="col-lg-8">
+    <div class="section-title">
+      <h5 class="my-3" id="nombreclienteVenta"></h5>
+    </div>
+  </div>
+</div>
 
-<table class="table">
+<table class="table table-hover">
     <caption>
-        <span class="btn btn-success" onclick="crearVenta()">Hacer venta
+        <span class="btn btn-success rounded-0" onclick="crearVenta()">Hacer venta
             <span class="bi bi-currency-dollar"></span>
     </span>
     </caption>
@@ -42,7 +48,7 @@
       <td><?php echo $d[3]; ?></td>
       <td><?php echo $d[4]; ?></td>
       <td>
-          <span class="btn btn-danger btn-xs" onclick="quitarP('<?php echo $i; ?>')">
+          <span class="btn btn-danger btn-xs rounded-0" onclick="quitarP('<?php echo $i; ?>')">
                 <span class="bi bi-x-lg"></span>
             </span>
       </td>
@@ -50,12 +56,11 @@
     <?php 
             $total=$total + $d[3];
             $i++;
-            // $cliente=$d[6];
         }
         endif;    
     ?>
     <tr>
-        <td class="text-bold">Total <?php echo "$".$total; ?></td>
+        <td colspan="5" class="fs-5">Total: <span class="text-primary"><?php echo "$".$total; ?></span></td>
     </tr>
   </tbody>
 </table>
