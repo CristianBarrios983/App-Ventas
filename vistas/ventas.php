@@ -1,6 +1,7 @@
 <?php
     session_start();
     if(isset($_SESSION['usuario'])){
+        if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Vendedor"){
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +60,7 @@
             url:"../procesos/ventas/verDetalles.php",
             success:function(r){
                  let detallesVenta = jQuery.parseJSON(r);
-
+                console.log(detallesVenta)
                  // Limpiar la tabla de detalles antes de agregar nuevos datos
                  $('#abremodalDetalles tbody').empty();
 
@@ -70,12 +71,12 @@
                     i++;
                     total = detalle.total;
                       var fila = '<tr>' +
-                          '<td>' + i + '</td>' +
                           '<td>' + detalle.nombreProducto + '</td>' +
                           '<td>' + detalle.cantidad + '</td>' +
                           '<td>' + '$' + detalle.precio + '</td>' +
                           '</tr>';
                       $('#abremodalDetalles tbody').append(fila);
+                      console.log(detalle.nombreProducto, detalle.cantidad, detalle.precio);
                  });
 
                  console.log(i,total);
@@ -88,6 +89,9 @@
 </script>
 
 <?php
+        }else{
+            header("location:inicio.php");
+        }
     }else{
         header("location:../index.php");
     }

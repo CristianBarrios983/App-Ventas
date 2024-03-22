@@ -31,8 +31,8 @@
                 url:"../procesos/negocio/registrarNegocio.php",
                 success:function(r){
                     if(r==1){
-                        window.location.href="inicio.php";
                         alertify.success("Registrado exitosamente");
+                        window.location.href="inicio.php";
                     }else{
                         alertify.error("Hubo un error :(");
                     }

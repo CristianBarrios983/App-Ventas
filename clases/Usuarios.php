@@ -6,7 +6,8 @@
 
             $fecha=date('Y-m-d');
 
-            $sql="INSERT into usuarios (nombre,
+            $sql="INSERT into usuarios (rol,
+                                nombre,
                                 apellido,
                                 email,
                                 password,
@@ -15,6 +16,7 @@
                                 '$datos[1]',
                                 '$datos[2]',
                                 '$datos[3]',
+                                '$datos[4]',
                                 '$fecha')";
             return mysqli_query($conexion,$sql);
         }
@@ -23,14 +25,15 @@
             $conexion=$c->conexion();
             $password=sha1($datos[1]);
 
-            $_SESSION['usuario']=$datos[0];
-            $_SESSION['id_usuario']=self::traerID($datos);
 
             $sql="SELECT * from usuarios where email='$datos[0]'
                                         and password='$password'";
             $result=mysqli_query($conexion,$sql);
 
             if(mysqli_num_rows($result) > 0){
+                $_SESSION['usuario']=$datos[0];
+                $_SESSION['id_usuario']=self::traerID($datos);
+                $_SESSION['rol']=self::traerRoles($_SESSION['id_usuario']);
                 return 1;
             }else{
                 return 0;
@@ -91,8 +94,11 @@
             $c=new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT rol from usuarios where id_usuario='$iduser'";
+            $sql="SELECT roles.rol from usuarios 
+            INNER JOIN roles ON roles.id_rol = usuarios.rol
+            where id_usuario='$iduser'";
             $result=mysqli_query($conexion,$sql);
+
             return mysqli_fetch_row($result)[0];
         }
     }

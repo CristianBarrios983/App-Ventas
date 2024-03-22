@@ -93,6 +93,7 @@
             </div>
             </div>
         </div>
+        <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
         <div class="col">
             <div class="card radius-10 border-start border-0 border-3 rounded-0 border-warning">
             <div class="card-body">
@@ -124,12 +125,13 @@
                 </div>
             </div>
             </div>
-        </div> 
+        </div>
+        <?php endif; ?> 
         </div>
         
         <div class="row">
             <?php
-                if($_SESSION['id_usuario']==1):
+                if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"):
             ?>
             <div class="col-6">
                 <!-- Produtos mas vendidos -->
@@ -172,7 +174,7 @@
             <?php endif; ?>
             <!-- Datos del negocio -->
             <?php
-                if($_SESSION['id_usuario']==1):
+                if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"):
             ?>
             <div class="col-6">
                 <div class="card text-center rounded-0" id="datosNegocio">
@@ -196,7 +198,9 @@
                         <!-- Validar si existen datos del negocio -->
                         <?php if(!$validar): ?>
                             <p class="card-text">No hay datos del negocio</p>
-                            <a href="#" class="btn btn-primary rounded-0 d-block w-100" id="registrarNegocio">Añadir negocio</a>
+                            <?php if($_SESSION['rol'] == "Administrador"): ?>
+                                <a href="#" class="btn btn-primary rounded-0 d-block w-100" id="registrarNegocio">Añadir negocio</a>
+                            <?php endif; ?>
                         <?php endif; ?>
 
                         <?php
@@ -212,8 +216,10 @@
                             <p class="card-text">Nombre: <span class="text-primary"><?php echo $datos['nombre'] ?></span></p>
                             <p class="card-text">Direccion: <span class="text-primary"><?php echo $datos['direccion'] ?></span></p>
                             <p class="card-text">Telefono: <span class="text-primary"><?php echo $datos['telefono'] ?></span></p>
-                            <a href="#" class="btn btn-primary rounded-0" data-bs-toggle="modal" data-bs-target="#actualizaNegocioModal" onclick="agregaDatosNegocio('<?php echo $datos['id_negocio']; ?>')">Actualizar</a>
-                            <a href="#" class="btn btn-danger rounded-0" id="eliminarNegocio" onclick="eliminarNegocio()">Eliminar</a>
+                            <?php if($_SESSION['rol'] == "Administrador"): ?>
+                                <a href="#" class="btn btn-primary rounded-0" data-bs-toggle="modal" data-bs-target="#actualizaNegocioModal" onclick="agregaDatosNegocio('<?php echo $datos['id_negocio']; ?>')">Actualizar</a>
+                                <a href="#" class="btn btn-danger rounded-0" id="eliminarNegocio" onclick="eliminarNegocio()">Eliminar</a>
+                            <?php endif; ?>
                     </div>
                     <div class="card-footer text-body-secondary">
                         Fue registrado el <?php echo $datos['fechaRegistro'] ?>
@@ -311,8 +317,8 @@
                 url:"../procesos/negocio/eliminarNegocio.php",
                 success:function(r){
                     if(r==1){
-                        window.location.href="inicio.php";
                         alertify.success("Eliminado con exito");
+                        window.location.href="inicio.php";
                     }else{
                         alertify.error("No se pudo eliminar");
                     }
@@ -335,8 +341,8 @@
                 url:"../procesos/negocio/actualizaNegocio.php",
                 success:function(r){
                     if(r==1){
-                        window.location.href="inicio.php";
                         alertify.success("Negocio actualizado exitosamente");
+                        window.location.href="inicio.php";
                     }else{
                         alertify.error("No se pudo actualizar :(");
                     }

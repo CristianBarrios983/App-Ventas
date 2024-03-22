@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once "../../clases/Conexion.php";
 
     $c= new conectar();
@@ -16,7 +17,9 @@
       <th scope="col">Direccion</th>
       <th scope="col">Email</th>
       <th scope="col">Telefono</th>
+      <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
       <th scope="col" colspan="2">Acciones</th>
+      <?php endif; ?>
     </tr>
   </thead>
   <?php while($mostrar=mysqli_fetch_row($result)): ?>
@@ -27,6 +30,7 @@
       <td><?php echo $mostrar[3]; ?></td>
       <td><?php echo $mostrar[4]; ?></td>
       <td><?php echo $mostrar[5]; ?></td>
+      <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
       <td>
           <span class="btn btn-warning btn-xs rounded-0" data-bs-toggle="modal" data-bs-target="#abremodalClientesUpdate" onclick="agregaDatosCliente('<?php echo $mostrar[0]; ?>')">
               <span class="bi bi-pen-fill"></span>
@@ -37,6 +41,7 @@
               <span class="bi bi-trash3-fill"></span>
           </span>
       </td>
+      <?php endif; ?>
     </tr>
   </tbody>
   <?php endwhile;?>

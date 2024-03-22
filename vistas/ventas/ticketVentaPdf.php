@@ -8,15 +8,8 @@
     $conexion=$c->conexion();
     $idventa=$_GET['idventa'];
 
-    $sql="SELECT ve.id_venta,
-                    ve.fechaCompra,
-                    ve.id_cliente,
-                    art.nombre,
-                    art.precio,
-                    art.descripcion 
-                    from ventas as ve
-                    inner join articulos as art
-                    on ve.id_producto=art.id_producto and ve.id_venta='$idventa'";
+    $sql="SELECT id_venta, fechaCompra, id_cliente FROM ventas
+    WHERE id_venta ='$idventa'";
 
     $result=mysqli_query($conexion,$sql);
 
@@ -81,20 +74,16 @@
         <thead>
             <tr>
                 <th>Producto</th>
+                <th>Descripcion</th>
                 <th>Cantidad</th>
                 <th>Precio</th>
             </tr>
         </thead>
         <?php 
-            $sql="SELECT ve.id_venta,
-                    ve.fechaCompra,
-                    ve.id_cliente,
-                    art.nombre,
-                    art.precio,
-                    art.descripcion 
-                    from ventas as ve
-                    inner join articulos as art
-                    on ve.id_producto=art.id_producto and ve.id_venta='$idventa'";
+            $sql="SELECT articulos.nombre, articulos.descripcion, detalles.cantidad, detalles.precio FROM detalles
+            INNER JOIN ventas ON ventas.id_venta = detalles.venta
+            INNER JOIN articulos ON articulos.id_producto = detalles.producto
+            WHERE detalles.venta ='$idventa'";
 
             $result=mysqli_query($conexion,$sql);
             $total=0;
@@ -102,13 +91,14 @@
         ?>
         <tbody>
             <tr>
-                <td><?php echo $mostrar[3]." ".$mostrar[5]; ?></td>
-                <td class="center">1</td>
-                <td><?php echo "$".$mostrar[4]; ?></td>
+                <td><?php echo $mostrar[0]; ?></td>
+                <td><?php echo $mostrar[1]; ?></td>
+                <td><?php echo $mostrar[2]; ?></td>
+                <td><?php echo "$".$mostrar[3]; ?></td>
             </tr>
         </tbody>
         <?php
-            $total=$total + $mostrar[4]; 
+            $total=$total + $mostrar[3]; 
             endwhile; 
         ?>
     </table>

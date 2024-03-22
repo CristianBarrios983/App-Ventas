@@ -1,6 +1,11 @@
 <?php
     session_start();
     if(isset($_SESSION['usuario'])){
+      if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"){
+
+        require_once "../clases/Conexion.php"; 
+        $c= new conectar();
+        $conexion=$c->conexion();
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +41,19 @@
                         <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="usuario" id="usuario" placeholder="Usuario">
                       </div>
                       <div class="mb-3">
-                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="password" id="password" placeholder="Contraseña">
+                          <select class="form-select form-select-lg fs-6 rounded-0" name="rol" id="rol">
+                              <option value="">Seleccione rol</option>
+                              <?php
+                                  $sql="SELECT id_rol,rol from roles";
+                                  $result=mysqli_query($conexion,$sql);
+                              ?>
+                              <?php while($mostrar=mysqli_fetch_row($result)): ?>
+                                  <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
+                              <?php endwhile; ?>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                        <input type="password" class="form-control form-control-lg fs-6 rounded-0" name="password" id="password" placeholder="Contraseña">
                       </div>
                       <div>
                         <button type="submit" class="btn btn-primary rounded-0 d-block w-100" id="registro">Registrar</button>
@@ -77,6 +94,19 @@
             <label for="" class="form-label text-secondary fs-6">Usuario</label>
             <input type="text" name="usuarioU" id="usuarioU" class="form-control form-control-lg fs-6 rounded-0">
           </div>
+          <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Cambiar rol</label>
+                <select class="form-select form-select-lg fs-6 rounded-0" name="rolSelectU" id="rolSelectU">
+                    <option value="">Seleccione rol</option>
+                    <?php 
+                        $sql="SELECT id_rol,rol from roles";
+                        $result=mysqli_query($conexion,$sql);
+                    ?>
+                    <?php while($mostrar=mysqli_fetch_row($result)): ?>
+                        <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
         </form>
 
       </div>
@@ -188,6 +218,9 @@
 </script>
 
 <?php
+        }else{
+          header("location:inicio.php");
+        }
     }else{
         header("location:../index.php");
     }

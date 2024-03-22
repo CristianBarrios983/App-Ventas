@@ -14,7 +14,7 @@
     $rutaFinal=$carpeta.$nombreImg;
 
     $datosImg=array(
-        $_POST['categoriaSelect'], $nombreImg, $rutaFinal
+        $nombreImg, $rutaFinal
     );
 
         if(move_uploaded_file($rutaAlmacenamiento, $rutaFinal)){
@@ -28,6 +28,7 @@
                 $datos[4]=$_POST['descripcion'];
                 $datos[5]=$_POST['cantidad'];
                 $datos[6]=$_POST['precio'];
+                
                 echo $obj->insertaArticulo($datos);
             }else{
                 echo 0;

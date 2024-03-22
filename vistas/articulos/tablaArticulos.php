@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once "../../clases/Conexion.php";
     $c= new conectar();
     $conexion=$c->conexion();
@@ -26,7 +27,9 @@
       <th scope="col">Precio</th>
       <th scope="col">Imagen</th>
       <th scope="col">Categoria</th>
+      <?php if($_SESSION['rol'] == "Administrador"): ?>
       <th scope="col" colspan="3">Acciones</th>
+      <?php endif; ?>
 
     </tr>
   </thead>
@@ -36,7 +39,7 @@
       <td><?php echo $mostrar[0]; ?></td>
       <td><?php echo $mostrar[1]; ?></td>
       <td><?php echo $mostrar[2]; ?></td>
-      <td><?php echo $mostrar[3]; ?></td>
+      <td><?php echo '<label class="fw-bold text-success">$</label>'.$mostrar[3]; ?></td>
       <td>
           <?php 
             $imgMostrar=explode("/", $mostrar[4]);
@@ -45,6 +48,7 @@
             <img width="80" height="80" src="<?php echo $imgRuta ?>">
       </td>
       <td><?php echo $mostrar[5]; ?></td>
+      <?php if($_SESSION['rol'] == "Administrador"): ?>
       <td>
           <span data-bs-toggle="modal" data-bs-target="#abremodalAgregaStock" class="btn btn-success btn-xs rounded-0" onclick="agregaDatosArticulo('<?php echo $mostrar[6] ?>')">
                 <span class="bi bi-plus-lg"></span>
@@ -60,6 +64,7 @@
                 <span class="bi bi-trash3-fill"></span>
             </span>
       </td>
+      <?php endif; ?>
     </tr>
   </tbody>
   <?php endwhile;?>

@@ -25,6 +25,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="inicio.php">Panel</a>
         </li>
+        <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administrar productos
@@ -35,25 +36,30 @@
             <li><a class="dropdown-item" href="categorias.php">Categorias</a></li>
           </ul>
         </li>
-        <?php
-          if($_SESSION['id_usuario']==1):
-        ?>
+        <?php endif; ?>
+
+        <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
         <li class="nav-item">
           <a class="nav-link" href="usuarios.php">Usuarios</a>
         </li>
-        <?php
-          endif;
-        ?>
+        <?php endif; ?>
         <li class="nav-item">
           <a class="nav-link" href="clientes.php">Clientes</a>
         </li>
+        <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Vendedor"): ?>
         <li class="nav-item">
           <a class="nav-link" href="ventas.php">Ventas</a>
         </li>
+        <?php endif; ?>
       </ul>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-          <a class="nav-link disabled" href="ventas.php">Usuario: <span class="text-success fw-bold"><?php echo $_SESSION['usuario']; ?></span></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cuenta: <span class="text-success fw-bold"><?php echo $_SESSION['usuario']; ?></span>
+          </a>
+          <ul class="dropdown-menu rounded-0">
+            <li><a class="dropdown-item">Rol: <span class="text-success"><?php echo $_SESSION['rol']; ?></span></a></li>
+          </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="..//procesos/salir.php">Salir</a>

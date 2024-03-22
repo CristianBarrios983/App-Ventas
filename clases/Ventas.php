@@ -159,13 +159,10 @@
             INNER JOIN articulos ON articulos.id_producto = detalles.producto
             WHERE detalles.venta ='$idVenta'";
             $result=mysqli_query($conexion,$sql);
-            $mostrar=mysqli_fetch_row($result);
 
             $detalles = array();
 
             while ($fila = mysqli_fetch_assoc($result)) {
-                // $d = explode('/', $fila['total']);
-                // $img = $d[1].'/'.$d[2].'/'.$d[3];
 
                 $detalle = array(
                     'nombreProducto' => $fila['nombre'],

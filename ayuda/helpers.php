@@ -301,3 +301,10 @@ function verDetalles(idVenta) {
                   <button type="submit" class="btn btn-primary fs-5 fw-bold rounded-0 d-block w-100">Enviar mensaje <i class="fa-regular fa-paper-plane"></i></button>
                 </div>
 </form>
+
+
+
+<!-- Consulta para agregar columnas a una table -->
+ALTER TABLE usuarios
+ADD COLUMN rol INT AFTER id_usuario,
+ADD CONSTRAINT fk_rol FOREIGN KEY (rol) REFERENCES roles(id_rol)

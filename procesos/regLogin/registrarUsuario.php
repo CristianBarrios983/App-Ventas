@@ -6,6 +6,7 @@
 
     $pass=sha1($_POST['password']);
     $datos=array(
+        $_POST['rol'],
         $_POST['nombre'],
         $_POST['apellido'],
         $_POST['usuario'],

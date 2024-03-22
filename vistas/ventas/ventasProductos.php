@@ -1,16 +1,7 @@
 <?php
-    // session_start();
     require_once "../../clases/Conexion.php";
     $c= new conectar();
     $conexion=$c->conexion();
-
-    // Consulta clientes
-    $sqlCliente="SELECT id_cliente,nombre,apellido from clientes";
-    $resultCliente=mysqli_query($conexion,$sqlCliente);
-
-    // Consulta productos
-    $sqlProducto="SELECT id_producto,nombre from articulos";
-    $resultProducto=mysqli_query($conexion,$sqlProducto);
 ?>
 <div class="row">
     <div class="col-lg-8">
@@ -28,18 +19,28 @@
                         <select class="form-select form-select-lg fs-6 rounded-0" id="clienteVenta" name="clienteVenta">
                             <option value="" selected>Seleccione cliente</option>
                             <option value="0">Sin cliente</option>
-                        <?php while($cliente=mysqli_fetch_row($resultCliente)): ?>
-                            <option value="<?php echo $cliente[0] ?>"><?php echo $cliente[2]."".$cliente[1] ?></option>
-                        <?php endwhile; ?>
+                            <?php 
+                                // Consulta clientes
+                                $sqlCliente="SELECT id_cliente,nombre,apellido from clientes";
+                                $resultCliente=mysqli_query($conexion,$sqlCliente);
+                            ?>
+                            <?php while($cliente=mysqli_fetch_row($resultCliente)): ?>
+                                <option value="<?php echo $cliente[0] ?>"><?php echo $cliente[2]." ".$cliente[1] ?></option>
+                            <?php endwhile; ?>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <select class="form-select form-select-lg fs-6 rounded-0" id="productoVenta" name="productoVenta">
                             <option value="" selected>Seleccione producto</option>
-                        <?php while($producto=mysqli_fetch_row($resultProducto)): ?>
-                            <option value="<?php echo $producto[0] ?>"><?php echo $producto[1] ?></option>
-                        <?php endwhile; ?>
+                            <?php
+                                // Consulta productos
+                                $sqlProducto="SELECT id_producto,nombre from articulos";
+                                $resultProducto=mysqli_query($conexion,$sqlProducto);
+                            ?>
+                            <?php while($producto=mysqli_fetch_row($resultProducto)): ?>
+                                <option value="<?php echo $producto[0] ?>"><?php echo $producto[1] ?></option>
+                            <?php endwhile; ?>
                         </select>
                     </div>
 
@@ -160,9 +161,6 @@
                 $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
                 $('#frmVentasProductos')[0].reset();
                 $('#cantidadV').text('');
-
-                // Para recargar la pagina
-                // location.reload();
             }
         });
     });

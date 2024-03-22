@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-lg-8">
     <div class="section-title">
-      <h5 class="my-3" id="nombreclienteVenta"></h5>
+      <p class="my-3 fs-5" id="nombreclienteVenta"></p>
     </div>
   </div>
 </div>
@@ -60,7 +60,7 @@
         endif;    
     ?>
     <tr>
-        <td colspan="5" class="fs-5">Total: <span class="text-primary"><?php echo "$".$total; ?></span></td>
+        <td colspan="5">Total: <span class="text-primary"><?php echo "$".$total; ?></span></td>
     </tr>
   </tbody>
 </table>

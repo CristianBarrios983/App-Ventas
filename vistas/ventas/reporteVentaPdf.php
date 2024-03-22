@@ -10,7 +10,7 @@
     $idventa=$_GET['idventa'];
 
     $sql="SELECT id_venta, fechaCompra, id_cliente FROM ventas
-    WHERE id_venta = ='$idventa'";
+    WHERE id_venta ='$idventa'";
 
     $result=mysqli_query($conexion,$sql);
 

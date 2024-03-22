@@ -4,24 +4,9 @@ require_once '../../librerias/dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
 
 $id=$_GET['idventa'];
-// Introducimos HTML de prueba
-function file_get_contents_curl($url) {
-    $ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $url);
+ $html=file_get_contents("http://localhost/AppVentas/vistas/ventas/ticketVentaPdf.php?idventa=".$id);
 
-    $data = curl_exec($ch);
-    curl_close($ch);
-
-    return $data;
-}
-
- $html=file_get_contents("http://localhost/Proyectos/AppVentas/vistas/ventas/ticketVentaPdf.php?idventa=".$id);
-
-
- 
 // Instanciamos un objeto de la clase DOMPDF.
 $pdf = new DOMPDF();
  
@@ -37,5 +22,4 @@ $pdf->render();
  
 // Enviamos el fichero PDF al navegador.
 $pdf->stream('TicketVenta.pdf', array("Attachment" => false));
-//Para descargar en vez de abrir en el navegador
-//$pdf->stream('TicketVenta.pdf', array("Attachment" => true));
+//Para descargar en vez de abrir en el navegador es true

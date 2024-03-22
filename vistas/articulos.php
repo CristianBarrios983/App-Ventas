@@ -1,6 +1,7 @@
 <?php
     session_start();
     if(isset($_SESSION['usuario'])){
+        if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"){
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articulos</title>
+    <title>Productos</title>
     <?php require_once "menu.php"; ?>
     <?php require_once "../clases/Conexion.php"; 
         $c= new conectar();
@@ -29,6 +30,7 @@
           </div>
         </div>
         <div class="row">
+             <?php if($_SESSION['rol'] == "Administrador"): ?>
              <div class="col-sm-4">
                 <div class="card rounded-0">
                   <div class="card-body p-4">
@@ -63,7 +65,8 @@
                   </div>
                 </div>
               </div>
-            <div class="col-sm-4">
+              <?php endif; ?>
+            <div class="col-sm-6">
                 <div id="tablaArticulosLoad"></div>
             </div>
         </div>
@@ -161,19 +164,17 @@
 <script>
     $(document).ready(function(){
         $('#btnActualizaArticulo').click(function(){
-            // datos=$('#frmArticulosU').serialize();
+
             var formDataU= new FormData(document.getElementById("frmArticulosU"));
-            console.log(formDataU);
+
             $.ajax({
                 type:"POST",
-                // data:datos,
                 data: formDataU,
                 cache: false,
                 contentType: false,
                 processData: false,
                 url:"../procesos/articulos/actualizaArticulos.php",
                 success:function(r){
-                    console.log(r);
                     if(r==1){
                         $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
                         alertify.success("Se actualizo con exito");
@@ -211,14 +212,13 @@
 
 <script>
     function agregaDatosArticulo(idarticulo){
-        // console.log("id:"+idarticulo);
         $.ajax({
             type:"POST",
             data:"idart=" + idarticulo,
             url:"../procesos/articulos/obtieneDatosArticulo.php",
             success:function(r){
                 dato=jQuery.parseJSON(r);
-                // console.log(dato);
+
                 $('input[name="idArticulo"]').val(dato['id_producto']);
                 $('#categoriaSelectU').val(dato['id_categoria']);
                 $('#nombreU').val(dato['nombre']);
@@ -277,13 +277,12 @@
                 processData: false,
 
                 success:function(r){
-
                     if(r == 1){
                         $('#frmArticulos')[0].reset();
                         $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
                         alertify.success("Agregado con exito");
                     }else{
-                        alertify.error("Fallo al subir el archivo");
+                        alertify.error("Fallo al agregar el producto");
                     }
                 }
             });
@@ -293,6 +292,9 @@
 </script>
 
 <?php
+        }else{
+            header("location:inicio.php");
+        }
     }else{
         header("location:../index.php");
     }

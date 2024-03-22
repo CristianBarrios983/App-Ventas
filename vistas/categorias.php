@@ -1,6 +1,7 @@
 <?php
     session_start();
     if(isset($_SESSION['usuario'])){
+        if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"){
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +23,7 @@
           </div>
         </div>
         <div class="row">
+             <?php if($_SESSION['rol'] == "Administrador"): ?>
              <div class="col-sm-4">
                 <div class="card rounded-0">
                   <div class="card-body p-4">
@@ -36,6 +38,7 @@
                   </div>
                 </div>
               </div>
+              <?php endif; ?>
             <div class="col-sm-6">
                 <div id="tablaCategoriaLoad"></div>
             </div>
@@ -160,6 +163,9 @@
 </script>
 
 <?php
+        }else{
+            header("location:inicio.php");
+        }
     }else{
         header("location:../index.php");
     }

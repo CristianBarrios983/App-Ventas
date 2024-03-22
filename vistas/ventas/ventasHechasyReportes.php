@@ -26,7 +26,6 @@
             <table class="table table-hover">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Precio</th>
