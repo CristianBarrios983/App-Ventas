@@ -1,10 +1,11 @@
 <?php
     session_start();
-    $idusuario=$_SESSION['id_usuario'];
     require_once "../../clases/Conexion.php";
     require_once "../../clases/Articulos.php";
 
     $obj= new articulos();
+
+    $idusuario=$_SESSION['id_usuario'];
 
     $datos=array();
 
@@ -13,11 +14,12 @@
     $carpeta='../../archivos/';
     $rutaFinal=$carpeta.$nombreImg;
 
-    $datosImg=array(
-        $nombreImg, $rutaFinal
-    );
-
         if(move_uploaded_file($rutaAlmacenamiento, $rutaFinal)){
+
+            $datosImg=array(
+                $nombreImg, $rutaFinal
+            );
+
             $idimagen=$obj->agregaImagen($datosImg);
 
             if($idimagen > 0){
@@ -33,5 +35,7 @@
             }else{
                 echo 0;
             }
+        }else{
+            echo 0;
         }
 ?>

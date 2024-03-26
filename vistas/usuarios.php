@@ -217,6 +217,7 @@
     });
 </script>
 
+
 <?php
         }else{
           header("location:inicio.php");

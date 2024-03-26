@@ -77,7 +77,8 @@
 
             $sql="UPDATE usuarios set nombre='$datos[1]',
                                         apellido='$datos[2]',
-                                        email='$datos[3]'
+                                        email='$datos[3]',
+                                        rol='$datos[4]'
                                         where id_usuario='$datos[0]' ";
             return mysqli_query($conexion,$sql);
 

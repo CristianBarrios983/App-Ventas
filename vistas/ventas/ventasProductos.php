@@ -188,6 +188,7 @@
                 if(r > 0){
                     $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
                     $('#frmVentasProductos')[0].reset();
+                    $('#cantidadV').text('');
                     $('#nombreclienteVenta').load("ventas/tablaVentasTemp.php");
                     alertify.alert("Venta creada con exito");
                 }else if(r==0){
@@ -198,11 +199,4 @@
             }
         });
     }
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#clienteVenta').select2();
-        $('#productoVenta').select2();
-    });
 </script>

@@ -8,7 +8,8 @@
         $_POST['idUsuario'],
         $_POST['nombreU'],
         $_POST['apellidoU'], 
-        $_POST['usuarioU']
+        $_POST['usuarioU'],
+        $_POST['rolSelectU']
     );
 
     echo $obj->actualizaUsuario($datos);

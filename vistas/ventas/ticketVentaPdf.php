@@ -27,21 +27,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket de venta</title>
-    <style type="text/css">
-        @page{
-            margin-top: 0.3em;
-            margin-left: 0.6em;
-        }
-        body{
-            font-size: xx-small;
-        }
-        table{
-            border-collapse: collapse;
-        }
-        .center{
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <?php  
@@ -70,13 +55,12 @@
     <br>
     
 
-    <table border=1>
+    <table class="table">
         <thead>
             <tr>
-                <th>Producto</th>
-                <th>Descripcion</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
             </tr>
         </thead>
         <?php 
@@ -91,8 +75,7 @@
         ?>
         <tbody>
             <tr>
-                <td><?php echo $mostrar[0]; ?></td>
-                <td><?php echo $mostrar[1]; ?></td>
+                <td><?php echo $mostrar[0] ?></td>
                 <td><?php echo $mostrar[2]; ?></td>
                 <td><?php echo "$".$mostrar[3]; ?></td>
             </tr>

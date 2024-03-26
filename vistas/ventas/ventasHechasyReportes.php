@@ -40,10 +40,10 @@
             <p>Total de venta: <span id="totalVenta" class="fw-bold"></span></p>
 
       </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> -->
-      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
     </div>
   </div>
 </div>
@@ -84,10 +84,10 @@
               echo "$".$obj->obtenerTotal($mostrar[0]);
           ?>
       </td>
-      <td><a href="../procesos/ventas/crearTicketPdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-danger btn-xs rounded-0">
+      <!-- <td><a href="../procesos/ventas/crearTicketPdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-danger btn-xs rounded-0">
                             Ticket <span class=""></span>
-                        </a></td>
-      <td><a href="../procesos/ventas/crearReportePdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-primary btn-xs rounded-0">
+                        </a></td> -->
+      <!-- <td><a href="../procesos/ventas/crearReportePdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-primary btn-xs rounded-0"> -->
                             Reporte <span class=""></span>
                         </a>   </td>
       <!-- Detalles de venta -->

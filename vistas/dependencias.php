@@ -16,3 +16,14 @@
 <script src="../librerias/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 <!-- <script src="../librerias/select2-4.0.13/dist/js/select2.js"></script> -->
 <script src="../js/funciones.js"></script>
+
+<!-- DataTables CDN -->
+<link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
+
+<script>
+  let dataTable = new DataTable("#tablaUsuarios", {
+    perPage: 3,
+    perPageSelect: [3,5,10]
+  });
+</script>

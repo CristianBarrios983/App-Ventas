@@ -12,7 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos</title>
     <?php require_once "menu.php"; ?>
-    <?php require_once "../clases/Conexion.php"; 
+    <?php 
+        require_once "../clases/Conexion.php"; 
         $c= new conectar();
         $conexion=$c->conexion();
 
@@ -59,7 +60,7 @@
                             <input type="file" id="imagen" name="imagen" class="form-control form-control-lg fs-6 rounded-0">
                         </div>
                         <div>
-                            <button type="submit" id="btnAgregaArticulo" class="btn btn-primary rounded-0 d-block w-100">Registrar</button>
+                            <button type="button" id="btnAgregaArticulo" class="btn btn-primary rounded-0 d-block w-100">Registrar</button>
                         </div>
                     </form>
                   </div>
@@ -269,7 +270,7 @@
 
             $.ajax({
                 url: "../procesos/articulos/insertaArticulo.php",
-                type: "post",
+                type: "POST",
                 dataType: "html",
                 data: formData,
                 cache: false,
@@ -277,6 +278,7 @@
                 processData: false,
 
                 success:function(r){
+                    console.log(r);
                     if(r == 1){
                         $('#frmArticulos')[0].reset();
                         $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");

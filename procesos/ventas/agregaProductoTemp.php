@@ -31,7 +31,7 @@
         $sql = "SELECT nombre,apellido from clientes where id_cliente='$idcliente'";
         $result = mysqli_query($conexion, $sql);
         $c = mysqli_fetch_row($result);
-        $ncliente = $c[1] . " " . $c[0];
+        $ncliente = $c[0] . " " . $c[1];
     } else {
         // Lógica específica cuando se selecciona "Sin cliente"
         $ncliente = " ";
