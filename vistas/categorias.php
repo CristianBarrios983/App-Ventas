@@ -22,31 +22,47 @@
             </div>
           </div>
         </div>
+        <div class="row mb-3">
+            <?php if($_SESSION['rol'] == "Administrador"): ?>
+            <div class="col-lg-8">
+                <button type="button" class="btn btn-primary rounded-0 w-auto d-inline-block" data-bs-toggle="modal" data-bs-target="#registraCategoria">Registrar categoria</button>
+            </div>
+            <?php endif; ?>
+        </div>
         <div class="row">
-             <?php if($_SESSION['rol'] == "Administrador"): ?>
-             <div class="col-sm-4">
-                <div class="card rounded-0">
-                  <div class="card-body p-4">
-                    <form id="frmCategorias">
-                        <div class="mb-3">
-                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="categoria" id="categoria" placeholder="Categoria">
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary rounded-0 d-block w-100" id="btnAgregaCategoria">Registrar</button>
-                        </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <?php endif; ?>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div id="tablaCategoriaLoad"></div>
             </div>
         </div>
     </div>
 
+<!-- Modal Registra Categoria -->
+<div class="modal fade" id="registraCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar categoria</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+            <form id="frmCategorias">
+                <div>
+                    <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="categoria" id="categoria" placeholder="Categoria">
+                </div>
+            </form>
 
-<!-- Modal actualiza categoria Bootstrap 5.3.3 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
+        <button id="btnAgregaCategoria" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Actualiza Categoria -->
 <div class="modal fade" id="actualizaCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content rounded-0">

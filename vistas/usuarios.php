@@ -26,49 +26,68 @@
             </div>
           </div>
         </div>
+        <div class="row mb-3">
+            <?php if($_SESSION['rol'] == "Administrador"): ?>
+            <div class="col-lg-8">
+                <button type="button" class="btn btn-primary rounded-0 w-auto d-inline-block" data-bs-toggle="modal" data-bs-target="#registraUsuarioModal">Registrar usuario</button>
+            </div>
+            <?php endif; ?>
+        </div>
         <div class="row">
-             <div class="col-sm-4">
-                <div class="card rounded-0">
-                  <div class="card-body p-4">
-                    <form id="frmRegistro">
-                      <div class="mb-3">
-                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombre" id="nombre" placeholder="Nombre">
-                      </div>
-                      <div class="mb-3">
-                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="apellido" id="apellido" placeholder="Apellido">
-                      </div>
-                      <div class="mb-3">
-                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="usuario" id="usuario" placeholder="Usuario">
-                      </div>
-                      <div class="mb-3">
-                          <select class="form-select form-select-lg fs-6 rounded-0" name="rol" id="rol">
-                              <option value="">Seleccione rol</option>
-                              <?php
-                                  $sql="SELECT id_rol,rol from roles";
-                                  $result=mysqli_query($conexion,$sql);
-                              ?>
-                              <?php while($mostrar=mysqli_fetch_row($result)): ?>
-                                  <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
-                              <?php endwhile; ?>
-                          </select>
-                      </div>
-                      <div class="mb-3">
-                        <input type="password" class="form-control form-control-lg fs-6 rounded-0" name="password" id="password" placeholder="Contraseña">
-                      </div>
-                      <div>
-                        <button type="submit" class="btn btn-primary rounded-0 d-block w-100" id="registro">Registrar</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            <div class="col-sm-7">
+            <div class="col-sm-12">
                 <div id="tablaUsuariosLoad"></div>
             </div>
         </div>
     </div>
 
-<!-- Modal Boostrap 5.3.3 -->
+<!-- Modal Registra Usuario -->
+<div class="modal fade" id="registraUsuarioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+          <form id="frmRegistro">
+              <div class="mb-3">
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombre" id="nombre" placeholder="Nombre">
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="apellido" id="apellido" placeholder="Apellido">
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="usuario" id="usuario" placeholder="Usuario">
+              </div>
+              <div class="mb-3">
+                  <select class="form-select form-select-lg fs-6 rounded-0" name="rol" id="rol">
+                      <option value="">Seleccione rol</option>
+                      <?php
+                          $sql="SELECT id_rol,rol from roles";
+                          $result=mysqli_query($conexion,$sql);
+                      ?>
+                      <?php while($mostrar=mysqli_fetch_row($result)): ?>
+                          <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
+                      <?php endwhile; ?>
+                  </select>
+              </div>
+              <div>
+                <input type="password" class="form-control form-control-lg fs-6 rounded-0" name="password" id="password" placeholder="Contraseña">
+              </div>
+          </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
+        <button id="registro" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Registrar usuario</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Actualiza Usuario -->
 <div class="modal fade" id="actualizaUsuarioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content rounded-0">

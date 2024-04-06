@@ -4,6 +4,6 @@
 4_img: contiene todas las imagenes que necesitemos agregar a nuestras vistas
 5-archivos: contiene todas las imagenes de todos los productos agregados
 6_js: contiene todos los scripts de js para cada modulo y poder ejecutar todas las funciones de crud
-7_librerias: contiene las librerias para la creacion de pdf, jquery, alertify, bootstrap y select 2
+7_librerias: contiene las librerias para la creacion de pdf, jquery, alertify, bootstrap
 8_procesos: contiene los archivos intermedios entre las clases y las vistas. Estos enviaran informacion entre una cosa u otra
 9_vistas: contiene todas las vistas de los modulos

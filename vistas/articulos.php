@@ -30,50 +30,65 @@
             </div>
           </div>
         </div>
+        <div class="row mb-3">
+            <?php if($_SESSION['rol'] == "Administrador"): ?>
+            <div class="col-lg-8">
+                <button type="button" class="btn btn-primary rounded-0 w-auto d-inline-block" data-bs-toggle="modal" data-bs-target="#abremodalRegistroArticulo">Registrar producto</button>
+            </div>
+            <?php endif; ?>
+        </div>
         <div class="row">
-             <?php if($_SESSION['rol'] == "Administrador"): ?>
-             <div class="col-sm-4">
-                <div class="card rounded-0">
-                  <div class="card-body p-4">
-                    <form id="frmArticulos" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <select class="form-select form-select-lg fs-6 rounded-0" name="categoriaSelect" id="categoriaSelect">
-                                <option value="">Seleccione categoria</option>
-                            <?php while($mostrar=mysqli_fetch_row($result)): ?>
-                                <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
-                            <?php endwhile; ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombre" id="nombre" placeholder="Nombre">
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="descripcion" id="descripcion" placeholder="Descripcion">
-                        </div>
-                        <div class="mb-3">
-                            <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="cantidad" id="cantidad" placeholder="Cantidad">
-                        </div>
-                        <div class="mb-3">
-                            <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="precio" id="precio" placeholder="Precio">
-                        </div>
-                        <div class="mb-3">
-                            <input type="file" id="imagen" name="imagen" class="form-control form-control-lg fs-6 rounded-0">
-                        </div>
-                        <div>
-                            <button type="button" id="btnAgregaArticulo" class="btn btn-primary rounded-0 d-block w-100">Registrar</button>
-                        </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <?php endif; ?>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div id="tablaArticulosLoad"></div>
             </div>
         </div>
     </div>
 
-<!-- Modal actualiza producto Bootstrap 5.3.3 -->
+<!-- Modal Registra Producto -->
+<div class="modal fade" id="abremodalRegistroArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar producto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <form id="frmArticulos" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <select class="form-select form-select-lg fs-6 rounded-0" name="categoriaSelect" id="categoriaSelect">
+                        <option value="">Seleccione categoria</option>
+                    <?php while($mostrar=mysqli_fetch_row($result)): ?>
+                        <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
+                    <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="nombre" id="nombre" placeholder="Nombre">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="descripcion" id="descripcion" placeholder="Descripcion">
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="cantidad" id="cantidad" placeholder="Cantidad">
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="precio" id="precio" placeholder="Precio">
+                </div>
+                <div>
+                    <input type="file" id="imagen" name="imagen" class="form-control form-control-lg fs-6 rounded-0">
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
+        <button id="btnAgregaArticulo" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Actualiza Producto -->
 <div class="modal fade" id="abremodalUpdateArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content rounded-0">
@@ -127,7 +142,7 @@
   </div>
 </div>
 
-<!-- Modal actualiza stock Bootstrap 5.3.3 -->
+<!-- Modal Actualiza Stock -->
 <div class="modal fade" id="abremodalAgregaStock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content rounded-0">

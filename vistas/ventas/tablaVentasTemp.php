@@ -60,7 +60,7 @@
         endif;    
     ?>
     <tr>
-        <td colspan="5">Total: <span class="text-primary"><?php echo "$".$total; ?></span></td>
+        <td colspan="5">Total: <?php echo '<label class="fw-bold text-success">$</label>'.$total; ?></td>
     </tr>
   </tbody>
 </table>

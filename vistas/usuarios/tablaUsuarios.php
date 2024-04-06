@@ -10,7 +10,7 @@
 ?>
 
 
-<table class="table table-hover" id="tablaUsuarios">
+<table class="table table-hover text-center" id="tablaUsuarios">
   <thead class="table-dark">
     <tr>
       <th scope="col">Nombre</th>

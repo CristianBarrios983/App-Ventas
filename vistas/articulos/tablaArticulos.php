@@ -18,14 +18,14 @@
     $result=mysqli_query($conexion,$sql);
 ?>
 
-<table class="table table-hover">
+<table class="table table-hover text-center">
   <thead class="table-dark">
     <tr>
       <th scope="col">Nombre</th>
       <th scope="col">Descripcion</th>
+      <th scope="col">Imagen</th>
       <th scope="col">Stock</th>
       <th scope="col">Precio</th>
-      <th scope="col">Imagen</th>
       <th scope="col">Categoria</th>
       <?php if($_SESSION['rol'] == "Administrador"): ?>
       <th scope="col" colspan="3">Acciones</th>
@@ -38,8 +38,6 @@
     <tr>
       <td><?php echo $mostrar[0]; ?></td>
       <td><?php echo $mostrar[1]; ?></td>
-      <td><?php echo $mostrar[2]; ?></td>
-      <td><?php echo '<label class="fw-bold text-success">$</label>'.$mostrar[3]; ?></td>
       <td>
           <?php 
             $imgMostrar=explode("/", $mostrar[4]);
@@ -47,6 +45,8 @@
             ?>
             <img width="80" height="80" src="<?php echo $imgRuta ?>">
       </td>
+      <td><?php echo $mostrar[2]; ?></td>
+      <td><?php echo '<label class="fw-bold text-success">$</label>'.$mostrar[3]; ?></td>
       <td><?php echo $mostrar[5]; ?></td>
       <?php if($_SESSION['rol'] == "Administrador"): ?>
       <td>

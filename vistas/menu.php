@@ -13,7 +13,7 @@
 
 <body>
 
-<!-- Navbar Bootstrap 5.3.3 -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
   <div class="container">
     <a class="navbar-brand" href="#">App Ventas</a>
@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="inicio.php">Panel</a>
+          <a class="nav-link" aria-current="page" href="inicio.php">Panel</a>
         </li>
         <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
         <li class="nav-item dropdown">
@@ -47,8 +47,15 @@
           <a class="nav-link" href="clientes.php">Clientes</a>
         </li>
         <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Vendedor"): ?>
-        <li class="nav-item">
-          <a class="nav-link" href="ventas.php">Ventas</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Ventas
+          </a>
+          <ul class="dropdown-menu rounded-0">
+            <li><a class="dropdown-item" href="vender.php">Vender</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="ventasHechas.php">Ventas hechas</a></li>
+          </ul>
         </li>
         <?php endif; ?>
       </ul>
