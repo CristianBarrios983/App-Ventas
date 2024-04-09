@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href="../librerias/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 
-<!-- <link rel="stylesheet" type="text/css" href="../librerias/select2-4.0.13/dist/css/select2.css"> -->
+
 <link rel="stylesheet" type="text/css" href="../librerias/bootstrap-icons-1.11.3/font/bootstrap-icons.css">
 
 
@@ -14,7 +14,6 @@
 <script src="../librerias/alertifyjs/alertify.js"></script>
 <script src="../librerias/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
 <script src="../librerias/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
-<!-- <script src="../librerias/select2-4.0.13/dist/js/select2.js"></script> -->
 <script src="../js/funciones.js"></script>
 
 <!-- DataTables CDN -->

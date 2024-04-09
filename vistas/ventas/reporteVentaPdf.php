@@ -29,86 +29,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de venta</title>
     <style>
-    .titulo{
-        font-size: 20px;
-        text-align: center;
-        font-weight: bold;
-    }
-    .table, p {
-      font-family: Arial, Helvetica, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    .table td, .table th {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-
-    .table th {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      text-align: left;
-      background-color: black;
-      color: white;
-    }
-    </style>
-<body>
-    <?php  
-        $sql="SELECT * from negocio_info";
-        $result=mysqli_query($conexion,$sql);
-        $validar=0;
-        if(mysqli_num_rows($result) > 0){
-            $validar=1;
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-    ?>
 
-    <?php if($validar > 0): ?>
-    <?php 
-        $sql="SELECT nombre,direccion,telefono from negocio_info";
-        $result=mysqli_query($conexion,$sql);
-        $datosnegocio=mysqli_fetch_row($result);
-    ?>
-    <p class="titulo">Datos del negocio</p>
-    <p><b>Nombre</b><?php echo $datosnegocio[0]; ?></p>
-    <p><b>Direccion:</b> <?php echo $datosnegocio[1]; ?></p>
-    <p><b>Telefono:</b> <?php echo $datosnegocio[2]; ?></p>
-    <br>
-    <?php endif; ?>
-    <p class="titulo">Datos de compra</p>
-    <p><b>Fecha:</b> <?php echo $fecha; ?></p>
-    <p><b>Nro venta:</b> <?php echo $venta; ?></p>
-    <p><b>Cliente:</b> <?php echo $obj->nombreCliente($idCliente) ?></p>
-    <br>
-    <table class="table">
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Precio</th>
-            </tr>
-        <?php 
-            $sql="SELECT articulos.nombre, articulos.descripcion, detalles.cantidad, detalles.precio FROM detalles
-            INNER JOIN ventas ON ventas.id_venta = detalles.venta
-            INNER JOIN articulos ON articulos.id_producto = detalles.producto
-            WHERE detalles.venta ='$idventa'";
+        /* Estilos para contenedor */
+        .container {
+            max-width: 800px; /* Ajusta según sea necesario */
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
 
+        /* Estilos para título */
+        .titulo {
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .negrita{
+            font-weight: bold;
+        }
+
+        /* Estilos para tabla */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .table th {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <?php  
+            $sql="SELECT * from negocio_info";
             $result=mysqli_query($conexion,$sql);
-            $total=0;
-            while($mostrar=mysqli_fetch_row($result)):
-        ?>
-            <tr>
-                <td><?php echo $mostrar[0]; ?></td>
-                <td><?php echo $mostrar[1]; ?></td>
-                <td><?php echo $mostrar[2]; ?></td>
-                <td><?php echo "$".$mostrar[3]; ?></td>
-            </tr>
-        <?php
-            $total=$total + $mostrar[3]; 
-            endwhile; 
+            $validar=0;
+            if(mysqli_num_rows($result) > 0){
+                $validar=1;
+            }
         ?>
 
-        <p><b>Total =</b> <?php echo "$".$total; ?> </p>
-    </table>
+        <?php if($validar > 0): ?>
+            <?php 
+                $sql="SELECT nombre,direccion,telefono from negocio_info";
+                $result=mysqli_query($conexion,$sql);
+                $datosnegocio=mysqli_fetch_row($result);
+            ?>
+            <div class="datos-negocio">
+                <p class="titulo">Datos del negocio</p>
+                <p><span class="negrita">Nombre:</span> <?php echo $datosnegocio[0]; ?></p>
+                <p><span class="negrita">Direccion:</span> <?php echo $datosnegocio[1]; ?></p>
+                <p><span class="negrita">Telefono:</span> <?php echo $datosnegocio[2]; ?></p>
+            </div>
+        <?php endif; ?>
+
+        <div class="datos-venta">
+            <p class="titulo">Datos de compra</p>
+            <p><span class="negrita">Fecha:</span> <?php echo $fecha; ?></p>
+            <p><span class="negrita">Nro venta:</span> <?php echo $venta; ?></p>
+            <p><span class="negrita">Cliente:</span> <?php echo $obj->nombreCliente($idCliente) ?></p>
+        </div>
+        
+        <div class="tabla-ventas">
+            <table class="table">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                </tr>
+                <?php 
+                    $sql="SELECT articulos.nombre, articulos.descripcion, detalles.cantidad, detalles.precio FROM detalles
+                    INNER JOIN ventas ON ventas.id_venta = detalles.venta
+                    INNER JOIN articulos ON articulos.id_producto = detalles.producto
+                    WHERE detalles.venta ='$idventa'";
+
+                    $result=mysqli_query($conexion,$sql);
+                    $total=0;
+                    while($mostrar=mysqli_fetch_row($result)):
+                ?>
+                <tr>
+                    <td><?php echo $mostrar[0]; ?></td>
+                    <td><?php echo $mostrar[1]; ?></td>
+                    <td><?php echo $mostrar[2]; ?></td>
+                    <td><?php echo "$".$mostrar[3]; ?></td>
+                </tr>
+                <?php
+                    $total=$total + $mostrar[3]; 
+                    endwhile; 
+                ?>
+                <tr>
+                    <td colspan="3"><b>Total:</b></td>
+                    <td><?php echo "$".$total; ?></td>
+                </tr>
+            </table>
 </body>
 </html>
