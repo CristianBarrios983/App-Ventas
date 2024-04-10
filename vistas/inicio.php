@@ -252,13 +252,9 @@
                         <label for="" class="form-label text-secondary fs-6">Direccion</label>
                         <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="direccionU" id="direccionU">
                     </div>
-                    <div class="mb-3">
+                    <div class="">
                         <label for="" class="form-label text-secondary fs-6">Telefono</label>
                         <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="telefonoU" id="telefonoU">
-                    </div>
-                    <div class="mb-3">
-                        <label for="" class="form-label text-secondary fs-6">Fecha de Registro</label>
-                        <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="fechaU" id="fechaU" readonly>
                     </div>
             </form>
 

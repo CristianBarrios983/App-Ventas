@@ -96,11 +96,27 @@
 
 <!-- script para agregar categoria nueva -->
 <script type="text/javascript">
+    // Cargando datatables apenas inicia la pagina
+    document.addEventListener("DOMContentLoaded", function() {
+        $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php", function() {
+            // Inicializar DataTables después de cargar la tabla
+            let dataTable = new DataTable("#tablaCategorias", {
+                perPage: 3,
+                perPageSelect: [3,5,10],
+                // Para cambiar idioma
+                labels: {
+                            placeholder: "Buscar...",
+                            perPage: "{select} Registros por pagina",
+                            noRows: "Registro no encontrado",
+                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                        }
+            });
+        });
+    });
+
+
     $(document).ready(function(){
-
-        $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php");
         $('#btnAgregaCategoria').click(function(){
-
             vacios=validarFormVacio('frmCategorias');
 
             if(vacios > 0){
@@ -108,25 +124,38 @@
                 return false;
             }
             
-        datos=$('#frmCategorias').serialize();
-        $.ajax({
-            type:"POST",
-            data:datos,
-            url:"../procesos/categorias/agregaCategoria.php",
-            success:function(r){
-                if(r==1){
-                    //Esta linea permite limpiar los registros
-                    $('#frmCategorias')[0].reset();
-                    $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php");
-                    alertify.success("Categoria agregada exitosamente");
-                }else{
-                    alertify.error("No se pudo agregar la categoria :(");
+            datos=$('#frmCategorias').serialize();
+            $.ajax({
+                type:"POST",
+                data:datos,
+                url:"../procesos/categorias/agregaCategoria.php",
+                success:function(r){
+                    if(r==1){
+                        //Esta linea permite limpiar los registros
+                        $('#frmCategorias')[0].reset();
+                        $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaCategorias", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
+                        alertify.success("Categoria agregada exitosamente");
+                    }else{
+                        alertify.error("No se pudo agregar la categoria :(");
+                    }
                 }
-            }
+            });
         });
     });
-    })
 </script>
+
 
 <!-- script para traer datos de categorias -->
 <script>
@@ -144,7 +173,19 @@
                 url:"../procesos/categorias/eliminarCategoria.php",
                 success:function(r){
                     if(r==1){
-                        $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php");
+                        $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaCategorias", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Eliminado con exito");
                     }else{
                         alertify.error("No se pudo eliminar");
@@ -167,7 +208,19 @@
                 url:"../procesos/categorias/actualizaCategoria.php",
                 success:function(r){
                     if(r==1){
-                        $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php");
+                        $('#tablaCategoriaLoad').load("categorias/tablaCategorias.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaCategorias", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Actualizado con exito");
                     }else{
                         alertify.error("No se pudo actualizar")

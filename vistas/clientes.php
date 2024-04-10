@@ -118,9 +118,25 @@
 
 <!-- Script para agregar clientes -->
 <script type="text/javascript">
-    $(document).ready(function(){
+    // Cargando datatables apenas inicia la pagina
+    document.addEventListener("DOMContentLoaded", function() {
+        $('#tablaClientesLoad').load("clientes/tablaClientes.php", function() {
+            // Inicializar DataTables después de cargar la tabla
+            let dataTable = new DataTable("#tablaClientes", {
+                perPage: 3,
+                perPageSelect: [3,5,10],
+                // Para cambiar idioma
+                labels: {
+                            placeholder: "Buscar...",
+                            perPage: "{select} Registros por pagina",
+                            noRows: "Registro no encontrado",
+                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                        }
+            });
+        });
+    });
 
-        $('#tablaClientesLoad').load("clientes/tablaClientes.php");
+    $(document).ready(function(){
         $('#btnAgregaCliente').click(function(){
 
             vacios=validarFormVacio('frmClientes');
@@ -138,7 +154,20 @@
                 success:function(r){
                     if(r==1){
                         $('#frmClientes')[0].reset();
-                        $('#tablaClientesLoad').load("clientes/tablaClientes.php");
+                        $('#tablaClientesLoad').load("clientes/tablaClientes.php",function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaClientes", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Cliente agregado exitosamente");
                     }else{
                         alertify.error("No se pudo agregar el cliente :(");
@@ -177,7 +206,20 @@
                 url:"../procesos/clientes/eliminarCliente.php",
                 success:function(r){
                     if(r==1){
-                        $('#tablaClientesLoad').load('clientes/tablaClientes.php');
+                        $('#tablaClientesLoad').load("clientes/tablaClientes.php",function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaClientes", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Eliminado con exito");
                     }else{
                         alertify.error("No se pudo eliminar");
@@ -202,7 +244,20 @@
                 success:function(r){
                     if(r==1){
                         $('#frmClientes')[0].reset();
-                        $('#tablaClientesLoad').load("clientes/tablaClientes.php");
+                        $('#tablaClientesLoad').load("clientes/tablaClientes.php",function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaClientes", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Cliente actualizado exitosamente");
                     }else{
                         alertify.error("No se pudo actualizar :(");

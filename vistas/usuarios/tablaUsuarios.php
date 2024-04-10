@@ -10,6 +10,10 @@
 ?>
 
 
+<!-- DataTables CDN -->
+<link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
+
 <table class="table table-hover text-center" id="tablaUsuarios">
   <thead class="table-dark">
     <tr>
@@ -20,8 +24,9 @@
       <th scope="col" colspan="2">Acciones</th>
     </tr>
   </thead>
-  <?php while($mostrar=mysqli_fetch_row($result)): ?>
   <tbody>
+  <?php if (mysqli_num_rows($result) > 0): ?>
+    <?php while($mostrar=mysqli_fetch_row($result)): ?>
     <tr>
       <td><?php echo $mostrar[1]; ?></td>
       <td><?php echo $mostrar[2]; ?></td>
@@ -40,7 +45,12 @@
       </td>
       <?php endif; ?>
     </tr>
+    <?php endwhile;?>
+  <?php else: ?>
+      <tr>
+              <td colspan="<?php echo ($_SESSION['rol'] == "Administrador") ? '6' : '5'; ?>">No hay usuarios registrados.</td>
+      </tr>
+    <?php endif; ?>
   </tbody>
-  <?php endwhile;?>
 </table>
 

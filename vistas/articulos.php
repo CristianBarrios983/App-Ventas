@@ -192,7 +192,20 @@
                 url:"../procesos/articulos/actualizaArticulos.php",
                 success:function(r){
                     if(r==1){
-                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
+                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaProductos", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Se actualizo con exito");
                     }else{
                         alertify.error("No se pudo actualizar");
@@ -215,7 +228,20 @@
                 success:function(r){
                     if(r==1){
                         $('#frmStockU')[0].reset();
-                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
+                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaProductos", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Se agrego al stock actual con exito");
                     }else{
                         alertify.error("No se pudo agregar al stock");
@@ -255,7 +281,20 @@
                 url:"../procesos/articulos/eliminarArticulo.php",
                 success:function(r){
                     if(r==1){
-                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
+                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaProductos", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Eliminado con exito");
                     }else{
                         alertify.error("No se pudo eliminar");
@@ -269,8 +308,25 @@
 
 <!-- Script para validar campos vacios e ingresar articulo -->
 <script type="text/javascript">
+    // Cargando datatables apenas inicia la pagina
+    document.addEventListener("DOMContentLoaded", function() {
+        $('#tablaArticulosLoad').load("articulos/tablaArticulos.php", function() {
+            // Inicializar DataTables después de cargar la tabla
+            let dataTable = new DataTable("#tablaProductos", {
+                perPage: 3,
+                perPageSelect: [3,5,10],
+                // Para cambiar idioma
+                labels: {
+                            placeholder: "Buscar...",
+                            perPage: "{select} Registros por pagina",
+                            noRows: "Registro no encontrado",
+                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                        }
+            });
+        });
+    });
+
     $(document).ready(function(){
-        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
 
         $('#btnAgregaArticulo').click(function(){
 
@@ -296,7 +352,20 @@
                     console.log(r);
                     if(r == 1){
                         $('#frmArticulos')[0].reset();
-                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php");
+                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaProductos", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Agregado con exito");
                     }else{
                         alertify.error("Fallo al agregar el producto");

@@ -20,9 +20,9 @@
 <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
 <script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
 
-<script>
+<!-- <script>
   let dataTable = new DataTable("#tablaUsuarios", {
     perPage: 3,
     perPageSelect: [3,5,10]
   });
-</script>
+</script> -->

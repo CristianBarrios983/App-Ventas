@@ -18,7 +18,11 @@
     $result=mysqli_query($conexion,$sql);
 ?>
 
-<table class="table table-hover text-center">
+<!-- DataTables CDN -->
+<link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
+
+<table class="table table-hover text-center" id="tablaProductos">
   <thead class="table-dark">
     <tr>
       <th scope="col">Nombre</th>
@@ -33,8 +37,9 @@
 
     </tr>
   </thead>
-  <?php while($mostrar=mysqli_fetch_row($result)): ?>
   <tbody>
+  <?php if (mysqli_num_rows($result) > 0): ?>
+    <?php while($mostrar=mysqli_fetch_row($result)): ?>
     <tr>
       <td><?php echo $mostrar[0]; ?></td>
       <td><?php echo $mostrar[1]; ?></td>
@@ -66,6 +71,11 @@
       </td>
       <?php endif; ?>
     </tr>
+    <?php endwhile;?>
+  <?php else: ?>
+      <tr>
+            <td colspan="<?php echo ($_SESSION['rol'] == "Administrador") ? '9' : '6'; ?>">No hay productos registrados.</td>
+        </tr>
+    <?php endif; ?>
   </tbody>
-  <?php endwhile;?>
 </table>

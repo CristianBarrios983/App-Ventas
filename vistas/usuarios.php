@@ -116,7 +116,7 @@
           <div class="mb-3">
                 <label for="" class="form-label text-secondary fs-6">Cambiar rol</label>
                 <select class="form-select form-select-lg fs-6 rounded-0" name="rolSelectU" id="rolSelectU">
-                    <option value="">Seleccione rol</option>
+                <option value="">Seleccione rol</option>
                     <?php 
                         $sql="SELECT id_rol,rol from roles";
                         $result=mysqli_query($conexion,$sql);
@@ -167,7 +167,20 @@
                 url:"../procesos/usuarios/eliminarUsuario.php",
                 success:function(r){
                     if(r==1){
-                        $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php');
+                      $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaUsuarios", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Eliminado con exito");
                     }else{
                         alertify.error("No se pudo eliminar");
@@ -190,7 +203,20 @@
                 url:"../procesos/usuarios/actualizaUsuario.php",
                 success:function(r){
                     if(r==1){
-                        $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php');
+                      $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaUsuarios", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Se actualizo con exito");
                     }else{
                         alertify.error("No se pudo actualizar");
@@ -203,9 +229,24 @@
 
 <!-- Validar campos vacios y agregar registros -->
 <script>
-    $(document).ready(function(){
+  document.addEventListener("DOMContentLoaded", function() {
+        $('#tablaUsuariosLoad').load("usuarios/tablaUsuarios.php", function() {
+            // Inicializar DataTables después de cargar la tabla
+            let dataTable = new DataTable("#tablaUsuarios", {
+                perPage: 3,
+                perPageSelect: [3,5,10],
+                // Para cambiar idioma
+                labels: {
+                            placeholder: "Buscar...",
+                            perPage: "{select} Registros por pagina",
+                            noRows: "Registro no encontrado",
+                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                        }
+            });
+        });
+    });
 
-        $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php');
+    $(document).ready(function(){
 
         $('#registro').click(function(){
 
@@ -225,7 +266,20 @@
 
                     if(r==1){
                         $('#frmRegistro')[0].reset();
-                        $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php');
+                        $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaUsuarios", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
                         alertify.success("Registrado con exito!");
                     }else{
                         alertify.error("Hubo un error");

@@ -10,7 +10,9 @@
         
             $obj= new ventas();
         
-            $sql="SELECT id_venta,fechaCompra,id_cliente from ventas group by id_venta";
+            $sql="SELECT id_venta,fechaCompra,id_cliente, usuarios.nombre from ventas 
+            INNER JOIN usuarios ON ventas.id_usuario = usuarios.id_usuario
+            GROUP BY id_venta";
             $result=mysqli_query($conexion,$sql);
 ?>
 
@@ -54,10 +56,6 @@
                 <p>Total de venta: <span id="totalVenta" class="fw-bold"></span></p>
 
         </div>
-        <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div> -->
         </div>
     </div>
     </div>
@@ -69,18 +67,20 @@
         </div>
         </div>
     </div>
-    <table class="table table-hover">
+    <table class="table table-hover text-center" id="tablaVentasRealizadas">
     <thead class="table-dark">
         <tr>
         <th scope="col">#</th>
         <th scope="col">Fecha</th>
         <th scope="col">Cliente</th>
+        <th scope="col">Usuario</th>
         <th scope="col">Total</th>
         <th scope="col" colspan="3">Acciones</th>
         </tr>
     </thead>
-    <?php while($mostrar=mysqli_fetch_row($result)): ?>
     <tbody>
+    <?php if (mysqli_num_rows($result) > 0): ?>
+        <?php while($mostrar=mysqli_fetch_row($result)): ?>
         <tr>
         <th scope="row"><?php echo $mostrar[0]; ?></th>
         <td><?php echo $mostrar[1]; ?></td>
@@ -93,6 +93,7 @@
                 }
             ?>
         </td>
+        <td><?php echo $mostrar[3]; ?></td>
         <td>
             <?php
                 echo '<label class="fw-bold text-success">$</label>'.$obj->obtenerTotal($mostrar[0]);
@@ -109,10 +110,34 @@
             <span class="bi bi-card-list"></span>
         </a>   </td>
         </tr>
+        <?php endwhile;?>
+    <?php else: ?>
+        <tr>
+            <td colspan="8">No hay ventas realizadas.</td>
+        </tr>
+    <?php endif; ?>
     </tbody>
-    <?php endwhile;?>
     </table>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $('#tablaVentasRealizadas', function() {
+            // Inicializar DataTables después de cargar la tabla
+            let dataTable = new DataTable("#tablaVentasRealizadas", {
+                perPage: 3,
+                perPageSelect: [3,5,10],
+                // Para cambiar idioma
+                labels: {
+                            placeholder: "Buscar...",
+                            perPage: "{select} Registros por pagina",
+                            noRows: "Venta no encontrada",
+                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                        }
+            });
+        });
+    });
+</script>
 
 <script>
     function verDetalles(idVenta){

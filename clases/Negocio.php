@@ -52,7 +52,7 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="TRUNCATE negocio_info";
+            $sql="DELETE FROM negocio_info";
 
             return mysqli_query($conexion,$sql);
         }
