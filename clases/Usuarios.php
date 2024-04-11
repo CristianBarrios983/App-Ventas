@@ -55,7 +55,7 @@
             $c=new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT id_usuario,nombre,apellido,email from usuarios 
+            $sql="SELECT id_usuario,nombre,apellido,email,rol from usuarios 
                                         where id_usuario='$idusuario'";
 
             $result=mysqli_query($conexion,$sql);
@@ -66,7 +66,8 @@
                 'id_usuario' => $mostrar[0],
                 'nombre' => $mostrar[1], 
                 'apellido' => $mostrar[2],
-                'email' => $mostrar[3]
+                'email' => $mostrar[3],
+                'id_rol' => $mostrar[4]
             );
 
             return $datos;
@@ -102,5 +103,25 @@
 
             return mysqli_fetch_row($result)[0];
         }
+
+        public function obtenerRolesUsuario(){
+            $c=new conectar();
+            $conexion=$c->conexion();
+        
+            $sql="SELECT id_rol,rol FROM roles";
+        
+            $result=mysqli_query($conexion,$sql);
+        
+            $roles = array();
+        
+            while($mostrar=mysqli_fetch_row($result)) {
+                $roles[] = array(
+                    'id_rol' => $mostrar[0],
+                    'rol' => $mostrar[1]
+                );
+            }
+        
+            return $roles;
+        }        
     }
 ?>

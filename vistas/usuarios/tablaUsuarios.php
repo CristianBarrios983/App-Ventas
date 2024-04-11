@@ -9,11 +9,6 @@
     $result=mysqli_query($conexion,$sql);
 ?>
 
-
-<!-- DataTables CDN -->
-<link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
-<script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
-
 <table class="table table-hover text-center" id="tablaUsuarios">
   <thead class="table-dark">
     <tr>

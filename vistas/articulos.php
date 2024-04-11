@@ -105,14 +105,7 @@
             <div class="mb-3">
                 <label for="" class="form-label text-secondary fs-6">Categoria</label>
                 <select class="form-select form-select-lg fs-6 rounded-0" name="categoriaSelectU" id="categoriaSelectU">
-                    <option value="">Seleccione categoria</option>
-                    <?php 
-                        $sql="SELECT id_categoria,nombreCategoria from categorias";
-                        $result=mysqli_query($conexion,$sql);
-                    ?>
-                    <?php while($mostrar=mysqli_fetch_row($result)): ?>
-                        <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
-                    <?php endwhile; ?>
+
                 </select>
             </div>
             <div class="mb-3">
@@ -176,6 +169,77 @@
 </div>
 </body>
 </html>
+
+<!-- Script para validar campos vacios e ingresar articulo -->
+<script type="text/javascript">
+    // Cargando datatables apenas inicia la pagina
+    document.addEventListener("DOMContentLoaded", function() {
+        $('#tablaArticulosLoad').load("articulos/tablaArticulos.php", function() {
+            // Inicializar DataTables después de cargar la tabla
+            let dataTable = new DataTable("#tablaProductos", {
+                perPage: 3,
+                perPageSelect: [3,5,10],
+                // Para cambiar idioma
+                labels: {
+                            placeholder: "Buscar...",
+                            perPage: "{select} Registros por pagina",
+                            noRows: "Registro no encontrado",
+                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                        }
+            });
+        });
+    });
+
+    $(document).ready(function(){
+
+        $('#btnAgregaArticulo').click(function(){
+
+            vacios=validarFormVacio('frmArticulos');
+
+            if(vacios > 0){
+                alertify.alert("Los campos no deben estar vacios");
+                return false;
+            }
+
+            var formData= new FormData(document.getElementById("frmArticulos"));
+
+            $.ajax({
+                url: "../procesos/articulos/insertaArticulo.php",
+                type: "POST",
+                dataType: "html",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+
+                success:function(r){
+                    console.log(r);
+                    if(r == 1){
+                        $('#frmArticulos')[0].reset();
+                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php", function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaProductos", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
+                        alertify.success("Agregado con exito");
+                    }else{
+                        alertify.error("Fallo al agregar el producto");
+                    }
+                }
+            });
+           
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function(){
@@ -262,16 +326,46 @@
                 dato=jQuery.parseJSON(r);
 
                 $('input[name="idArticulo"]').val(dato['id_producto']);
-                $('#categoriaSelectU').val(dato['id_categoria']);
                 $('#nombreU').val(dato['nombre']);
                 $('#descripcionU').val(dato['descripcion']);
                 $('input[name="cantidadU"]').val(dato['cantidad']);
                 $('#precioU').val(dato['precio']);
+
+                let id_categoria = dato['id_categoria'];
+
+                obtenerCategorias(id_categoria);
             }
         });
     }
-    
 
+    function obtenerCategorias (id_categoria) {
+        $.ajax({
+            type: "GET",
+            url: "../procesos/articulos/obtenerCategorias.php",
+            success: function(r) {
+                let categorias = jQuery.parseJSON(r);
+                
+                // Limpiar el select antes de agregar los roles
+                $('#categoriaSelectU').empty();
+
+                // Iterar sobre los roles y agregar cada uno como una opción en el select
+                categorias.forEach(function(categoria) {
+                    var option = $('<option></option>').attr('value', categoria.id_categoria).text(categoria.categoria);
+
+                    // Si el rol es el mismo que el del usuario, lo seleccionamos
+                    if (categoria.id_categoria === id_categoria) {
+                        option.attr('selected', 'selected');
+                    }
+
+                    // Agregar la opción al select
+                    $('#categoriaSelectU').append(option);
+                });
+            }
+        });
+    }
+</script>
+
+<script>
     function eliminaArticulo(idArticulo){
         alertify.confirm('¿Desea eliminar esta articulo?', function(){ 
             // alertify.success('Ok') 
@@ -304,77 +398,6 @@
         }, function(){ 
             alertify.error('Cancelar')});
     }
-</script>
-
-<!-- Script para validar campos vacios e ingresar articulo -->
-<script type="text/javascript">
-    // Cargando datatables apenas inicia la pagina
-    document.addEventListener("DOMContentLoaded", function() {
-        $('#tablaArticulosLoad').load("articulos/tablaArticulos.php", function() {
-            // Inicializar DataTables después de cargar la tabla
-            let dataTable = new DataTable("#tablaProductos", {
-                perPage: 3,
-                perPageSelect: [3,5,10],
-                // Para cambiar idioma
-                labels: {
-                            placeholder: "Buscar...",
-                            perPage: "{select} Registros por pagina",
-                            noRows: "Registro no encontrado",
-                            info: "Mostrando registros del {start} al {end} de {rows} registros"
-                        }
-            });
-        });
-    });
-
-    $(document).ready(function(){
-
-        $('#btnAgregaArticulo').click(function(){
-
-            vacios=validarFormVacio('frmArticulos');
-
-            if(vacios > 0){
-                alertify.alert("Los campos no deben estar vacios");
-                return false;
-            }
-
-            var formData= new FormData(document.getElementById("frmArticulos"));
-
-            $.ajax({
-                url: "../procesos/articulos/insertaArticulo.php",
-                type: "POST",
-                dataType: "html",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-
-                success:function(r){
-                    console.log(r);
-                    if(r == 1){
-                        $('#frmArticulos')[0].reset();
-                        $("#tablaArticulosLoad").load("articulos/tablaArticulos.php", function() {
-                            // Inicializar DataTables después de cargar la tabla
-                            let dataTable = new DataTable("#tablaProductos", {
-                                perPage: 3,
-                                perPageSelect: [3,5,10],
-                                // Para cambiar idioma
-                                labels: {
-                                            placeholder: "Buscar...",
-                                            perPage: "{select} Registros por pagina",
-                                            noRows: "Registro no encontrado",
-                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
-                                        }
-                            });
-                        });
-                        alertify.success("Agregado con exito");
-                    }else{
-                        alertify.error("Fallo al agregar el producto");
-                    }
-                }
-            });
-           
-        });
-    });
 </script>
 
 <?php

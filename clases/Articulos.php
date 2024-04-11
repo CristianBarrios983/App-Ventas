@@ -124,5 +124,25 @@
                                         where id_producto='$datos[0]'";
             return mysqli_query($conexion,$sql);
         }
+
+        public function obtenerCategorias(){
+            $c=new conectar();
+            $conexion=$c->conexion();
+        
+            $sql="SELECT id_categoria, nombreCategoria FROM categorias";
+        
+            $result=mysqli_query($conexion,$sql);
+        
+            $categorias = array();
+        
+            while($mostrar=mysqli_fetch_row($result)) {
+                $categorias[] = array(
+                    'id_categoria' => $mostrar[0],
+                    'categoria' => $mostrar[1]
+                );
+            }
+        
+            return $categorias;
+        }
     }
 ?>

@@ -116,14 +116,7 @@
           <div class="mb-3">
                 <label for="" class="form-label text-secondary fs-6">Cambiar rol</label>
                 <select class="form-select form-select-lg fs-6 rounded-0" name="rolSelectU" id="rolSelectU">
-                <option value="">Seleccione rol</option>
-                    <?php 
-                        $sql="SELECT id_rol,rol from roles";
-                        $result=mysqli_query($conexion,$sql);
-                    ?>
-                    <?php while($mostrar=mysqli_fetch_row($result)): ?>
-                        <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
-                    <?php endwhile; ?>
+                
                 </select>
             </div>
         </form>
@@ -139,93 +132,6 @@
 
 </body>
 </html>
-
-<!-- Editar registros -->
-<script>
-    function agregaDatosUsuario(idusuario){
-        $.ajax({
-            type:"POST",
-            data:"idusuario=" + idusuario,
-            url:"../procesos/usuarios/obtenerDatosUsuario.php",
-            success:function(r){
-                dato=jQuery.parseJSON(r);
-
-                $('#idUsuario').val(dato['id_usuario']);
-                $('#nombreU').val(dato['nombre']);
-                $('#apellidoU').val(dato['apellido']);
-                $('#usuarioU').val(dato['email']);
-            }
-        });
-    }
-
-    function eliminarUsuario(idusuario){
-        alertify.confirm('¿Desea eliminar este usuario?', function(){ 
-            // alertify.success('Ok') 
-            $.ajax({
-                type:"POST",
-                data:"idusuario=" + idusuario,
-                url:"../procesos/usuarios/eliminarUsuario.php",
-                success:function(r){
-                    if(r==1){
-                      $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
-                            // Inicializar DataTables después de cargar la tabla
-                            let dataTable = new DataTable("#tablaUsuarios", {
-                                perPage: 3,
-                                perPageSelect: [3,5,10],
-                                // Para cambiar idioma
-                                labels: {
-                                            placeholder: "Buscar...",
-                                            perPage: "{select} Registros por pagina",
-                                            noRows: "Registro no encontrado",
-                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
-                                        }
-                            });
-                        });
-                        alertify.success("Eliminado con exito");
-                    }else{
-                        alertify.error("No se pudo eliminar");
-                    }
-                }
-            });
-        }, function(){ 
-            alertify.error('Cancelar')});
-    }
-</script>
-
-<!-- Actualiza usuario -->
-<script>
-    $(document).ready(function(){
-        $('#btnActualizaUsuario').click(function(){
-            datos=$('#frmRegistroU').serialize();
-            $.ajax({
-                type:"POST",
-                data:datos,
-                url:"../procesos/usuarios/actualizaUsuario.php",
-                success:function(r){
-                    if(r==1){
-                      $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
-                            // Inicializar DataTables después de cargar la tabla
-                            let dataTable = new DataTable("#tablaUsuarios", {
-                                perPage: 3,
-                                perPageSelect: [3,5,10],
-                                // Para cambiar idioma
-                                labels: {
-                                            placeholder: "Buscar...",
-                                            perPage: "{select} Registros por pagina",
-                                            noRows: "Registro no encontrado",
-                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
-                                        }
-                            });
-                        });
-                        alertify.success("Se actualizo con exito");
-                    }else{
-                        alertify.error("No se pudo actualizar");
-                    }
-                }
-            });
-        });
-    });
-</script>
 
 <!-- Validar campos vacios y agregar registros -->
 <script>
@@ -288,6 +194,127 @@
             });
         });
     });
+</script>
+
+<!-- Rellenar datos -->
+<script>
+  function agregaDatosUsuario(idusuario){
+    $.ajax({
+        type:"POST",
+        data:"idusuario=" + idusuario,
+        url:"../procesos/usuarios/obtenerDatosUsuario.php",
+        success:function(r){
+            dato=jQuery.parseJSON(r);
+
+            $('#idUsuario').val(dato['id_usuario']);
+            $('#nombreU').val(dato['nombre']);
+            $('#apellidoU').val(dato['apellido']);
+            $('#usuarioU').val(dato['email']);
+
+            // Rol del usuario
+            var id_rol = dato['id_rol'];
+
+            obtenerRoles(id_rol);
+        }
+      });
+    }
+
+    function obtenerRoles (id_rol) {
+        $.ajax({
+            type: "GET",
+            url: "../procesos/usuarios/obtenerRoles.php",
+            success: function(r) {
+                let roles = jQuery.parseJSON(r);
+                
+                // Limpiar el select antes de agregar los roles
+                $('#rolSelectU').empty();
+
+                // Iterar sobre los roles y agregar cada uno como una opción en el select
+                roles.forEach(function(rol) {
+                    var option = $('<option></option>').attr('value', rol.id_rol).text(rol.rol);
+
+                    // Si el rol es el mismo que el del usuario, lo seleccionamos
+                    if (rol.id_rol === id_rol) {
+                        option.attr('selected', 'selected');
+                    }
+
+                    // Agregar la opción al select
+                    $('#rolSelectU').append(option);
+                });
+            }
+        });
+    }
+
+</script>
+
+<!-- Actualiza usuario -->
+<script>
+    $(document).ready(function(){
+        $('#btnActualizaUsuario').click(function(){
+            datos=$('#frmRegistroU').serialize();
+            $.ajax({
+                type:"POST",
+                data:datos,
+                url:"../procesos/usuarios/actualizaUsuario.php",
+                success:function(r){
+                    if(r==1){
+                      $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaUsuarios", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
+                        alertify.success("Se actualizo con exito");
+                    }else{
+                        alertify.error("No se pudo actualizar");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+  function eliminarUsuario(idusuario){
+        alertify.confirm('¿Desea eliminar este usuario?', function(){ 
+            // alertify.success('Ok') 
+            $.ajax({
+                type:"POST",
+                data:"idusuario=" + idusuario,
+                url:"../procesos/usuarios/eliminarUsuario.php",
+                success:function(r){
+                    if(r==1){
+                      $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
+                            // Inicializar DataTables después de cargar la tabla
+                            let dataTable = new DataTable("#tablaUsuarios", {
+                                perPage: 3,
+                                perPageSelect: [3,5,10],
+                                // Para cambiar idioma
+                                labels: {
+                                            placeholder: "Buscar...",
+                                            perPage: "{select} Registros por pagina",
+                                            noRows: "Registro no encontrado",
+                                            info: "Mostrando registros del {start} al {end} de {rows} registros"
+                                        }
+                            });
+                        });
+                        alertify.success("Eliminado con exito");
+                    }else{
+                        alertify.error("No se pudo eliminar");
+                    }
+                }
+            });
+        }, function(){ 
+            alertify.error('Cancelar')});
+    }
 </script>
 
 
