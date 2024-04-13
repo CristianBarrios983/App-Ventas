@@ -34,7 +34,7 @@
             $conexion=$c->conexion();
 
             $fecha=date('Y-m-d');
-            $idventa=self::crearFolio();
+            // $idventa=self::crearFolio();
             $datos=$_SESSION['tablaComprasTemp'];
             $idusuario=$_SESSION['id_usuario'];
             $idCliente = $_SESSION['idcliente'];
@@ -47,11 +47,13 @@
                 $totalVenta += $d[3]; // Precio * Cantidad
             }
 
-            $sqlVentas = "INSERT INTO ventas (id_venta,id_cliente,id_usuario,total,fechaCompra) 
-                    VALUES ('$idventa','$idCliente','$idusuario','$totalVenta','$fecha')";
+            $sqlVentas = "INSERT INTO ventas (id_cliente,id_usuario,total,fechaCompra) 
+                    VALUES ('$idCliente','$idusuario','$totalVenta','$fecha')";
             $resultVentas = mysqli_query($conexion,$sqlVentas);
 
             if($resultVentas){
+
+                $idventa = mysqli_insert_id($conexion);
 
                 for ($i=0; $i < count($datos) ; $i++){
                     $d=explode("||", $datos[$i]);
@@ -84,21 +86,21 @@
             return $r;
         }
 
-        public function crearFolio(){
-            $c= new conectar();
-            $conexion=$c->conexion();
+        // public function crearFolio(){
+        //     $c= new conectar();
+        //     $conexion=$c->conexion();
 
-            $sql="SELECT id_venta from ventas group by id_venta desc";
+        //     $sql="SELECT id_venta FROM ventas GROUP BY id_venta DESC";
 
-            $result=mysqli_query($conexion,$sql);
-            $id=mysqli_fetch_row($result)[0];
+        //     $result=mysqli_query($conexion,$sql);
+        //     $id=mysqli_fetch_row($result)[0];
 
-            if($id=="" or $id==null or $id==0){
-                return 1;
-            }else{
-                return $id + 1;
-            }
-        }
+        //     if($id=="" || $id==null || $id==0){
+        //         return 1;
+        //     }else{
+        //         return $id + 1;
+        //     }
+        // }
 
         public function nombreCliente($idCliente){
             $c= new conectar();

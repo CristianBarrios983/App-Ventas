@@ -66,11 +66,17 @@
 
                         <div class="mb-3">
                             <p class="text-danger fs-5" id="cantidadV" name="cantidadV"></p>
-                            <input readonly hidden="" type="text" class="form-control form-control-lg fs-6 rounded-0" id="cantidad" name="cantidad">
+                            <input readonly hidden="" type="text" class="form-control form-control-lg fs-6 rounded-0" id="stock" name="stock">
                         </div>
 
                         <div class="mb-3">
-                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" id="precioV" name="precioV" readonly>
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" id="precioV" name="precioV" hidden>
+                            <p class="text-success fs-5" id="precioP" name="precioP"></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="cantidad">Cantidad:</label>
+                            <input type="number" class="form-control form-control-lg fs-6 rounded-0" id="cantidad" name="cantidad" min="1" max="20">
                         </div>
 
                         <div class="mb-3">
@@ -88,10 +94,10 @@
             </div>
             </div>
         </div>
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
             <div id="imgProducto"></div>
-        </div>
-        <div class="col-sm-4">
+        </div> -->
+        <div class="col-sm-8">
             <div id="tablaVentasTempLoad"></div>
         </div>
     </div>
@@ -102,6 +108,8 @@
     $(document).ready(function(){
 
         $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
+        $('label[for="cantidad"]').hide();
+        $('#cantidad').hide();
         $('#productoVenta').change(function(){
 
             $.ajax({
@@ -113,14 +121,14 @@
                     
                         $('#descripcionV').val(dato['descripcion']);
                         obtenerCantidadDisponible($('#productoVenta').val());
-                        $('#cantidad').val(dato['cantidad']);
+                        $('#stock').val(dato['cantidad']);
                         $('#precioV').val(dato['precio']);
+                        $('#precioP').text('Precio: $' + dato['precio']);
 
-                        $('label[for="descripcionV"]').show();
                         $('#descripcionV').show();
-                        $('label[for="precioV"]').show();
-                        $('#precioV').show();
-                        $('#btnAgregaVenta').show(); //Oculta el boton
+                        $('label[for="cantidad"]').show();
+                        $('#cantidad').show();
+                        $('#btnAgregaVenta').show(); //Muestra el boton
                         $('#message').text('');
 
 
@@ -142,34 +150,49 @@
 
         $('#btnAgregaVenta').click(function(){
 
-            vacios=validarFormVacio('frmVentasProductos');
+            vacios = validarFormVacio('frmVentasProductos');
 
-            if(vacios > 0){
+            if (vacios > 0) {
                 alertify.alert("Los campos no deben estar vacios");
                 return false;
             }
 
-            datos=$('#frmVentasProductos').serialize();
-            $.ajax({
-                type:"POST",
-                data:datos,
-                url:"../procesos/ventas/agregaProductoTemp.php",
-                success:function(r){
-                    if(r==1){
-                        $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
-                        obtenerCantidadDisponible($('#productoVenta').val());
-                    }else{
-                        obtenerCantidadDisponible($('#productoVenta').val());
-                        $('label[for="descripcionV"]').hide();
-                        $('#descripcionV').hide();
-                        $('label[for="precioV"]').hide();
-                        $('#precioV').hide();
-                        $('#btnAgregaVenta').hide(); //Oculta el boton
-                        $('#message').text('¡No hay stock disponible!');
-                    }
+            let cantidad = parseInt($('#cantidad').val());
+            let stockDisponible = parseInt($('#stock').val());
+
+            if (cantidad <= 0) {
+                alertify.alert("La cantidad debe ser mayor que cero");
+                return false;
+            }
+
+            if (cantidad > stockDisponible) {
+                alertify.alert("La cantidad ingresada supera el stock disponible");
+                return false;
+            }
+
+        datos=$('#frmVentasProductos').serialize();
+        $.ajax({
+            type:"POST",
+            data:datos,
+            url:"../procesos/ventas/agregaProductoTemp.php",
+            success:function(r){
+                if(r==1){
+                    $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
+                    obtenerCantidadDisponible($('#productoVenta').val());
+                } else {
+                    //Si no hay suficiente stock, no se agrega el producto al carrito
+                    obtenerCantidadDisponible($('#productoVenta').val());
+                    // $('#descripcionV').hide();
+                    // $('#precioP').hide();
+                    $('#btnAgregaVenta').hide(); // Oculta el boton
+                    // $('#message').text('¡No hay suficiente stock disponible!');
+                    alertify.alert("La cantidad ingresada supera el stock disponible");
+                    return false;
+                }
                 }
             });
         });
+
 
         $('#btnVaciarVentas').click(function(){
         $.ajax({
@@ -178,6 +201,11 @@
                 $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
                 $('#frmVentasProductos')[0].reset();
                 $('#cantidadV').text('');
+                $('#precioP').text('');
+                $('#cantidad').text('');
+                $('label[for="cantidad"]').hide();
+                $('#cantidad').hide();
+                $('#message').text('');
             }
         });
     });
@@ -206,6 +234,7 @@
                     $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
                     $('#frmVentasProductos')[0].reset();
                     $('#cantidadV').text('');
+                    $('#precioP').text('');
                     $('#nombreclienteVenta').load("ventas/tablaVentasTemp.php");
                     alertify.alert("Venta creada con exito");
                 }else if(r==0){

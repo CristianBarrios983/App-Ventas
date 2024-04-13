@@ -99,10 +99,10 @@
                 echo '<label class="fw-bold text-success">$</label>'.$obj->obtenerTotal($mostrar[0]);
             ?>
         </td>
-        <td><a href="../procesos/ventas/crearTicketPdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-danger btn-xs rounded-0">
+        <td><a target="_blank" href="../procesos/ventas/crearTicketPdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-danger btn-xs rounded-0">
                                 <span class="bi bi-ticket-detailed"></span>
                             </a></td> 
-        <td><a href="../procesos/ventas/crearReportePdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-primary btn-xs rounded-0">
+        <td><a target="_blank" href="../procesos/ventas/crearReportePdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-primary btn-xs rounded-0">
                                 <span class="bi bi-filetype-pdf"></span>
                             </a>   </td>
         <!-- Detalles de venta -->

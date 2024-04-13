@@ -112,7 +112,7 @@
         <div class="tabla-ventas">
             <table class="table">
                 <tr>
-                    <th scope="col">Nombre</th>
+                    <th scope="col">Producto</th>
                     <th scope="col">Descripcion</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
