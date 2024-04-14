@@ -125,8 +125,7 @@
         $('#tablaVentasRealizadas', function() {
             // Inicializar DataTables después de cargar la tabla
             let dataTable = new DataTable("#tablaVentasRealizadas", {
-                perPage: 3,
-                perPageSelect: [3,5,10],
+                perPageSelect: [10,20,30,40,50,75,100],
                 // Para cambiar idioma
                 labels: {
                             placeholder: "Buscar...",

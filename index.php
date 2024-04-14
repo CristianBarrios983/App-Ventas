@@ -34,7 +34,7 @@
             <h3>Acceder</h3>
           </div>
           <div class="mb-3">
-            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="usuario" id="usuario" placeholder="Nombre" required>
+            <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="credencial" id="credencial" placeholder="Usuario o correo" required>
           </div>
           <div class="mb-3">
             <input type="password" class="form-control form-control-lg fs-6 rounded-0" name="password" id="password" placeholder="Contraseña" required>

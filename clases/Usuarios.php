@@ -9,6 +9,7 @@
             $sql="INSERT into usuarios (rol,
                                 nombre,
                                 apellido,
+                                usuario,
                                 email,
                                 password,
                                 fechaCaptura)
@@ -17,6 +18,7 @@
                                 '$datos[2]',
                                 '$datos[3]',
                                 '$datos[4]',
+                                '$datos[5]',
                                 '$fecha')";
             return mysqli_query($conexion,$sql);
         }
@@ -26,8 +28,7 @@
             $password=sha1($datos[1]);
 
 
-            $sql="SELECT * from usuarios where email='$datos[0]'
-                                        and password='$password'";
+            $sql="SELECT * FROM usuarios WHERE (usuario='$datos[0]' OR email='$datos[0]') AND password='$password'";
             $result=mysqli_query($conexion,$sql);
 
             if(mysqli_num_rows($result) > 0){
@@ -45,7 +46,7 @@
 
             $password=sha1($datos[1]);
 
-            $sql="SELECT id_usuario from usuarios where email='$datos[0]'
+            $sql="SELECT id_usuario from usuarios where (usuario='$datos[0]' OR email='$datos[0]')
             and password='$password'";
 
             $result=mysqli_query($conexion,$sql);
@@ -55,7 +56,7 @@
             $c=new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT id_usuario,nombre,apellido,email,rol from usuarios 
+            $sql="SELECT id_usuario,nombre,apellido,usuario,email,rol from usuarios 
                                         where id_usuario='$idusuario'";
 
             $result=mysqli_query($conexion,$sql);
@@ -66,8 +67,9 @@
                 'id_usuario' => $mostrar[0],
                 'nombre' => $mostrar[1], 
                 'apellido' => $mostrar[2],
-                'email' => $mostrar[3],
-                'id_rol' => $mostrar[4]
+                'usuario' => $mostrar[3],
+                'email' => $mostrar[4],
+                'id_rol' => $mostrar[5]
             );
 
             return $datos;
@@ -78,8 +80,9 @@
 
             $sql="UPDATE usuarios set nombre='$datos[1]',
                                         apellido='$datos[2]',
-                                        email='$datos[3]',
-                                        rol='$datos[4]'
+                                        usuario='$datos[3]',
+                                        email='$datos[4]',
+                                        rol='$datos[5]'
                                         where id_usuario='$datos[0]' ";
             return mysqli_query($conexion,$sql);
 

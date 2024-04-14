@@ -10,6 +10,7 @@
         $_POST['nombre'],
         $_POST['apellido'],
         $_POST['usuario'],
+        $_POST['email'],
         $pass
                 );
     echo $obj->registroUsuario($datos);

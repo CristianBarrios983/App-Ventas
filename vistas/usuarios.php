@@ -61,6 +61,9 @@
                 <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="usuario" id="usuario" placeholder="Usuario">
               </div>
               <div class="mb-3">
+                <input type="email" class="form-control form-control-lg fs-6 rounded-0" name="email" id="email" placeholder="Correo electronico">
+              </div>
+              <div class="mb-3">
                   <select class="form-select form-select-lg fs-6 rounded-0" name="rol" id="rol">
                       <option value="">Seleccione rol</option>
                       <?php
@@ -114,6 +117,10 @@
             <input type="text" name="usuarioU" id="usuarioU" class="form-control form-control-lg fs-6 rounded-0">
           </div>
           <div class="mb-3">
+            <label for="" class="form-label text-secondary fs-6">Correo electronico</label>
+            <input type="email" name="emailU" id="emailU" class="form-control form-control-lg fs-6 rounded-0">
+          </div>
+          <div class="mb-3">
                 <label for="" class="form-label text-secondary fs-6">Cambiar rol</label>
                 <select class="form-select form-select-lg fs-6 rounded-0" name="rolSelectU" id="rolSelectU">
                 
@@ -139,8 +146,9 @@
         $('#tablaUsuariosLoad').load("usuarios/tablaUsuarios.php", function() {
             // Inicializar DataTables después de cargar la tabla
             let dataTable = new DataTable("#tablaUsuarios", {
-                perPage: 3,
-                perPageSelect: [3,5,10],
+                // perPage: 10, // Paginas por defecto
+                perPageSelect: [10,20,30,40,50,75,100],
+                //stateSave: true, //Guarda el estado de la tabla
                 // Para cambiar idioma
                 labels: {
                             placeholder: "Buscar...",
@@ -175,8 +183,7 @@
                         $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
                             // Inicializar DataTables después de cargar la tabla
                             let dataTable = new DataTable("#tablaUsuarios", {
-                                perPage: 3,
-                                perPageSelect: [3,5,10],
+                                perPageSelect: [10,20,30,40,50,75,100],
                                 // Para cambiar idioma
                                 labels: {
                                             placeholder: "Buscar...",
@@ -209,7 +216,8 @@
             $('#idUsuario').val(dato['id_usuario']);
             $('#nombreU').val(dato['nombre']);
             $('#apellidoU').val(dato['apellido']);
-            $('#usuarioU').val(dato['email']);
+            $('#usuarioU').val(dato['usuario']);
+            $('#emailU').val(dato['email']);
 
             // Rol del usuario
             var id_rol = dato['id_rol'];
@@ -261,8 +269,7 @@
                       $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
                             // Inicializar DataTables después de cargar la tabla
                             let dataTable = new DataTable("#tablaUsuarios", {
-                                perPage: 3,
-                                perPageSelect: [3,5,10],
+                                perPageSelect: [10,20,30,40,50,75,100],
                                 // Para cambiar idioma
                                 labels: {
                                             placeholder: "Buscar...",
@@ -295,8 +302,7 @@
                       $('#tablaUsuariosLoad').load('usuarios/tablaUsuarios.php', function() {
                             // Inicializar DataTables después de cargar la tabla
                             let dataTable = new DataTable("#tablaUsuarios", {
-                                perPage: 3,
-                                perPageSelect: [3,5,10],
+                                perPageSelect: [10,20,30,40,50,75,100],
                                 // Para cambiar idioma
                                 labels: {
                                             placeholder: "Buscar...",

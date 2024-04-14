@@ -9,6 +9,7 @@
         $_POST['nombreU'],
         $_POST['apellidoU'], 
         $_POST['usuarioU'],
+        $_POST['emailU'],
         $_POST['rolSelectU']
     );
 

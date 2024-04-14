@@ -182,8 +182,6 @@
                 } else {
                     //Si no hay suficiente stock, no se agrega el producto al carrito
                     obtenerCantidadDisponible($('#productoVenta').val());
-                    // $('#descripcionV').hide();
-                    // $('#precioP').hide();
                     $('#btnAgregaVenta').hide(); // Oculta el boton
                     // $('#message').text('¡No hay suficiente stock disponible!');
                     alertify.alert("La cantidad ingresada supera el stock disponible");
