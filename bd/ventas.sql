@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2024 a las 12:24:07
+-- Tiempo de generación: 14-04-2024 a las 23:55:03
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -39,17 +39,6 @@ CREATE TABLE `articulos` (
   `fechaCaptura` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `articulos`
---
-
-INSERT INTO `articulos` (`id_producto`, `id_categoria`, `id_imagen`, `id_usuario`, `nombre`, `descripcion`, `cantidad`, `precio`, `fechaCaptura`) VALUES
-(19, 2, 10, 1, 'Caramelos', 'Sabor dulce de leche', 432, 50, '2024-03-21'),
-(20, 1, 11, 1, 'Leche', 'Serenisima 1 litro', 50, 1400, '2024-03-22'),
-(21, 1, 12, 1, 'Yogurt', 'Milkaut 1 litro', 24, 1200, '2024-03-25'),
-(22, 2, 13, 1, 'Gomitas', 'Mogul', 343, 300, '2024-03-25'),
-(23, 4, 14, 1, 'Pan de leche', 'Pack 9 unidades', 20, 100, '2024-03-25');
-
 -- --------------------------------------------------------
 
 --
@@ -62,15 +51,6 @@ CREATE TABLE `categorias` (
   `nombreCategoria` varchar(150) DEFAULT NULL,
   `fechaCaptura` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `categorias`
---
-
-INSERT INTO `categorias` (`id_categoria`, `id_usuario`, `nombreCategoria`, `fechaCaptura`) VALUES
-(1, 1, 'Lacteos', '2024-03-13'),
-(2, 1, 'Golosinas', '2024-03-13'),
-(4, 1, 'Panificados', '2024-03-25');
 
 -- --------------------------------------------------------
 
@@ -89,13 +69,6 @@ CREATE TABLE `clientes` (
   `rfc` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `clientes`
---
-
-INSERT INTO `clientes` (`id_cliente`, `id_usuario`, `nombre`, `apellido`, `direccion`, `email`, `telefono`, `rfc`) VALUES
-(1, 1, 'Cristiano ', 'Ronaldo', 'ufhirfmoewiodjoewd', 'cristianoronaldo@gmail.com', '3704894859', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -110,21 +83,6 @@ CREATE TABLE `detalles` (
   `precio` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `detalles`
---
-
-INSERT INTO `detalles` (`id_detalle`, `venta`, `producto`, `cantidad`, `precio`) VALUES
-(1, 1, 20, 5, 7000),
-(2, 1, 19, 10, 500),
-(3, 2, 19, 5, 250),
-(4, 3, 19, 13, 650),
-(5, 4, 19, 8, 400),
-(6, 4, 20, 2, 2800),
-(7, 5, 19, 7, 350),
-(8, 6, 20, 3, 4200),
-(9, 6, 19, 25, 1250);
-
 -- --------------------------------------------------------
 
 --
@@ -137,17 +95,6 @@ CREATE TABLE `imagenes` (
   `ruta` varchar(500) DEFAULT NULL,
   `fechaSubida` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `imagenes`
---
-
-INSERT INTO `imagenes` (`id_imagen`, `nombre`, `ruta`, `fechaSubida`) VALUES
-(10, 'astronauta7.jpg', '../../archivos/astronauta7.jpg', '2024-03-25'),
-(11, '125b4749900b13cbacf81faade2a5f8f.jpg', '../../archivos/125b4749900b13cbacf81faade2a5f8f.jpg', '2024-03-22'),
-(12, 'iron man.webp', '../../archivos/iron man.webp', '2024-03-25'),
-(13, 'astronauta2.jpg', '../../archivos/astronauta2.jpg', '2024-03-25'),
-(14, 'astronauta.jpg', '../../archivos/astronauta.jpg', '2024-03-25');
 
 -- --------------------------------------------------------
 
@@ -194,21 +141,11 @@ CREATE TABLE `usuarios` (
   `rol` int(11) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `apellido` varchar(50) DEFAULT NULL,
+  `usuario` varchar(250) NOT NULL,
   `email` varchar(50) DEFAULT NULL,
   `password` tinytext DEFAULT NULL,
   `fechaCaptura` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id_usuario`, `rol`, `nombre`, `apellido`, `email`, `password`, `fechaCaptura`) VALUES
-(1, 1, 'Cristian', 'Barrios', 'admin', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '2024-03-13'),
-(3, 2, 'Amanda', 'Collins', 'amanda', '2abd55e001c524cb2cf6300a89ca6366848a77d5', '2024-03-13'),
-(5, 3, 'Ezequiel', 'Gonzalez', 'ezequiel', '2abd55e001c524cb2cf6300a89ca6366848a77d5', '2024-03-21'),
-(6, 2, 'Laura', 'Vera', 'laura', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '2024-03-21'),
-(7, 1, 'Alex', 'Ferguson', 'alex', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '2024-03-22');
 
 -- --------------------------------------------------------
 
@@ -223,18 +160,6 @@ CREATE TABLE `ventas` (
   `total` float DEFAULT NULL,
   `fechaCompra` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `ventas`
---
-
-INSERT INTO `ventas` (`id_venta`, `id_cliente`, `id_usuario`, `total`, `fechaCompra`) VALUES
-(1, 0, 1, 7500, '2024-03-22'),
-(2, 1, 1, 250, '2024-03-22'),
-(3, 0, 1, 650, '2024-03-23'),
-(4, 1, 1, 3200, '2024-03-23'),
-(5, 0, 1, 350, '2024-03-23'),
-(6, 1, 1, 5450, '2024-03-23');
 
 --
 -- Índices para tablas volcadas
@@ -291,6 +216,12 @@ ALTER TABLE `usuarios`
   ADD KEY `fk_rol` (`rol`);
 
 --
+-- Indices de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  ADD PRIMARY KEY (`id_venta`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -298,37 +229,37 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalles`
 --
 ALTER TABLE `detalles`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `negocio_info`
 --
 ALTER TABLE `negocio_info`
-  MODIFY `id_negocio` int(1) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_negocio` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -340,7 +271,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
