@@ -32,7 +32,9 @@
             $result=mysqli_query($conexion,$sql);
 
             if(mysqli_num_rows($result) > 0){
-                $_SESSION['usuario']=$datos[0];
+                $datosUsuario = mysqli_fetch_row($result);
+
+                $_SESSION['usuario']=$datosUsuario[2]." ".$datosUsuario[3];
                 $_SESSION['id_usuario']=self::traerID($datos);
                 $_SESSION['rol']=self::traerRoles($_SESSION['id_usuario']);
                 return 1;

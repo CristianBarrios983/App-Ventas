@@ -46,7 +46,10 @@
         <img src="<?php echo substr($d[5],3) ?>" alt="" width="80px" height="80px">
       </td> -->
       <td><?php echo $d[3]; ?></td>
-      <td><?php echo $d[4]; ?></td>
+      <!-- Input para modificar la cantidad -->
+      <td>
+        <input type="number" class="form-control form-control-lg fs-6 rounded-0" id="cantidad_<?php echo $i; ?>" name="cantidad" value="<?php echo $d[4]; ?>" min="1" onchange="actualizarCantidad(<?php echo $i; ?>, this.value, <?php echo $d[0]; ?>)">
+      </td>
       <td>
           <span class="btn btn-danger btn-xs rounded-0" onclick="quitarP('<?php echo $i; ?>')">
                 <span class="bi bi-x-lg"></span>

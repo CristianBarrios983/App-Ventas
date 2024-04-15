@@ -160,8 +160,13 @@
             let cantidad = parseInt($('#cantidad').val());
             let stockDisponible = parseInt($('#stock').val());
 
-            if (cantidad <= 0) {
+            if (Math.sign(cantidad) === 0) {
                 alertify.alert("La cantidad debe ser mayor que cero");
+                return false;
+            }
+
+            if (Math.sign(cantidad) === -1) {
+                alertify.alert("La cantidad no puede ser negativo");
                 return false;
             }
 
@@ -244,6 +249,44 @@
         });
     }
 </script>
+
+<script>
+    function actualizarCantidad(indice, nuevaCantidad, idProducto) {
+
+        if (Math.sign(nuevaCantidad) === 0) {
+            alertify.alert("La cantidad debe ser mayor que cero");
+            return false;
+        }
+
+        if (Math.sign(nuevaCantidad) === -1) {
+            alertify.alert("La cantidad no debe ser negativa");
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            data: { indice: indice, nuevaCantidad: nuevaCantidad, idProducto: idProducto },
+            url: "../procesos/ventas/actualizarCantidad.php",
+            success: function(r) {
+
+                console.log(r);
+
+                if(r==1){
+                    // Recargar la tabla de ventas después de la actualización
+                    $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
+                    alertify.success("Se modifico la cantidad correctamente");
+                }else if(r==0){
+                    $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
+                    alertify.alert("La cantidad supera el stock disponible");
+                }else{
+                    $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
+                    alertify.error("No se pudo modificar la cantidad");
+                }
+            }
+        });
+    }
+</script>
+
 
 <?php
         }else{
