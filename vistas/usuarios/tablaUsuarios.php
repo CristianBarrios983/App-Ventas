@@ -28,7 +28,7 @@
       <td><?php echo $mostrar[2]; ?></td>
       <td><?php echo $mostrar[3]; ?></td>
       <td><?php echo $mostrar[4]; ?></td>
-      <td class="text-success"><?php echo $mostrar[4]; ?></td>
+      <td class="text-success"><?php echo $mostrar[5]; ?></td>
       <td>
           <span data-bs-toggle="modal" data-bs-target="#actualizaUsuarioModal" class="btn btn-warning btn-xs rounded-0" onclick="agregaDatosUsuario('<?php echo $mostrar[0]; ?>')">
                 <span class="bi bi-pen-fill"></span>
