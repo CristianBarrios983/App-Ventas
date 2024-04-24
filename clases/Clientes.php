@@ -1,29 +1,39 @@
 <?php
     class clientes{
+
         public function agregaClientes($datos){
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $idusuario=$_SESSION['id_usuario'];
+            $sql="INSERT INTO clientes (id_usuario,nombre,apellido,direccion,email,telefono) VALUES (?,?,?,?,?,?)";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("ssssss",$idUsuario,$nombre,$apellido,$direccion,$email,$telefono);
 
-            $sql="INSERT into clientes (id_usuario,nombre,apellido,direccion,email,telefono)
-                                                            values ('$idusuario',
-                                                                    '$datos[0]',
-                                                                    '$datos[1]',
-                                                                    '$datos[2]',
-                                                                    '$datos[3]',
-                                                                    '$datos[4]')";
-            return mysqli_query($conexion,$sql);
+            $idUsuario=$_SESSION['id_usuario'];
+            $nombre=$datos[0];
+            $apellido=$datos[1];
+            $direccion=$datos[2];
+            $email=$datos[3];
+            $telefono=$datos[4];
+
+            return $stmt->execute();
         }
+
         public function obtenDatosCliente($idcliente){
 
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT id_cliente,nombre,apellido,direccion,email,telefono from clientes where id_cliente = '$idcliente'";
-            $result=mysqli_query($conexion,$sql);
+            $sql="SELECT id_cliente,nombre,apellido,direccion,email,telefono FROM clientes WHERE id_cliente = ?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idCliente);
 
-            $mostrar=mysqli_fetch_row($result);
+            $idCliente=$idcliente;
+
+            $stmt->execute();
+            $result=$stmt->get_result();
+
+            $mostrar=$result->fetch_row();
 
             $datos=array(
                 'id_cliente' => $mostrar[0],
@@ -40,22 +50,32 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="UPDATE clientes set nombre='$datos[1]',
-                                        apellido='$datos[2]',
-                                        direccion='$datos[3]',
-                                        email='$datos[4]',
-                                        telefono='$datos[5]'
-                                        where id_cliente='$datos[0]'";
-            return mysqli_query($conexion,$sql);
+            $sql="UPDATE clientes SET nombre=?,apellido=?,direccion=?,email=?,telefono=? WHERE id_cliente=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("ssssss",$nombre,$apellido,$direccion,$email,$telefono,$idCliente);
+
+            $nombre=$datos[1];
+            $apellido=$datos[2];
+            $direccion=$datos[3];
+            $email=$datos[4];
+            $telefono=$datos[5];
+            $idCliente=$datos[0];
+
+
+            return $stmt->execute();
         }
 
         public function eliminaCliente($idcliente){
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="DELETE from clientes where id_cliente='$idcliente'";
+            $sql="DELETE from clientes where id_cliente=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idCliente);
 
-            return mysqli_query($conexion,$sql);
+            $idCliente=$idcliente;
+
+            return $stmt->execute();
         }
     }
 ?>

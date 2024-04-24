@@ -4,32 +4,42 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="INSERT into categorias(id_usuario,
-                                        nombreCategoria,
-                                        fechaCaptura)
-                        values ('$datos[0]',
-                                '$datos[1]',
-                                '$datos[2]')";
+            $sql="INSERT INTO categorias(id_usuario,nombreCategoria,fechaCaptura) VALUES (?,?,?)";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("sss",$idUsuario,$nombre,$fechaRegistro);
 
-            return mysqli_query($conexion,$sql);
+            $idUsuario=$datos[0];
+            $nombre=$datos[1];
+            $fechaRegistro=$datos[2];
+
+            return $stmt->execute();
         }
 
         public function actualizaCategoria($datos){
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="UPDATE categorias set nombreCategoria='$datos[1]' where id_categoria='$datos[0]'";
+            $sql="UPDATE categorias SET nombreCategoria=? WHERE id_categoria=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("ss",$nombreCategoria,$id);
 
-            echo mysqli_query($conexion,$sql);
+            $nombreCategoria=$datos[1];
+            $id=$datos[0];
+
+            return $stmt->execute();
         }
 
         public function eliminaCategoria($idcategoria){
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="DELETE from categorias where id_categoria='$idcategoria'";
+            $sql="DELETE FROM categorias WHERE id_categoria=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idCategoria);
+            
+            $idCategoria=$idcategoria;
 
-            return mysqli_query($conexion,$sql);
+            return $stmt->execute();
         }
     }
 ?>

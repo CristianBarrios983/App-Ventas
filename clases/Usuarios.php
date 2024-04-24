@@ -1,69 +1,90 @@
 <?php
     class usuarios{
+
         public function registroUsuario($datos){
             $c=new conectar();
             $conexion=$c->conexion();
 
+            $sql="INSERT INTO usuarios (rol,nombre,apellido,usuario,email,password,fechaCaptura) VALUES (?,?,?,?,?,?,?)";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("sssssss",$rol,$nombre,$apellido,$usuario,$email,$password,$fecha);
+
+            $rol=$datos[0];
+            $nombre=$datos[1];
+            $apellido=$datos[2];
+            $usuario=$datos[3];
+            $email=$datos[4];
+            $password=$datos[5];
             $fecha=date('Y-m-d');
 
-            $sql="INSERT into usuarios (rol,
-                                nombre,
-                                apellido,
-                                usuario,
-                                email,
-                                password,
-                                fechaCaptura)
-                        values ('$datos[0]',
-                                '$datos[1]',
-                                '$datos[2]',
-                                '$datos[3]',
-                                '$datos[4]',
-                                '$datos[5]',
-                                '$fecha')";
-            return mysqli_query($conexion,$sql);
+            return $stmt->execute();
         }
+
         public function loginUsuario($datos){
             $c=new conectar();
             $conexion=$c->conexion();
+            
+            $sql="SELECT * FROM usuarios WHERE (usuario=? OR email=?) AND password=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("sss",$credencial,$credencial,$password);
+            $credencial=$datos[0];
             $password=sha1($datos[1]);
 
+            //Ejecuto mi consulta
+            $stmt->execute();
 
-            $sql="SELECT * FROM usuarios WHERE (usuario='$datos[0]' OR email='$datos[0]') AND password='$password'";
-            $result=mysqli_query($conexion,$sql);
+            //Obtengo los resultados
+            $result=$stmt->get_result();
 
-            if(mysqli_num_rows($result) > 0){
-                $datosUsuario = mysqli_fetch_row($result);
+            if($result->num_rows > 0){
+                $datosUsuario = $result->fetch_row();
 
                 $_SESSION['usuario']=$datosUsuario[2]." ".$datosUsuario[3];
                 $_SESSION['id_usuario']=self::traerID($datos);
                 $_SESSION['rol']=self::traerRoles($_SESSION['id_usuario']);
+                
                 return 1;
             }else{
                 return 0;
             }
         }
+
         public function traerID($datos){
             $c=new conectar();
             $conexion=$c->conexion();
 
+            $sql="SELECT id_usuario from usuarios where (usuario=? OR email=?)
+            and password=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("sss",$credencial,$credencial,$password);
+
+            $credencial=$datos[0];
             $password=sha1($datos[1]);
 
-            $sql="SELECT id_usuario from usuarios where (usuario='$datos[0]' OR email='$datos[0]')
-            and password='$password'";
+            $stmt->execute();
 
-            $result=mysqli_query($conexion,$sql);
-            return mysqli_fetch_row($result)[0];
+            $result=$stmt->get_result();
+
+            $idUsuario = $result->fetch_row();
+
+            return $idUsuario[0];
         }
+
         public function obtenerDatosUsuario($idusuario){
             $c=new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT id_usuario,nombre,apellido,usuario,email,rol from usuarios 
-                                        where id_usuario='$idusuario'";
+            $sql="SELECT id_usuario,nombre,apellido,usuario,email,rol FROM usuarios 
+                                        WHERE id_usuario= ? ";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idUsuario);
+            $idUsuario=$idusuario;
 
-            $result=mysqli_query($conexion,$sql);
+            $stmt->execute();
 
-            $mostrar=mysqli_fetch_row($result);
+            $result=$stmt->get_result();
+
+            $mostrar = $result->fetch_row();
 
             $datos=array(
                 'id_usuario' => $mostrar[0],
@@ -76,37 +97,59 @@
 
             return $datos;
         }
+
         public function actualizaUsuario($datos){
             $c=new conectar();
             $conexion=$c->conexion();
 
-            $sql="UPDATE usuarios set nombre='$datos[1]',
-                                        apellido='$datos[2]',
-                                        usuario='$datos[3]',
-                                        email='$datos[4]',
-                                        rol='$datos[5]'
-                                        where id_usuario='$datos[0]' ";
-            return mysqli_query($conexion,$sql);
+            $sql="UPDATE usuarios SET nombre=?,apellido=?,usuario=?,email=?,rol=? WHERE id_usuario=? ";
+
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("ssssss",$nombre,$apellido,$usuario,$email,$rol,$id);
+
+            $id=$nombre=$datos[0];
+            $nombre=$datos[1];
+            $apellido=$datos[2];
+            $usuario=$datos[3];
+            $email=$datos[4];
+            $rol=$datos[5];
+
+            return $stmt->execute();
 
         }
+
         public function eliminaUsuario($idusuario){
             $c=new conectar();
             $conexion=$c->conexion();
 
-            $sql="DELETE from usuarios where id_usuario='$idusuario'";
+            $sql="DELETE FROM usuarios WHERE id_usuario=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$id);
 
-            return mysqli_query($conexion,$sql);
+            $id=$idusuario;
+
+            return $stmt->execute();
         }
+
         public function traerRoles($iduser){
             $c=new conectar();
             $conexion=$c->conexion();
 
             $sql="SELECT roles.rol from usuarios 
             INNER JOIN roles ON roles.id_rol = usuarios.rol
-            where id_usuario='$iduser'";
-            $result=mysqli_query($conexion,$sql);
+            where id_usuario= ?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idUsuario);
 
-            return mysqli_fetch_row($result)[0];
+            $idUsuario=$iduser;
+
+            $stmt->execute();
+
+            $result=$stmt->get_result();
+
+            $rolUsuario = $result->fetch_row();
+
+            return $rolUsuario[0];
         }
 
         public function obtenerRolesUsuario(){
@@ -114,12 +157,14 @@
             $conexion=$c->conexion();
         
             $sql="SELECT id_rol,rol FROM roles";
-        
-            $result=mysqli_query($conexion,$sql);
+            $stmt=$conexion->prepare($sql);
+            
+            $stmt->execute();
+            $result=$stmt->get_result();
         
             $roles = array();
         
-            while($mostrar=mysqli_fetch_row($result)) {
+            while($mostrar = $result->fetch_row()) {
                 $roles[] = array(
                     'id_rol' => $mostrar[0],
                     'rol' => $mostrar[1]

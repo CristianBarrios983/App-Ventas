@@ -219,8 +219,10 @@
             $('#usuarioU').val(dato['usuario']);
             $('#emailU').val(dato['email']);
 
+            console.log("id:"+dato['id_usuario']+" "+"nombre:"+dato['nombre']+" "+"apellido:"+dato['apellido']+" "+"usuario:"+dato['usuario']+" "+"email:"+dato['email']+" "+"rol:"+dato['id_rol']);
+
             // Rol del usuario
-            var id_rol = dato['id_rol'];
+            let id_rol = dato['id_rol'];
 
             obtenerRoles(id_rol);
         }
