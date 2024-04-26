@@ -9,11 +9,16 @@
     $c = new conectar();
     $conexion = $c->conexion();
 
-    $idproducto = $_POST['idproducto'];
+    $sql="SELECT cantidad FROM articulos WHERE id_producto=?";
+    $stmt=$conexion->prepare($sql);
+    $stmt->bind_param("s",$idProducto);
 
-    $sql="SELECT cantidad FROM articulos WHERE id_producto=$idproducto";
-    $result=mysqli_query($conexion,$sql);
-    $row=mysqli_fetch_row($result);
+    $idProducto = $_POST['idproducto'];
+
+    $stmt->execute();
+
+    $result=$stmt->get_result();
+    $row=$result->fetch_row();
     $cantidad=$row[0];
 
     $cantidadRestante = $cantidad;
@@ -23,7 +28,7 @@
         $datos = explode("||", $item);
         $idProductoArray = $datos[0] ?? null;
         
-        if ($idProductoArray == $idproducto) {
+        if ($idProductoArray == $idProducto) {
             $cantidadRestante -= $datos[4] ?? 0; // Resta la cantidad del producto en la sesión temporal
             break; // Sale del bucle después de encontrar el producto
         }

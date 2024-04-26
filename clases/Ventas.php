@@ -9,12 +9,19 @@
                             art.cantidad,
                             img.ruta,
                             art.precio 
-                            from articulos as art 
-                            inner join imagenes as img 
-                            on art.id_imagen=img.id_imagen
-                            and art.id_producto='$idproducto'";
-            $result=mysqli_query($conexion,$sql);
-            $mostrar=mysqli_fetch_row($result);
+                            FROM articulos AS art 
+                            INNER JOIN imagenes AS img 
+                            ON art.id_imagen=img.id_imagen
+                            AND art.id_producto=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idProducto);
+
+            $idProducto=$idproducto;
+
+            $stmt->execute();
+
+            $result=$stmt->get_result();
+            $mostrar=$result->fetch_row();
 
             $d=explode('/', $mostrar[3]);
             $img=$d[1].'/'.$d[2].'/'.$d[3];
@@ -33,11 +40,8 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $fecha=date('Y-m-d');
-            // $idventa=self::crearFolio();
             $datos=$_SESSION['tablaComprasTemp'];
-            $idusuario=$_SESSION['id_usuario'];
-            $idCliente = $_SESSION['idcliente'];
+            
             $r=0;
 
             // Calcular el total de la venta
@@ -48,28 +52,41 @@
             }
 
             $sqlVentas = "INSERT INTO ventas (id_cliente,id_usuario,total,fechaCompra) 
-                    VALUES ('$idCliente','$idusuario','$totalVenta','$fecha')";
-            $resultVentas = mysqli_query($conexion,$sqlVentas);
+                    VALUES (?,?,?,?)";
+            $stmt=$conexion->prepare($sqlVentas);
+            $stmt->bind_param("ssss",$idCliente,$idUsuario,$totalVenta,$fechaVenta);
+
+            $idCliente = $_SESSION['idcliente'];
+            $idUsuario= $_SESSION['id_usuario'];
+            $totalVenta=$totalVenta;
+            $fechaVenta=date('Y-m-d');
+
+            $resultVentas = $stmt->execute();;
 
             if($resultVentas){
 
-                $idventa = mysqli_insert_id($conexion);
+                $idventa = $stmt->insert_id;
 
                 for ($i=0; $i < count($datos) ; $i++){
                     $d=explode("||", $datos[$i]);
     
-                    $sqlDetalles="INSERT into detalles (venta,
+                    $sqlDetalles="INSERT INTO detalles (venta,
                                                 producto,
                                                 cantidad,
                                                 precio)
-                                        VALUES ('$idventa',
-                                                '$d[0]',
-                                                '$d[4]',
-                                                '$d[3]')";
-                    $resultDetalles=mysqli_query($conexion,$sqlDetalles);
+                                        VALUES (?,?,?,?)";
+                    $stmt2=$conexion->prepare($sqlDetalles);
+                    $stmt2->bind_param("ssss",$idVenta,$producto,$cantidad,$precio);
+
+                    $idVenta=$idventa;
+                    $producto=$d[0];
+                    $cantidad=$d[4];
+                    $precio=$d[3];
+
+                    $resultDetalles=$stmt2->execute();
 
                     if($resultDetalles){
-                        self::descuentaCantidad($d[0],$d[4]);
+                        self::descuentaCantidad($producto,$cantidad);
                         $r++;
                     }else{
                         echo "Error al registrar detalle" . mysqli_error($conexion);
@@ -77,7 +94,7 @@
                 }
             
             }else{
-                echo "Erro al insertar la venta" . mysqli_error($conexion);
+                echo "Error al insertar la venta" . mysqli_error($conexion);
             }
 
             unset($_SESSION['idcliente']);
@@ -90,10 +107,17 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT nombre,apellido from clientes where id_cliente='$idCliente'";
-            $result=mysqli_query($conexion,$sql);
+            $sql="SELECT nombre,apellido FROM clientes WHERE id_cliente=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idCliente);
 
-            $mostrar=mysqli_fetch_row($result);
+            $idCliente=$idCliente;
+
+            $stmt->execute();
+
+            $result=$stmt->get_result();
+
+            $mostrar=$result->fetch_row();
 
             if(!$mostrar==null){
                 return $mostrar[0]." ".$mostrar[1];
@@ -106,12 +130,19 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT total from ventas where id_venta='$idventa'";
-            $result=mysqli_query($conexion,$sql);
+            $sql="SELECT total FROM ventas WHERE id_venta=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idVenta);
+
+            $idVenta=$idventa;
+
+            $stmt->execute();
+
+            $result=$stmt->get_result();
 
             $total=0;
 
-            while($mostrar=mysqli_fetch_row($result)){
+            while($mostrar=$result->fetch_row()){
                 $total=$total + $mostrar[0];
             }
 
@@ -123,16 +154,27 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="SELECT cantidad from articulos where id_producto='$idproducto'";
-            $result=mysqli_query($conexion,$sql);
+            $sql="SELECT cantidad from articulos where id_producto=?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idProducto);
 
-            $cantidad1=mysqli_fetch_row($result)[0];
+            $idProducto=$idproducto;
+
+            $stmt->execute();
+
+            $result=$stmt->get_result();
+
+            $cantidad1=$result->fetch_row()[0];
+
+
+            $sql2="UPDATE articulos set cantidad=? where id_producto=?";
+            $stmt2=$conexion->prepare($sql2);
+            $stmt2->bind_param("ss",$cantidadNueva,$idProducto);
 
             $cantidadNueva=abs($cantidad - $cantidad1);
+            $idProducto=$idproducto;
 
-            $sql="UPDATE articulos set cantidad='$cantidadNueva' where id_producto='$idproducto'";
-
-            mysqli_query($conexion,$sql);
+            $stmt2->execute();
         }
 
 
@@ -143,12 +185,19 @@
             $sql="SELECT articulos.nombre, detalles.cantidad, detalles.precio, ventas.total FROM detalles
             INNER JOIN ventas ON ventas.id_venta = detalles.venta
             INNER JOIN articulos ON articulos.id_producto = detalles.producto
-            WHERE detalles.venta ='$idVenta'";
-            $result=mysqli_query($conexion,$sql);
+            WHERE detalles.venta =?";
+            $stmt=$conexion->prepare($sql);
+            $stmt->bind_param("s",$idVenta);
+
+            $idVenta=$idVenta;
+
+            $stmt->execute();
+
+            $result=$stmt->get_result();
 
             $detalles = array();
 
-            while ($fila = mysqli_fetch_assoc($result)) {
+            while ($fila = $result->fetch_assoc()) {
 
                 $detalle = array(
                     'nombreProducto' => $fila['nombre'],

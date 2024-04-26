@@ -5,15 +5,21 @@
     if (isset($_POST['indice']) && isset($_POST['nuevaCantidad']) && isset($_POST['idProducto'])) {
         $indice = $_POST['indice'];
         $nuevaCantidad = $_POST['nuevaCantidad'];
-        $idProducto = $_POST['idProducto'];
 
         // Consulta para obtener la cantidad del producto
         $c = new conectar();
         $conexion = $c->conexion();
 
-        $sql = "SELECT cantidad, precio FROM articulos WHERE id_producto = '$idProducto'";
-        $result = mysqli_query($conexion, $sql);
-        $datosP = mysqli_fetch_row($result);
+        $sql = "SELECT cantidad, precio FROM articulos WHERE id_producto = ?";
+        $stmt=$conexion->prepare($sql);
+        $stmt->bind_param("s",$idProducto);
+
+        $idProducto = $_POST['idProducto'];
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $datosP = $result->fetch_row();
 
         $stock = $datosP[0];
         $precio = $datosP[1];

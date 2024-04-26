@@ -212,7 +212,6 @@
                 processData: false,
 
                 success:function(r){
-                    console.log(r);
                     if(r == 1){
                         $('#frmArticulos')[0].reset();
                         $("#tablaArticulosLoad").load("articulos/tablaArticulos.php", function() {
@@ -364,7 +363,7 @@
 <script>
     function eliminaArticulo(idArticulo){
         alertify.confirm('¿Desea eliminar esta articulo?', function(){ 
-            // alertify.success('Ok') 
+ 
             $.ajax({
                 type:"POST",
                 data:"idarticulo=" + idArticulo,
