@@ -12,7 +12,12 @@
             $nombre=$datos[1];
             $fechaRegistro=$datos[2];
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function actualizaCategoria($datos){
@@ -26,7 +31,12 @@
             $nombreCategoria=$datos[1];
             $id=$datos[0];
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function eliminaCategoria($idcategoria){
@@ -39,7 +49,12 @@
             
             $idCategoria=$idcategoria;
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
     }
 ?>

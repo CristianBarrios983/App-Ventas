@@ -33,6 +33,10 @@
                 'ruta' => $img,
                 'precio' => $mostrar[4]
             );
+
+            $stmt->close();
+            $conexion->close();
+
             return $datos;
         }
 
@@ -61,7 +65,7 @@
             $totalVenta=$totalVenta;
             $fechaVenta=date('Y-m-d');
 
-            $resultVentas = $stmt->execute();;
+            $resultVentas = $stmt->execute();
 
             if($resultVentas){
 
@@ -89,16 +93,25 @@
                         self::descuentaCantidad($producto,$cantidad);
                         $r++;
                     }else{
+                        $stmt->close();
+                        $stmt2->close();
+                        $conexion->close();
                         echo "Error al registrar detalle" . mysqli_error($conexion);
                     }
                 }
             
             }else{
+                $stmt->close();
+                $conexion->close();
                 echo "Error al insertar la venta" . mysqli_error($conexion);
             }
 
             unset($_SESSION['idcliente']);
             unset($_SESSION['cliente']);
+
+            $stmt->close();
+            $stmt2->close();
+            $conexion->close();
 
             return $r;
         }
@@ -120,9 +133,17 @@
             $mostrar=$result->fetch_row();
 
             if(!$mostrar==null){
+
+                $stmt->close();
+                $conexion->close();
                 return $mostrar[0]." ".$mostrar[1];
+
             }else{
+
+                $stmt->close();
+                $conexion->close();
                 return " ";
+
             }
         }
 
@@ -145,6 +166,9 @@
             while($mostrar=$result->fetch_row()){
                 $total=$total + $mostrar[0];
             }
+
+            $stmt->close();
+            $conexion->close();
 
             return $total;
         }
@@ -208,6 +232,10 @@
 
                 $detalles[] = $detalle;
             }
+
+            $stmt->close();
+            $conexion->close();
+
             return $detalles;
         }
     }

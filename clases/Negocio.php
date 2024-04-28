@@ -14,8 +14,13 @@
             $direccion=$datos[1];
             $telefono=$datos[2];
             $fechaRegistro=$datos[3];
+
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
                         
-            return $stmt->execute();
+            return $result;
         }
 
         public function obtenDatosNegocio($idnegocio){
@@ -42,6 +47,10 @@
                 'telefono' => $mostrar[3],
                 'fechaRegistro' => $mostrar[4]
             );
+
+            $stmt->close();
+            $conexion->close();
+
             return $datos;
         }
 
@@ -58,7 +67,12 @@
             $telefono=$datos[3];
             $idNegocio=$datos[0];
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function eliminaNegocio(){
@@ -68,7 +82,12 @@
             $sql="DELETE FROM negocio_info";
             $stmt=$conexion->prepare($sql);
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 	}
 

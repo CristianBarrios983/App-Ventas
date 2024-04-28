@@ -5,7 +5,7 @@
     $obj= new conectar();
     $conexion=$obj->conexion();
 
-    $sql="SELECT * from usuarios where id_usuario=1";
+    $sql="SELECT * FROM usuarios WHERE id_usuario=1";
     $result=mysqli_query($conexion,$sql);
     $validar=0;
     if(mysqli_num_rows($result) > 0){

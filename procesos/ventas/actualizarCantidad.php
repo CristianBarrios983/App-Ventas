@@ -41,8 +41,15 @@
                 }
             }
 
+            $stmt->close();
+            $conexion->close();
+
             echo 1;
         }else{
+
+            $stmt->close();
+            $conexion->close();
+
             echo 0;
         } 
     } else {

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "../../clases/Conexion.php";
+require_once "../../clases/Ventas.php";
 
 if (!isset($_SESSION['tablaComprasTemp'])) {
     $_SESSION['tablaComprasTemp'] = array();
@@ -29,20 +30,29 @@ foreach ($_SESSION['tablaComprasTemp'] as $item) {
 }
 
 if ($idcliente != 0) {
-    $sql = "SELECT nombre,apellido from clientes where id_cliente='$idcliente'";
-    $result = mysqli_query($conexion, $sql);
-    $c = mysqli_fetch_row($result);
-    $ncliente = $c[0] . " " . $c[1];
+
+    $obj = new ventas();
+    $ncliente = $obj->nombreCliente($idcliente);
+
 } else {
-    // Lógica específica cuando se selecciona "Sin cliente"
+    // Lógica cuando se selecciona "Sin cliente"
     $ncliente = " ";
 }
 
-$sqlArt = "SELECT articulos.nombre, articulos.id_imagen, imagenes.ruta from articulos
+$sqlArt = "SELECT articulos.nombre, articulos.id_imagen, imagenes.ruta FROM articulos
 INNER JOIN imagenes ON articulos.id_imagen = imagenes.id_imagen
-WHERE articulos.id_producto ='$idproducto'";
-$resultArt = mysqli_query($conexion, $sqlArt);
-$row = mysqli_fetch_row($resultArt);
+WHERE articulos.id_producto = ? ";
+$stmt=$conexion->prepare($sqlArt);
+$stmt->bind_param("s",$idproducto);
+
+$idproducto=$idproducto;
+
+$stmt->execute();
+
+$resultArt = $stmt->get_result();
+
+$row = $resultArt->fetch_row();
+
 $nombreproducto = $row[0];
 $imagen = $row[2];
 
@@ -75,9 +85,15 @@ if ($cantidadRestante > 0 && $cantidadRestante >= $cantidad) {
         $_SESSION['tablaComprasTemp'][] = $articulo;
     }
 
+    $stmt->close();
+    $conexion->close();
+
     echo 1;
 
 } else {
+
+    $stmt->close();
+    $conexion->close();
 
     echo 0;
 }

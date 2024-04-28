@@ -17,6 +17,9 @@
 
             $idInsertado=$stmt->insert_id;
 
+            $stmt->close();
+            $conexion->close();
+
             return $idInsertado;
         }
         public function actualizaImagen($datos) {
@@ -34,8 +37,13 @@
             $ruta=$datos[2];
             $fechaSubida = date("Y-m-d");
             $idImagen=$datos[0];
+
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
         
-            return $stmt->execute();
+            return $result;
         }
         public function insertaArticulo($datos){
             $c= new conectar();
@@ -54,7 +62,12 @@
             $precio=$datos[6];
             $fechaRegistro=date("Y-m-d");
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
         public function obtieneDatosArticulo($idarticulo){
             $c= new conectar();
@@ -87,6 +100,10 @@
                 "cantidad" => $mostrar[4],
                 "precio" => $mostrar[5]
             );
+
+            $stmt->close();
+            $conexion->close();
+
             return $datos;
         }
         public function actualizaArticulo($datos){
@@ -108,7 +125,12 @@
             $precio=$datos[4];
             $idProducto=$datos[0];
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function eliminaArticulo($idarticulo){
@@ -141,10 +163,20 @@
                 if($result2){
                     
                     if(unlink($ruta)){
+                        $stmt->close();
+                        $stmt2->close();
+                        $conexion->close();
                         return 1;
                     }
                 }
+
+                $stmt->close();
+                $stmt2->close();
+                $conexion->close();
             }
+
+            $stmt->close();
+            $conexion->close();
         }
         
         public function obtenerIdImg($idProducto){
@@ -162,6 +194,9 @@
             $result = $stmt->get_result();
         
             $idImagen = $result->fetch_row()[0];
+
+            $stmt->close();
+            $conexion->close();
         
             return $idImagen;
         }
@@ -181,6 +216,9 @@
             $result = $stmt->get_result();
         
             $rutaImagen = $result->fetch_row()[0];
+
+            $stmt->close();
+            $conexion->close();
         
             return $rutaImagen;
         }
@@ -198,7 +236,12 @@
             $cantidad=$datos[1];
             $idProducto=$datos[0];
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function obtenerCategorias(){
@@ -221,6 +264,9 @@
                     'categoria' => $mostrar[1]
                 );
             }
+
+            $stmt->close();
+            $conexion->close();
         
             return $categorias;
         }

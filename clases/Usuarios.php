@@ -17,7 +17,12 @@
             $password=$datos[5];
             $fecha=date('Y-m-d');
 
-            return $stmt->execute();
+            $result= $stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function loginUsuario($datos){
@@ -42,9 +47,16 @@
                 $_SESSION['usuario']=$datosUsuario[2]." ".$datosUsuario[3];
                 $_SESSION['id_usuario']=self::traerID($datos);
                 $_SESSION['rol']=self::traerRoles($_SESSION['id_usuario']);
+
+                $stmt->close();
+                $conexion->close();
                 
                 return 1;
+
             }else{
+                $stmt->close();
+                $conexion->close();
+
                 return 0;
             }
         }
@@ -66,6 +78,9 @@
             $result=$stmt->get_result();
 
             $idUsuario = $result->fetch_row();
+
+            $stmt->close();
+            $conexion->close();
 
             return $idUsuario[0];
         }
@@ -95,6 +110,9 @@
                 'id_rol' => $mostrar[5]
             );
 
+            $stmt->close();
+            $conexion->close();
+
             return $datos;
         }
 
@@ -114,7 +132,12 @@
             $email=$datos[4];
             $rol=$datos[5];
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
 
         }
 
@@ -128,7 +151,12 @@
 
             $id=$idusuario;
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function traerRoles($iduser){
@@ -148,6 +176,9 @@
             $result=$stmt->get_result();
 
             $rolUsuario = $result->fetch_row();
+
+            $stmt->close();
+            $conexion->close();
 
             return $rolUsuario[0];
         }
@@ -170,6 +201,9 @@
                     'rol' => $mostrar[1]
                 );
             }
+
+            $stmt->close();
+            $conexion->close();
         
             return $roles;
         }        

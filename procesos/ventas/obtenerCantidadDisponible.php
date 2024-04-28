@@ -34,5 +34,8 @@
         }
     }
 
+    $stmt->close();
+    $conexion->close();
+
     echo $cantidadRestante;
 ?>

@@ -16,7 +16,12 @@
             $email=$datos[3];
             $telefono=$datos[4];
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function obtenDatosCliente($idcliente){
@@ -43,6 +48,10 @@
                 'email' => $mostrar[4],
                 'telefono' => $mostrar[5]
             );
+
+            $stmt->close();
+            $conexion->close();
+
             return $datos;
         }
 
@@ -61,8 +70,12 @@
             $telefono=$datos[5];
             $idCliente=$datos[0];
 
+            $result=$stmt->execute();
 
-            return $stmt->execute();
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
 
         public function eliminaCliente($idcliente){
@@ -75,7 +88,12 @@
 
             $idCliente=$idcliente;
 
-            return $stmt->execute();
+            $result=$stmt->execute();
+
+            $stmt->close();
+            $conexion->close();
+
+            return $result;
         }
     }
 ?>
