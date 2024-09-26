@@ -32,7 +32,7 @@
                 success:function(r){
                     if(r==1){
                         alertify.success("Registrado exitosamente");
-                        window.location.href="inicio.php";
+                        window.location.href="configuracion.php";
                     }else{
                         alertify.error("Hubo un error :(");
                     }

@@ -1,5 +1,26 @@
 <?php
     class ventas{
+        public function buscarProductoPorNombre($nombreProducto) {
+            $c = new conectar();
+            $conexion = $c->conexion();
+        
+            $sqlProducto = "SELECT id_producto, nombre, descripcion FROM articulos WHERE nombre LIKE ?";
+            $stmt = $conexion->prepare($sqlProducto);
+            $likeNombre = "%" . $nombreProducto . "%";
+            $stmt->bind_param("s", $likeNombre);
+            $stmt->execute();
+            $resultProducto = $stmt->get_result();
+        
+            $productos = array();
+        
+            while ($producto = $resultProducto->fetch_assoc()) {
+                $productos[] = $producto;
+            }
+            
+            return $productos;
+        }
+        
+
         public function obtenDatosProducto($idproducto){
             $c=new conectar();
             $conexion=$c->conexion();

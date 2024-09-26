@@ -1,33 +1,73 @@
 // Script para rellenar los datos del producto en el formulario
-$(document).ready(function(){
+$(document).ready(function() {
 
     $('#tablaVentasTempLoad').load("ventas/tablaVentasTemp.php");
     $('label[for="cantidad"]').hide();
     $('#cantidad').hide();
-    $('#productoVenta').change(function(){
+   
+    $('#productoBuscar').keyup(function() {
+        let nombreProducto = $(this).val();
 
-        $.ajax({
-            type:"POST",
-            data:"idproducto=" + $('#productoVenta').val(),
-            url:"../procesos/ventas/llenarFormProducto.php",
-            success:function(r){
-                dato=jQuery.parseJSON(r);
+        if (nombreProducto.length >= 1) { // Buscar productos si hay al menos 2 caracteres
+            $.ajax({
+                type: "POST",
+                url: "../procesos/ventas/buscarProductoPorNombre.php", //
+                data: { nombreProducto: nombreProducto },
+                success: function(response) {
+                    console.log("Respuesta del servidor:", response); // Aquí puedes ver el objeto
+                    
+                    let productos = response; 
+                    let sugerencias = '';
                 
-                    $('#descripcionV').val(dato['descripcion']);
-                    obtenerCantidadDisponible($('#productoVenta').val());
-                    $('#stock').val(dato['cantidad']);
-                    $('#precioV').val(dato['precio']);
-                    $('#precioP').text('Precio: $' + dato['precio']);
+                    if (productos.length > 0) {
+                        productos.forEach(function(producto) {
+                            sugerencias += `<div class="producto-sugerido" data-id="${producto.id_producto}">${producto.nombre}</div>`;
+                        });
+                    } else {
+                        sugerencias = '<div>No se encontraron productos</div>';
+                    }
+                
+                    $('#sugerenciasProductos').html(sugerencias);
+                }
+            });
+        } else {
+            $('#sugerenciasProductos').empty();
+        }
+    });
 
-                    $('#descripcionV').show();
-                    $('label[for="cantidad"]').show();
-                    $('#cantidad').show();
-                    $('#btnAgregaVenta').show(); //Muestra el boton
-                    $('#message').text('');
 
+    // Al hacer clic en un producto sugerido, llenar el formulario
+    $(document).on('click', '.producto-sugerido', function() {
+        let idProducto = $(this).data('id');
+        let nombreProducto = $(this).text();
+
+        $('#productoVenta').val(idProducto);  // Guarda el ID del producto
+        $('#productoBuscar').val(nombreProducto);  // Muestra el nombre en el input
+
+        $('#sugerenciasProductos').empty();  // Oculta las sugerencias
+
+        // Realiza la petición para llenar los otros datos del producto (como antes)
+        $.ajax({
+            type: "POST",
+            data: { idproducto: idProducto },
+            url: "../procesos/ventas/llenarFormProducto.php",
+            success: function(response) {
+                let dato = JSON.parse(response);
+                $('#descripcionV').val(dato['descripcion']);
+                obtenerCantidadDisponible(idProducto);
+                $('#stock').val(dato['cantidad']);
+                $('#precioV').val(dato['precio']);
+                $('#precioP').text('Precio: $' + dato['precio']);
+
+                $('#descripcionV').show();
+                $('label[for="cantidad"]').show();
+                $('#cantidad').show();
+                $('#btnAgregaVenta').show(); // Muestra el botón
+                $('#message').text('');
             }
         });
     });
+
 
     // Funcion para obtener la cantidad disponible del producto
     function obtenerCantidadDisponible(idProducto) {

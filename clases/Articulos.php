@@ -69,7 +69,7 @@
 
             return $result;
         }
-        public function obtieneDatosArticulo($idarticulo){
+        public function obtieneDatosArticulo($iarticulo){
             $c= new conectar();
             $conexion=$c->conexion();
 

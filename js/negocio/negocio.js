@@ -40,7 +40,7 @@ $(document).ready(function(){
             success:function(r){
                 if(r==1){
                     alertify.success("Negocio actualizado exitosamente");
-                    window.location.href="inicio.php";
+                    window.location.href="configuracion.php";
                 }else{
                     alertify.error("No se pudo actualizar :(");
                 }
@@ -60,7 +60,7 @@ function eliminarNegocio(idnegocio){
             success:function(r){
                 if(r==1){
                     alertify.success("Eliminado con exito");
-                    window.location.href="inicio.php";
+                    window.location.href="configuracion.php";
                 }else{
                     alertify.error("No se pudo eliminar");
                 }

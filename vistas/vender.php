@@ -46,19 +46,14 @@
                             </select>
                         </div>
 
+                        <!-- Busqueda de producto -->
                         <div class="mb-3">
-                            <select class="form-select form-select-lg fs-6 rounded-0" id="productoVenta" name="productoVenta">
-                                <option value="" selected>Seleccione producto</option>
-                                <?php
-                                    // Consulta productos
-                                    $sqlProducto="SELECT id_producto,nombre from articulos";
-                                    $resultProducto=mysqli_query($conexion,$sqlProducto);
-                                ?>
-                                <?php while($producto=mysqli_fetch_row($resultProducto)): ?>
-                                    <option value="<?php echo $producto[0] ?>"><?php echo $producto[1] ?></option>
-                                <?php endwhile; ?>
-                            </select>
+                            <input type="text" class="form-control form-control-lg fs-6 rounded-0" id="productoBuscar" name="productoBuscar" placeholder="Buscar producto por nombre">
+                            <input type="hidden" id="productoVenta" name="productoVenta"> <!-- Guarda el ID del producto seleccionado -->
+                            <div id="sugerenciasProductos"></div> <!-- Aquí se mostrarán las sugerencias de productos -->
                         </div>
+
+
 
                         <div class="mb-3">
                             <textarea name="descripcionV" id="descripcionV" class="form-control form-control-lg fs-6 rounded-0" readonly></textarea>
