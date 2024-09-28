@@ -6,7 +6,7 @@
         <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="direccionNegocio" id="direccionNegocio" placeholder="Direccion">
     </div>
     <div class="mb-3">
-	    <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="telefonoNegocio" id="telefonoNegocio" placeholder="Telefono">
+	    <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="telefonoNegocio" id="telefonoNegocio" placeholder="Telefono">
     </div>
     <div>
 	    <button type="button" class="btn btn-primary px-4 rounded-0 d-block w-100" id="registroNegocio">Registrar</button>
@@ -15,13 +15,14 @@
 
 <script>
     $(document).ready(function(){
-        $('#registroNegocio').click(function(){
+        $('#registroNegocio').click(function(e){
 
-            vacios=validarFormVacio('frmNegocio');
+            e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
 
-            if(vacios > 0){
-                alert("Los campos no deben estar vacios");
-                return false;
+            let esValido=validarFormulario('frmNegocio');
+
+            if (!esValido) {
+                return false; // Si la validación falla, no se envía el formulario
             }
 
             datos=$('#frmNegocio').serialize();

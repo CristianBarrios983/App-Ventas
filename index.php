@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once "vistas/dependencias.php";
+    // require_once "vistas/dependencias.php";
     require_once "Clases/Conexion.php";
     $obj= new conectar();
     $conexion=$obj->conexion();
@@ -23,6 +23,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="librerias/bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="librerias/alertifyjs/css/alertify.css">
+    <link rel="stylesheet" href="librerias/alertifyjs/css/themes/default.css">
     <script src="librerias/jquery-3.6.1.min.js"></script>
     <script src="js/funciones.js"></script>
 </head>
@@ -53,33 +55,35 @@
 </body>
 </html>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#ingresarSistema').click(function(){
+<script src="librerias/alertifyjs/alertify.js"></script>
 
-            vacios=validarFormVacio('frmLogin');
+<script type="text/javascript"> 
+    $(document).ready(function() {
+        $('#ingresarSistema').click(function() {
+            // Llamar a la función de validación para el formulario
+            let esValido = validarFormulario('frmLogin'); 
 
-                if(vacios > 0){
-                    alert("Los campos no deben estar vacios");
-                    return false;
-                }
+            if (!esValido) {
+                return false; // Si la validación falla, no se envía el formulario
+            }
 
-            datos=$('#frmLogin').serialize();
+            let datos = $('#frmLogin').serialize();
             $.ajax({
-                type:"POST",
-                data:datos,
-                url:"procesos/regLogin/login.php",
-                success:function(r){
-                    if(r==1){
-                        window.location="vistas/inicio.php";
-                    }else{
-                        alert("No se pudo acceder :(");
+                type: "POST",
+                data: datos,
+                url: "procesos/regLogin/login.php",
+                success: function(r) {
+                    if (r == 1) {
+                        window.location = "vistas/inicio.php";
+                    } else {
+                        alertify.alert("No se pudo acceder :(");
                     }
                 }
             });
         });
     });
 </script>
+
 
 <?php
     }else{

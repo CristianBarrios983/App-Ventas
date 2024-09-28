@@ -31,8 +31,18 @@ function agregaDatosNegocio(idnegocio){
 
 // Funcion para actualizar negocio
 $(document).ready(function(){
-    $('#actualizarNegocioU').click(function(){
+    $('#actualizarNegocioU').click(function(e){
+
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
+
+        let esValido=validarFormulario('frmNegocioU');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
+        }
+
         datos=$('#frmNegocioU').serialize();
+
         $.ajax({
             type:"POST",
             data:datos,

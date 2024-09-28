@@ -99,6 +99,7 @@
 </div>
 
 <script src="../js/ventas/ventas.js"></script>
+<script src="../js/funciones.js"></script>
 
 <?php
         }else{

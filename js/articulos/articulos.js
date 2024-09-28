@@ -18,13 +18,14 @@ document.addEventListener("DOMContentLoaded", function() {
 // Script para agregar producto
 $(document).ready(function(){
 
-    $('#btnAgregaArticulo').click(function(){
+    $('#btnAgregaArticulo').click(function(e){
 
-        vacios=validarFormVacio('frmArticulos');
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
 
-        if(vacios > 0){
-            alertify.alert("Los campos no deben estar vacios");
-            return false;
+        let esValido=validarFormulario('frmArticulos');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
         }
 
         var formData= new FormData(document.getElementById("frmArticulos"));
@@ -55,6 +56,11 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Agregado con exito");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#abremodalRegistroArticulo').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
                 }else{
                     alertify.error("Fallo al agregar el producto");
                 }
@@ -148,9 +154,17 @@ function obtenerCategorias (id_categoria) {
 
 // Script para actualizar producto
 $(document).ready(function(){
-    $('#btnActualizaArticulo').click(function(){
+    $('#btnActualizaArticulo').click(function(e){
 
-        var formDataU= new FormData(document.getElementById("frmArticulosU"));
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
+
+        let esValido=validarFormulario('frmArticulosU');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
+        }
+
+        let formDataU= new FormData(document.getElementById("frmArticulosU"));
 
         $.ajax({
             type:"POST",
@@ -175,6 +189,11 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Se actualizo con exito");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#abremodalUpdateArticulo').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
                 }else{
                     alertify.error("No se pudo actualizar");
                 }

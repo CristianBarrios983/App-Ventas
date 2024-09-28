@@ -112,7 +112,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-        <button id="actualizarNegocioU" type="button" class="btn btn-primary rounded-0">Actualizar</button>
+        <button id="actualizarNegocioU" type="submit" class="btn btn-primary rounded-0">Actualizar</button>
       </div>
     </div>
   </div>
@@ -122,6 +122,7 @@
 </html>
 
 <script src="../js/negocio/negocio.js"></script>
+<script src="../js/funciones.js"></script>
 
 
 <?php

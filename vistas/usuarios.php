@@ -83,7 +83,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-        <button id="registro" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Registrar usuario</button>
+        <button id="registro" type="submit" class="btn btn-primary rounded-0">Registrar usuario</button>
       </div>
     </div>
   </div>
@@ -131,7 +131,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-        <button id="btnActualizaUsuario" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Actualizar</button>
+        <button id="btnActualizaUsuario" type="submit" class="btn btn-primary rounded-0">Actualizar</button>
       </div>
     </div>
   </div>
@@ -141,6 +141,7 @@
 </html>
 
 <script src="../js/usuarios/usuarios.js"></script>
+<script src="../js/funciones.js"></script>
 
 <?php
         }else{

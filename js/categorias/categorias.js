@@ -17,15 +17,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Script para agregar categoria
 $(document).ready(function(){
-    $('#btnAgregaCategoria').click(function(){
-        vacios=validarFormVacio('frmCategorias');
+    $('#btnAgregaCategoria').click(function(e){
 
-        if(vacios > 0){
-            alertify.alert("Los campos no deben estar vacios");
-            return false;
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
+
+        let esValido=validarFormulario('frmCategorias');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
         }
         
         datos=$('#frmCategorias').serialize();
+
         $.ajax({
             type:"POST",
             data:datos,
@@ -47,6 +50,11 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Categoria agregada exitosamente");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#registraCategoria').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
                 }else{
                     alertify.error("No se pudo agregar la categoria :(");
                 }
@@ -64,8 +72,18 @@ function agregaDato(idCategoria,categoria){
 
 // Script para actualizar categoria
 $(document).ready(function(){
-    $('#btnActualizaCategoria').click(function(){
+    $('#btnActualizaCategoria').click(function(e){
+
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
+
+        let esValido=validarFormulario('frmCategoriaU');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
+        }
+
         datos=$('#frmCategoriaU').serialize();
+
         $.ajax({
             type:"POST",
             data:datos,
@@ -85,6 +103,11 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Actualizado con exito");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#actualizaCategoria').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
                 }else{
                     alertify.error("No se pudo actualizar")
                 }

@@ -17,13 +17,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Script para agregar clientes
 $(document).ready(function(){
-    $('#btnAgregaCliente').click(function(){
+    $('#btnAgregaCliente').click(function(e){
 
-        vacios=validarFormVacio('frmClientes');
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
 
-        if(vacios > 0){
-            alertify.alert("Los campos no deben estar vacios");
-            return false;
+        let esValido=validarFormulario('frmClientes');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
         }
         
     datos=$('#frmClientes').serialize();
@@ -48,6 +49,11 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Cliente agregado exitosamente");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#registraClienteModal').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
                 }else{
                     alertify.error("No se pudo agregar el cliente :(");
                 }
@@ -76,8 +82,18 @@ function agregaDatosCliente(idcliente){
 
 // Script para actualizar cliente
 $(document).ready(function(){
-    $('#btnAgregarClienteU').click(function(){
+    $('#btnAgregarClienteU').click(function(e){
+
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
+
+        let esValido=validarFormulario('frmClientesU');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
+        }
+
         datos=$('#frmClientesU').serialize();
+
         $.ajax({
             type:"POST",
             data:datos,
@@ -99,6 +115,11 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Cliente actualizado exitosamente");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#abremodalClientesUpdate').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
                 }else{
                     alertify.error("No se pudo actualizar :(");
                 }

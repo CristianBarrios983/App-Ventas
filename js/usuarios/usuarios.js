@@ -20,16 +20,18 @@ document.addEventListener("DOMContentLoaded", function() {
 // Script para registrar un usuario
 $(document).ready(function(){
 
-    $('#registro').click(function(){
+    $('#registro').click(function(e){
 
-        vacios=validarFormVacio('frmRegistro');
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
 
-        if(vacios > 0){
-            alertify.alert("Los campos no deben estar vacios");
-            return false;
+        let esValido=validarFormulario('frmRegistro');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
         }
 
         datos=$('#frmRegistro').serialize();
+
         $.ajax({
             type:"POST",
             data:datos,
@@ -52,6 +54,12 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Registrado con exito!");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#registraUsuarioModal').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
+
                 }else{
                     alertify.error("Hubo un error");
                 }
@@ -114,8 +122,18 @@ function obtenerRoles (id_rol) {
 
 // Script para actualizar usuario
 $(document).ready(function(){
-    $('#btnActualizaUsuario').click(function(){
+    $('#btnActualizaUsuario').click(function(e){
+
+        e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
+
+        let esValido=validarFormulario('frmRegistroU');
+
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
+        }
+
         datos=$('#frmRegistroU').serialize();
+
         $.ajax({
             type:"POST",
             data:datos,
@@ -136,6 +154,11 @@ $(document).ready(function(){
                         });
                     });
                     alertify.success("Se actualizo con exito");
+
+                    // Cerrar el modal solo si el registro fue exitoso
+                    $('#actualizaUsuarioModal').modal('hide');
+                    // Eliminar el backdrop manualmente
+                    $('.modal-backdrop').remove();
                 }else{
                     alertify.error("No se pudo actualizar");
                 }

@@ -55,7 +55,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-        <button id="btnAgregaCategoria" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Registrar</button>
+        <button id="btnAgregaCategoria" type="button" class="btn btn-primary rounded-0">Registrar</button>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-        <button id="btnActualizaCategoria" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Actualizar</button>
+        <button id="btnActualizaCategoria" type="button" class="btn btn-primary rounded-0">Actualizar</button>
       </div>
     </div>
   </div>
@@ -95,6 +95,7 @@
 </html>
 
 <script src="../js/categorias/categorias.js"></script>
+<script src="../js/funciones.js"></script>
 
 <?php
         }else{

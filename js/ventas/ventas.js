@@ -82,14 +82,13 @@ $(document).ready(function() {
     }
 
     // En este script se agrega la venta
-    $('#btnAgregaVenta').click(function(){
+    $('#btnAgregaVenta').click(function(e){
 
         // Validaciones de los campos para evitar datos incorrectos
-        vacios = validarFormVacio('frmVentasProductos');
+        let esValido=validarFormulario('frmVentasProductos');
 
-        if (vacios > 0) {
-            alertify.alert("Los campos no deben estar vacios");
-            return false;
+        if (!esValido) {
+            return false; // Si la validación falla, no se envía el formulario
         }
 
         let cantidad = parseInt($('#cantidad').val());

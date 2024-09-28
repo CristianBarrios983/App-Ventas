@@ -20,6 +20,8 @@
     <title>Registro</title>
     <link rel="stylesheet" href="librerias/bootstrap-5.3.3-dist/css/bootstrap.css">
     <script src="librerias/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="librerias/alertifyjs/css/alertify.css">
+    <link rel="stylesheet" href="librerias/alertifyjs/css/themes/default.css">
     <script src="js/funciones.js"></script>
 </head>
 <body class="m-0 bg-dark">
@@ -60,16 +62,20 @@
 </body>
 </html>
 
+<script src="librerias/alertifyjs/alertify.js"></script>
+
+
 <script>
     $(document).ready(function(){
-        $('#registro').click(function(){
+        $('#registro').click(function(e){
 
-            vacios=validarFormVacio('frmRegistro');
+          e.preventDefault(); // Evita el comportamiento predeterminado del botón de enviar
 
-            if(vacios > 0){
-                alert("Los campos no deben estar vacios");
-                return false;
-            }
+          let esValido=validarFormulario('frmRegistro');
+
+          if (!esValido) {
+              return false; // Si la validación falla, no se envía el formulario
+          }
 
             datos=$('#frmRegistro').serialize();
             $.ajax({

@@ -65,7 +65,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-            <button id="btnAgregaCliente" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Registrar cliente</button>
+            <button id="btnAgregaCliente" type="submit" class="btn btn-primary rounded-0">Registrar cliente</button>
         </div>
         </div>
     </div>
@@ -108,7 +108,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-            <button id="btnAgregarClienteU" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Actualizar</button>
+            <button id="btnAgregarClienteU" type="submit" class="btn btn-primary rounded-0">Actualizar</button>
         </div>
         </div>
     </div>
@@ -117,6 +117,7 @@
 </html>
 
 <script src="../js/clientes/clientes.js"></script>
+<script src="../js/funciones.js"></script>
 
 <?php
     }else{
