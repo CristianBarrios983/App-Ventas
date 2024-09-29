@@ -168,31 +168,31 @@
             }
         }
 
-        public function obtenerTotal($idventa){
-            $c= new conectar();
-            $conexion=$c->conexion();
+        // public function obtenerTotal($idventa){
+        //     $c= new conectar();
+        //     $conexion=$c->conexion();
 
-            $sql="SELECT total FROM ventas WHERE id_venta=?";
-            $stmt=$conexion->prepare($sql);
-            $stmt->bind_param("s",$idVenta);
+        //     $sql="SELECT total FROM ventas WHERE id_venta=?";
+        //     $stmt=$conexion->prepare($sql);
+        //     $stmt->bind_param("s",$idVenta);
 
-            $idVenta=$idventa;
+        //     $idVenta=$idventa;
 
-            $stmt->execute();
+        //     $stmt->execute();
 
-            $result=$stmt->get_result();
+        //     $result=$stmt->get_result();
 
-            $total=0;
+        //     $total=0;
 
-            while($mostrar=$result->fetch_row()){
-                $total=$total + $mostrar[0];
-            }
+        //     while($mostrar=$result->fetch_row()){
+        //         $total=$total + $mostrar[0];
+        //     }
 
-            $stmt->close();
-            $conexion->close();
+        //     $stmt->close();
+        //     $conexion->close();
 
-            return $total;
-        }
+        //     return $total;
+        // }
 
 
         public function descuentaCantidad($idproducto,$cantidad){

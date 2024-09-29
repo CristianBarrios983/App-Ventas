@@ -13,9 +13,9 @@ $conexion = $c->conexion();
 $idcliente = $_POST['clienteVenta'];
 $idproducto = $_POST['productoVenta'];
 $stock = $_POST['stock'];
-$cantidad = $_POST['cantidad'];
+$cantidad = (int)$_POST['cantidad']; // Aseguramos que la cantidad sea un entero
 $descripcion = $_POST['descripcionV'];
-$precio = $_POST['precioV'];
+$precio = (float)$_POST['precioV']; // Aseguramos que el precio sea decimal
 
 $cantidadRestante = $stock;
 
@@ -25,27 +25,24 @@ foreach ($_SESSION['tablaComprasTemp'] as $item) {
 
     if ($idProductoArray == $idproducto) {
         $cantidadRestante -= $datos[4] ?? 0; // Resta la cantidad del producto en la sesión temporal
-        break; // Sale del bucle después de encontrar el producto
+        break;
     }
 }
 
 if ($idcliente != 0) {
-
     $obj = new ventas();
     $ncliente = $obj->nombreCliente($idcliente);
-
 } else {
-    // Lógica cuando se selecciona "Sin cliente"
     $ncliente = " ";
 }
 
 $sqlArt = "SELECT articulos.nombre, articulos.id_imagen, imagenes.ruta FROM articulos
 INNER JOIN imagenes ON articulos.id_imagen = imagenes.id_imagen
 WHERE articulos.id_producto = ? ";
-$stmt=$conexion->prepare($sqlArt);
-$stmt->bind_param("s",$idproducto);
+$stmt = $conexion->prepare($sqlArt);
+$stmt->bind_param("s", $idproducto);
 
-$idproducto=$idproducto;
+$idproducto = $idproducto;
 
 $stmt->execute();
 
@@ -57,7 +54,6 @@ $nombreproducto = $row[0];
 $imagen = $row[2];
 
 if ($cantidadRestante > 0 && $cantidadRestante >= $cantidad) {
-    // Verificar si el producto ya está en el array
     $productoExiste = false;
     $_SESSION['idcliente'] = $idcliente;
     $_SESSION['cliente'] = $ncliente;
@@ -68,33 +64,30 @@ if ($cantidadRestante > 0 && $cantidadRestante >= $cantidad) {
         $idProductoArray = $datos[0];
 
         if ($idProductoArray == $idproducto) {
-            // El producto ya existe, actualiza la cantidad y la cantidad restante
-            $cantidadTotal = $datos[4] + $cantidad;
-            $precioTotal = $precio * $cantidadTotal;
-            $item = $datos[0] . "||" . $datos[1] . "||" . $datos[2] . "||" . $precioTotal . "||" . $cantidadTotal . "||" . $datos[5]; // Actualiza la cantidad
-            $cantidadRestante -= $cantidad; // Resta la cantidad ingresada de la cantidad restante disponible
+            $cantidadTotal = (int)$datos[4] + $cantidad; // Aseguramos que la cantidad sea entera
+            $precioTotal = (float)$precio * $cantidadTotal; // El precio es decimal
+            $item = $datos[0] . "||" . $datos[1] . "||" . $datos[2] . "||" . $precioTotal . "||" . $cantidadTotal . "||" . $datos[5];
+            $cantidadRestante -= $cantidad;
             $productoExiste = true;
             break;
         }
     }
 
     if (!$productoExiste) {
-        // El producto no existe, agrega uno nuevo con cantidad 1
-        $precioTotal = $precio * $cantidad;
+        // El producto no existe, agrega uno nuevo
+        $precioTotal = $precio * $cantidad; // Calcula el precio total sin formatear
         $articulo = $idproducto . "||" . $nombreproducto . "||" . $descripcion . "||" . $precioTotal . "||" . $cantidad . "||" . $imagen;
         $_SESSION['tablaComprasTemp'][] = $articulo;
     }
+    
 
     $stmt->close();
     $conexion->close();
 
     echo 1;
-
 } else {
-
     $stmt->close();
     $conexion->close();
-
     echo 0;
 }
 ?>

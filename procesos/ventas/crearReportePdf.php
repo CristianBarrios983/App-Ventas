@@ -5,7 +5,7 @@ use Dompdf\Dompdf;
 
 $id = $_GET['idventa'];
 
-$html = file_get_contents("http://localhost/AppVentas/vistas/ventas/reporteVentaPdf.php?idventa=" . $id);
+$html = file_get_contents("http://localhost/app-ventas/vistas/ventas/reporteVentaPdf.php?idventa=" . $id);
 
 // Instanciamos un objeto de la clase DOMPDF con las opciones configuradas
 $pdf = new Dompdf();

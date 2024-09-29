@@ -10,7 +10,7 @@
         
             $obj= new ventas();
         
-            $sql="SELECT id_venta,fechaCompra,id_cliente, usuarios.nombre from ventas 
+            $sql="SELECT id_venta,fechaCompra,id_cliente, usuarios.nombre, ventas.total from ventas 
             INNER JOIN usuarios ON ventas.id_usuario = usuarios.id_usuario
             GROUP BY id_venta";
             $result=mysqli_query($conexion,$sql);
@@ -96,7 +96,7 @@
         <td><?php echo $mostrar[3]; ?></td>
         <td>
             <?php
-                echo '<label class="fw-bold text-success">$</label>'.$obj->obtenerTotal($mostrar[0]);
+                echo '<label class="fw-bold text-success">$</label>'.$mostrar[4];
             ?>
         </td>
         <td><a target="_blank" href="../procesos/ventas/crearTicketPdf.php?idventa=<?php echo $mostrar[0] ?>" class="btn btn-danger btn-xs rounded-0">
