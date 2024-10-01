@@ -4,7 +4,8 @@
             $c = new conectar();
             $conexion = $c->conexion();
         
-            $sqlProducto = "SELECT id_producto, nombre, descripcion FROM articulos WHERE nombre LIKE ?";
+            // Agregamos la condición para que solo busque productos con estado 1
+            $sqlProducto = "SELECT id_producto, nombre, descripcion FROM articulos WHERE nombre LIKE ? AND estado = 1";
             $stmt = $conexion->prepare($sqlProducto);
             $likeNombre = "%" . $nombreProducto . "%";
             $stmt->bind_param("s", $likeNombre);
@@ -16,9 +17,10 @@
             while ($producto = $resultProducto->fetch_assoc()) {
                 $productos[] = $producto;
             }
-            
+        
             return $productos;
         }
+        
         
 
         public function obtenDatosProducto($idproducto){

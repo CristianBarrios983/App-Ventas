@@ -136,48 +136,31 @@
         public function eliminaArticulo($idarticulo){
             $c = new conectar();
             $conexion = $c->conexion();
-
+        
             // Llama a obtenerIdImg usando la instancia actual del objeto
             $idImagen = $this->obtenerIdImg($idarticulo);
-
-            $ruta = $this->obtenerRutaImagen($idImagen);
         
-            $sql = "DELETE FROM articulos WHERE id_producto=?";
+            // En lugar de eliminar físicamente el producto, solo cambiamos su estado a 0 (inactivo)
+            $sql = "UPDATE articulos SET estado=0 WHERE id_producto=?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("s", $idProducto);
         
             $idProducto = $idarticulo;
-        
+            
             $result = $stmt->execute();
         
+            // Si se "eliminó" lógicamente el producto, no eliminamos la imagen, solo retornamos éxito.
             if($result){
-
-                $sql2 = "DELETE FROM imagenes WHERE id_imagen=?";
-                $stmt2 = $conexion->prepare($sql2);
-                $stmt2->bind_param("s", $idImg);
-
-                $idImg = $idImagen;
-        
-                $result2 = $stmt2->execute();
-        
-                if($result2){
-                    
-                    if(unlink($ruta)){
-                        $stmt->close();
-                        $stmt2->close();
-                        $conexion->close();
-                        return 1;
-                    }
-                }
-
                 $stmt->close();
-                $stmt2->close();
                 $conexion->close();
+                return 1; // Operación exitosa, pero sin eliminar la imagen
             }
-
+        
             $stmt->close();
             $conexion->close();
+            return 0; // Si falló la operación
         }
+        
         
         public function obtenerIdImg($idProducto){
             $c = new conectar();

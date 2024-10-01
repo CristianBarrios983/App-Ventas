@@ -40,21 +40,31 @@
         }
 
         public function eliminaCategoria($idcategoria){
-            $c= new conectar();
-            $conexion=$c->conexion();
-
-            $sql="DELETE FROM categorias WHERE id_categoria=?";
-            $stmt=$conexion->prepare($sql);
-            $stmt->bind_param("s",$idCategoria);
-            
-            $idCategoria=$idcategoria;
-
-            $result=$stmt->execute();
-
-            $stmt->close();
+            $c = new conectar();
+            $conexion = $c->conexion();
+        
+            // Primero reasignamos los productos a una categoría por defecto, como "Sin categoría"
+            // Asegúrate de que existe una categoría con el nombre 'Sin categoría'
+            $sqlUpdateProductos = "UPDATE articulos 
+                                   SET id_categoria = (SELECT id_categoria FROM categorias WHERE nombreCategoria = 'Sin categoría') 
+                                   WHERE id_categoria = ?";
+            $stmtUpdate = $conexion->prepare($sqlUpdateProductos);
+            $stmtUpdate->bind_param("s", $idCategoria);
+            $idCategoria = $idcategoria;
+            $stmtUpdate->execute();
+            $stmtUpdate->close();
+        
+            // Después eliminamos la categoría
+            $sqlDeleteCategoria = "DELETE FROM categorias WHERE id_categoria = ?";
+            $stmtDelete = $conexion->prepare($sqlDeleteCategoria);
+            $stmtDelete->bind_param("s", $idCategoria);
+            $result = $stmtDelete->execute();
+        
+            $stmtDelete->close();
             $conexion->close();
-
+        
             return $result;
         }
+        
     }
 ?>

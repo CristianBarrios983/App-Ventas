@@ -80,7 +80,10 @@
                                 $c= new conectar();
                                 $conexion=$c->conexion();
 
-                                $sql = "SELECT COUNT(id_producto) total FROM articulos";
+                                $sql = "SELECT COUNT(id_producto) AS total 
+                                                                FROM articulos 
+                                                                WHERE estado = 1
+                                                                ";
                                 $result = mysqli_query($conexion,$sql);
                                 $productos = mysqli_fetch_assoc($result);
                             ?>
@@ -148,10 +151,14 @@
                             $c= new conectar();
                             $conexion=$c->conexion();
 
-                            $sql="SELECT articulos.nombre, articulos.descripcion, SUM(detalles.cantidad) as cantidad
-                                FROM detalles JOIN articulos ON detalles.producto = articulos.id_producto
-                                GROUP BY articulos.id_producto
-                                ORDER BY COUNT(detalles.producto) DESC LIMIT 5;";
+                            $sql="SELECT articulos.nombre, articulos.descripcion, SUM(detalles.cantidad) AS cantidad
+                                    FROM detalles 
+                                    JOIN articulos ON detalles.producto = articulos.id_producto
+                                    WHERE articulos.estado = 1  -- Solo productos activos
+                                    GROUP BY articulos.id_producto
+                                    ORDER BY cantidad DESC  -- Ordenar por cantidad de mayor a menor
+                                    LIMIT 10;
+                                ";
 
                             $result=mysqli_query($conexion,$sql);
                             $id=0;

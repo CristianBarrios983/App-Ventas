@@ -4,7 +4,7 @@
     $c= new conectar();
     $conexion=$c->conexion();
 
-    $sql="SELECT id_categoria,nombreCategoria FROM categorias;";
+    $sql="SELECT id_categoria, nombreCategoria FROM categorias WHERE nombreCategoria != 'Sin categoría'";
 
     $result=mysqli_query($conexion,$sql);
 ?>
