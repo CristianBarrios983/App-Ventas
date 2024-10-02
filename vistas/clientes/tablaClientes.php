@@ -17,7 +17,7 @@
       <th scope="col">Direccion</th>
       <th scope="col">Email</th>
       <th scope="col">Telefono</th>
-      <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
+      <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Vendedor"): ?>
       <th scope="col" colspan="2">Acciones</th>
       <?php endif; ?>
     </tr>
@@ -31,7 +31,7 @@
       <td><?php echo $mostrar[3]; ?></td>
       <td><?php echo $mostrar[4]; ?></td>
       <td><?php echo $mostrar[5]; ?></td>
-      <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Supervisor"): ?>
+      <?php if($_SESSION['rol'] == "Administrador" || $_SESSION['rol'] == "Vendedor"): ?>
       <td>
           <span class="btn btn-warning btn-xs rounded-0" data-bs-toggle="modal" data-bs-target="#abremodalClientesUpdate" onclick="agregaDatosCliente('<?php echo $mostrar[0]; ?>')">
               <span class="bi bi-pen-fill"></span>

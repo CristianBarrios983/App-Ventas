@@ -49,9 +49,9 @@
             $c= new conectar();
             $conexion=$c->conexion();
 
-            $sql="INSERT INTO articulos (id_categoria,id_imagen,id_usuario,nombre,descripcion,cantidad,precio,fechaCaptura) VALUES (?,?,?,?,?,?,?,?)";
+            $sql="INSERT INTO articulos (id_categoria,id_imagen,id_usuario,nombre,descripcion,cantidad,precio,stock_minimo,fechaCaptura) VALUES (?,?,?,?,?,?,?,?,?)";
             $stmt=$conexion->prepare($sql);
-            $stmt->bind_param("ssssssss",$idCategoria,$idImagen,$idUsuario,$nombre,$descripcion,$cantidad,$precio,$fechaRegistro);
+            $stmt->bind_param("sssssssss",$idCategoria,$idImagen,$idUsuario,$nombre,$descripcion,$cantidad,$precio,$stock_minimo,$fechaRegistro);
 
             $idCategoria=$datos[0];
             $idImagen=$datos[1];
@@ -60,6 +60,7 @@
             $descripcion=$datos[4];
             $cantidad=$datos[5];
             $precio=$datos[6];
+            $stock_minimo=$datos[7];
             $fechaRegistro=date("Y-m-d");
 
             $result=$stmt->execute();
@@ -69,43 +70,46 @@
 
             return $result;
         }
-        public function obtieneDatosArticulo($iarticulo){
+
+        public function obtieneDatosArticulo($idarticulo){
             $c= new conectar();
-            $conexion=$c->conexion();
-
-            $sql="SELECT id_producto,
-                            id_categoria,
-                            nombre,
-                            descripcion,
-                            cantidad,
-                            precio
-                            FROM articulos WHERE id_producto=?";
-
-            $stmt=$conexion->prepare($sql);
-            $stmt->bind_param("s",$idArticulo);
-
-            $idArticulo=$idarticulo;
-
+            $conexion = $c->conexion();
+        
+            // Asegurarse de asignar el valor antes del bind_param
+            $idArticulo = $idarticulo;
+        
+            $sql = "SELECT id_producto, id_categoria, nombre, descripcion, cantidad, precio, stock_minimo
+                    FROM articulos WHERE id_producto = ?";
+        
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("s", $idArticulo);
+        
             $stmt->execute();
-
-            $result=$stmt->get_result();
-
-            $mostrar=$result->fetch_row();
-
-            $datos=array(
-                "id_producto" => $mostrar[0],
-                "id_categoria" => $mostrar[1],
-                "nombre" => $mostrar[2],
-                "descripcion" => $mostrar[3],
-                "cantidad" => $mostrar[4],
-                "precio" => $mostrar[5]
-            );
-
+        
+            $result = $stmt->get_result();
+            $mostrar = $result->fetch_row();
+        
+            if($mostrar) { // Verificar si el resultado es válido
+                $datos = array(
+                    "id_producto" => $mostrar[0],
+                    "id_categoria" => $mostrar[1],
+                    "nombre" => $mostrar[2],
+                    "descripcion" => $mostrar[3],
+                    // "cantidad" => $mostrar[4],
+                    "precio" => $mostrar[5],
+                    "stock_minimo" => $mostrar[6]
+                );
+            } else {
+                $datos = array("error" => "No se encontró el artículo.");
+            }
+        
             $stmt->close();
             $conexion->close();
-
+        
             return $datos;
         }
+        
+
         public function actualizaArticulo($datos){
             $c= new conectar();
             $conexion=$c->conexion();
@@ -113,16 +117,18 @@
             $sql="UPDATE articulos SET id_categoria=?,
                                         nombre=?,
                                         descripcion=?,
-                                        precio=?
+                                        precio=?,
+                                        stock_minimo=?
                                         WHERE id_producto=?";
 
             $stmt=$conexion->prepare($sql);
-            $stmt->bind_param("sssss",$idCategoria,$nombre,$descripcion,$precio,$idProducto);
+            $stmt->bind_param("ssssss",$idCategoria,$nombre,$descripcion,$precio,$stock_minimo,$idProducto);
 
             $idCategoria=$datos[1];
             $nombre=$datos[2];
             $descripcion=$datos[3];
             $precio=$datos[4];
+            $stock_minimo=$datos[5];
             $idProducto=$datos[0];
 
             $result=$stmt->execute();

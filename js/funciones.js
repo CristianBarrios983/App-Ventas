@@ -20,6 +20,7 @@ function validarFormulario(formulario) {
         let regexNombreProducto = /^[a-zA-ZÀ-ÿ0-9\s\-_.]+$/u; // Permite letras, números, espacios, guiones, guiones bajos y puntos.
         let regexPrecio = /^\d+(\.\d{1,2})?$/; // Valida números enteros o decimales con hasta dos cifras decimales.
         let regexCantidad = /^[1-9]\d*$/; // Valida números enteros positivos (no permite cero).
+        let regexStockMinimo = /^[0-9]+$/; //Valida numeros enteros positivos (incluye cero).
         let regexDireccion = /^[a-zA-Z0-9\s,.-]+$/; // Permite letras, números, espacios, comas y puntos
         let regexTelefono = /^\d{10}$/; // 10 dígitos
         let regexNombreNegocio = /^[a-zA-Z0-9\s&.,-]+$/;
@@ -66,30 +67,39 @@ function validarFormulario(formulario) {
                 }
                 break;
             case 'frmArticulos':
+                let inputFile = document.getElementById('imagen');  // Asegúrate que este ID coincida con tu campo en el HTML
+                    
                 // Validar nombre del producto
                 if (nombreCampo === "nombre" && !regexNombreProducto.test(valorCampo)) {
                     errores.push("El campo nombre debe ser válido (sin caracteres especiales).");
                 }
-                
+                    
                 // Validar descripción del producto
                 if (nombreCampo === "descripcion" && !regexNombreProducto.test(valorCampo)) {
                     errores.push("El campo descripción debe ser válido (sin caracteres especiales).");
                 }
-
+                
                 // Validar precio
                 if (nombreCampo === "precio" && !regexPrecio.test(valorCampo)) {
                     errores.push("El campo precio debe ser un número válido (puede incluir decimales).");
                 }
-
+                
                 // Validar cantidad
                 if (nombreCampo === "cantidad" && !regexCantidad.test(valorCampo)) {
-                    errores.push("El campo cantidad debe ser un número entero positivo.");
+                    errores.push("El campo cantidad debe ser un número entero positivo mayor a 0.");
                 }
-                // Validar que se haya seleccionado un archivo
-                if (nombreCampo === "imagen" && !valorCampo) {
+                    
+                // Validar stock minimo
+                 if (nombreCampo === "stock_minimo" && !regexStockMinimo.test(valorCampo)) {
+                    errores.push("El campo stock minimo debe ser un número entero positivo.");
+                }
+                
+                // Validar que se haya seleccionado un archivo solo si el campo imagen está presente
+                if (nombreCampo === "imagen" && inputFile.files.length === 0) {
                     errores.push("Debes seleccionar una imagen.");
                 }
-                break;
+                
+                break;                
             case 'frmArticulosU':
                 // Validar nombre del producto
                 if (nombreCampo === "nombreU" && !regexNombreProducto.test(valorCampo)) {
@@ -110,9 +120,15 @@ function validarFormulario(formulario) {
                 // if (nombreCampo === "cantidad" && !regexCantidad.test(valorCampo)) {
                 //     errores.push("El campo cantidad debe ser un número entero positivo.");
                 // }
-                // Validar que se haya seleccionado un archivo
-                if (nombreCampo === "imagenU" && !valorCampo) {
-                    errores.push("Debes seleccionar una imagen.");
+                //Valida stock minimo
+                if (nombreCampo === "stock_minimoU" && !regexStockMinimo.test(valorCampo)) {
+                    errores.push("El campo stock minimo debe ser un número entero positivo.");
+                }
+                break;
+            case 'frmStockU':
+                // Validar stock a añadir
+                if (nombreCampo === "cantidadA" && !regexCantidad.test(valorCampo)) {
+                    errores.push("El campo debe ser un número entero positivo mayor a cero.");
                 }
                 break;
             case 'frmCategorias':

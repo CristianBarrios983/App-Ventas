@@ -161,3 +161,8 @@ function eliminarCliente(idcliente){
         alertify.error('Cancelar')
     });
 }
+
+
+document.getElementById('registraClienteModal').addEventListener('hidden.bs.modal', function () {
+    $('#frmClientes')[0].reset();
+});

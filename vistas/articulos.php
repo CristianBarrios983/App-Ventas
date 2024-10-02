@@ -72,10 +72,16 @@
                     <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="cantidad" id="cantidad" placeholder="Cantidad">
                 </div>
                 <div class="mb-3">
+                    <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="stock_minimo" id="stock_minimo" placeholder="Stock minimo">
+                </div>
+                <div class="mb-3">
                     <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="precio" id="precio" placeholder="Precio">
                 </div>
                 <div>
-                    <input type="file" id="imagen" name="imagen" class="form-control form-control-lg fs-6 rounded-0">
+                    <input type="file" id="imagen" name="imagen" class="form-control form-control-lg fs-6 rounded-0" onchange="vistaPreliminar(event)">
+                </div>
+                <div class="mb-3">
+                  <img class="d-block w-100" src="" alt="" id="img-preview">
                 </div>
             </form>
       </div>
@@ -121,9 +127,16 @@
                 <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="precioU" id="precioU">
             </div>
             <div class="mb-3">
-                <label for="" class="form-label text-secondary fs-6">Cambiar imagen</label>
-                <input type="file" id="imagenU" name="imagenU" class="form-control form-control-lg fs-6 rounded-0">
+                <label for="" class="form-label text-secondary fs-6">Stock_minimo</label>
+                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="stock_minimoU" id="stock_minimoU">
             </div>
+            <div class="mb-3">
+                <label for="" class="form-label text-secondary fs-6">Cambiar imagen (opcional)</label>
+                <input type="file" id="imagenU" name="imagenU" class="form-control form-control-lg fs-6 rounded-0" onchange="vistaPreliminarEditar(event)">
+            </div>
+            <div class="mb-3">
+            <img class="d-block w-100" src="" alt="" id="img-preview-update">
+          </div>
         </form>
 
       </div>
@@ -155,14 +168,14 @@
             </div>
             <div class="mb-3">
                 <label for="" class="form-label text-secondary fs-6">Cantidad Adicional</label>
-                <input type="text" class="form-control form-control-lg fs-6 rounded-0" name="cantidadA" id="cantidadA">
+                <input type="number" class="form-control form-control-lg fs-6 rounded-0" name="cantidadA" id="cantidadA">
             </div>
         </form>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cerrar</button>
-        <button id="btnActualizaStock" type="button" class="btn btn-primary rounded-0" data-bs-dismiss="modal">Agregar</button>
+        <button id="btnActualizaStock" type="button" class="btn btn-primary rounded-0">Agregar</button>
       </div>
     </div>
   </div>

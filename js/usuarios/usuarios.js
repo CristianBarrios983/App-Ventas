@@ -200,3 +200,8 @@ function eliminarUsuario(idusuario){
     }, function(){ 
         alertify.error('Cancelar')});
 }
+
+
+document.getElementById('registraUsuarioModal').addEventListener('hidden.bs.modal', function () {
+    $('#frmRegistro')[0].reset();
+});

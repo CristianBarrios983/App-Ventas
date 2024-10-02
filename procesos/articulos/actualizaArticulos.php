@@ -35,7 +35,8 @@
                     $_POST['categoriaSelectU'],
                     $_POST['nombreU'],
                     $_POST['descripcionU'],
-                    $_POST['precioU']
+                    $_POST['precioU'],
+                    $_POST['stock_minimoU']
                 );
                 echo $obj->actualizaArticulo($datos);
             } else {
@@ -53,7 +54,8 @@
             $_POST['categoriaSelectU'],
             $_POST['nombreU'],
             $_POST['descripcionU'],
-            $_POST['precioU']
+            $_POST['precioU'],
+            $_POST['stock_minimoU']
         );
 
         echo $obj->actualizaArticulo($datos);

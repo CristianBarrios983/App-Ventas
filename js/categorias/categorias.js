@@ -148,3 +148,8 @@ function eliminaCategoria(idcategoria){
     }, function(){ 
         alertify.error('Cancelar')});
 }
+
+document.getElementById('registraCategoria').addEventListener('hidden.bs.modal', function () {
+    $('#frmCategorias')[0].reset();
+});
+

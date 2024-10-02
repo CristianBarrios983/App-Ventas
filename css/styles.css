@@ -20,3 +20,17 @@
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+
+.bajo-stock {
+    background-color: rgb(238, 127, 127) !important; /* O un color menos intenso para no desentonar */
+    color: white !important; /* Para que el texto sea legible */
+}
+
+
+#widgetStock {
+    position: fixed; /* Fijo en la parte superior */
+    bottom: 20px;
+    right: 20px;
+    width: 300px; /* Ancho del widget */
+    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+}

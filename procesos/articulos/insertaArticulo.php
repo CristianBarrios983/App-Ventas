@@ -30,6 +30,7 @@
                 $datos[4]=$_POST['descripcion'];
                 $datos[5]=$_POST['cantidad'];
                 $datos[6]=$_POST['precio'];
+                $datos[7]=$_POST['stock_minimo'];
                 
                 echo $obj->insertaArticulo($datos);
             }else{

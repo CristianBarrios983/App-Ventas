@@ -179,6 +179,38 @@
                 </div>
             </div>
             <?php endif; ?>
+
+        <div class="col-6">
+            <?php
+                $c= new conectar();
+                $conexion=$c->conexion();
+
+                // Consulta para obtener productos y sus niveles de stock
+                $query = "SELECT nombre, cantidad, stock_minimo FROM articulos"; // Cambia el nombre de la tabla y columnas según tu estructura
+                $result = mysqli_query($conexion, $query);
+
+                // Verifica si hay resultados
+                $stockBajo = false;
+                if (mysqli_num_rows($result) > 0) {
+                    while ($mostrar = mysqli_fetch_assoc($result)) {
+                        if ($mostrar['cantidad'] < $mostrar['stock_minimo']) {
+                            $stockBajo = true;
+                            break; // Salir del bucle si se encuentra un stock bajo
+                        }
+                    }
+                }
+
+                // Cerrar la conexión
+                mysqli_close($conexion);
+            ?>
+
+            <?php if ($stockBajo): ?>
+                <div id="widgetStock" class="alert alert-warning" role="alert">
+                    <strong>Advertencia:</strong> Algunos productos están por debajo del stock mínimo.
+                </div>
+            <?php endif; ?>
+
+        </div>
     </div>
 
 </body>
