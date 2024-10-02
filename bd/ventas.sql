@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-04-2024 a las 23:55:03
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 03-10-2024 a las 00:54:33
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,8 +35,10 @@ CREATE TABLE `articulos` (
   `nombre` varchar(50) DEFAULT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `precio` float DEFAULT NULL,
-  `fechaCaptura` date DEFAULT NULL
+  `precio` decimal(10,2) DEFAULT NULL,
+  `fechaCaptura` date DEFAULT NULL,
+  `estado` tinyint(4) DEFAULT 1,
+  `stock_minimo` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -47,10 +49,17 @@ CREATE TABLE `articulos` (
 
 CREATE TABLE `categorias` (
   `id_categoria` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
   `nombreCategoria` varchar(150) DEFAULT NULL,
   `fechaCaptura` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`id_categoria`, `id_usuario`, `nombreCategoria`, `fechaCaptura`) VALUES
+(1, 0, 'Sin categoria', '2024-10-02');
 
 -- --------------------------------------------------------
 
@@ -80,7 +89,7 @@ CREATE TABLE `detalles` (
   `venta` int(11) DEFAULT NULL,
   `producto` int(11) DEFAULT NULL,
   `cantidad` float DEFAULT NULL,
-  `precio` float DEFAULT NULL
+  `precio` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -157,7 +166,7 @@ CREATE TABLE `ventas` (
   `id_venta` int(11) NOT NULL,
   `id_cliente` int(11) DEFAULT NULL,
   `id_usuario` int(11) DEFAULT NULL,
-  `total` float DEFAULT NULL,
+  `total` decimal(10,2) DEFAULT NULL,
   `fechaCompra` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -229,13 +238,13 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
@@ -259,7 +268,7 @@ ALTER TABLE `imagenes`
 -- AUTO_INCREMENT de la tabla `negocio_info`
 --
 ALTER TABLE `negocio_info`
-  MODIFY `id_negocio` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_negocio` int(1) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
